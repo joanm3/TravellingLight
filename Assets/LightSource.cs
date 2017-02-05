@@ -8,18 +8,22 @@ public class LightSource : MonoBehaviour
 
     public GameObject lightSourcePrefab;
     public float maxDistance = 100f;
-    public LayerMask layerMask;
+    public LayerMask mirrorMask;
+    public LayerMask mecanismMask;
     [Header("Gizmos")]
     public float sphereRadius = 0.5f;
     [Header("Read Only, dont modify:")]
     public bool isReflecting = false;
+    public bool isActivatingItem = false;
     public Ray rayLight;
     public RaycastHit hitInfo;
     public Vector3 contactPoint;
     public Vector3 contactNormal;
     public float distance;
     public Transform otherCollider = null;
+    public GameObject contactGameObject = null;
     public LightSource reflectedLight = null;
+    public ActivateOnLightContact lightMecanism;
 
 
     void Update()
@@ -27,7 +31,26 @@ public class LightSource : MonoBehaviour
         rayLight.origin = transform.position;
         rayLight.direction = transform.forward;
 
-        isReflecting = Physics.Raycast(rayLight, out hitInfo, maxDistance, layerMask);
+        isActivatingItem = Physics.Raycast(rayLight, out hitInfo, maxDistance, mecanismMask);
+        if (isActivatingItem)
+        {
+            contactPoint = hitInfo.point;
+            distance = hitInfo.distance;
+            contactGameObject = hitInfo.collider.gameObject;
+            lightMecanism = contactGameObject.GetComponent<ActivateOnLightContact>();
+            lightMecanism.IsActive = true;
+            return;
+        }
+
+        if (lightMecanism != null)
+        {
+            lightMecanism.IsActive = false;
+            contactGameObject = null;
+            lightMecanism = null;
+        }
+
+
+        isReflecting = Physics.Raycast(rayLight, out hitInfo, maxDistance, mirrorMask);
         if (isReflecting)
         {
             contactPoint = hitInfo.point;
@@ -36,7 +59,8 @@ public class LightSource : MonoBehaviour
             otherCollider = hitInfo.collider.transform;
             if (reflectedLight == null)
             {
-                reflectedLight = Instantiate(lightSourcePrefab, contactPoint, Quaternion.identity, null).GetComponent<LightSource>();
+                contactGameObject = Instantiate(lightSourcePrefab, contactPoint, Quaternion.identity, null);
+                reflectedLight = contactGameObject.GetComponent<LightSource>();
             }
             else
             {
@@ -72,17 +96,24 @@ public class LightSource : MonoBehaviour
         float _sphereRadius = sphereRadius; 
 #endif
         Gizmos.DrawSphere(transform.position, _sphereRadius);
-        Gizmos.DrawSphere(transform.position, sphereRadius);
 
         if (!Application.isPlaying)
             return;
 
-        if (isReflecting)
+        if (isActivatingItem)
         {
-            Gizmos.color = Color.red;
-
+            Gizmos.color = Color.green;
             Gizmos.DrawLine(transform.position, contactPoint);
             Gizmos.DrawSphere(contactPoint, _sphereRadius);
+            return;
+        }
+
+        if (isReflecting)
+        {
+            Gizmos.color = Color.magenta;
+
+            Gizmos.DrawLine(transform.position, contactPoint);
+            //Gizmos.DrawSphere(contactPoint, _sphereRadius);
         }
         else
         {

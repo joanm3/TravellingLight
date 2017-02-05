@@ -33,13 +33,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1760394439993640}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0.22082299, z: -0, w: 0.97531396}
+  m_LocalPosition: {x: 11.25, y: 0, z: -11.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 25.515001, z: 0}
 --- !u!114 &114405875865518724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -51,15 +51,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da89ebc42cb2c1a4da230debdf1daafe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sphereRadius: 0.24
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  lightSourcePrefab: {fileID: 1760394439993640}
   maxDistance: 100
+  mirrorMask:
+    serializedVersion: 2
+    m_Bits: 256
+  mecanismMask:
+    serializedVersion: 2
+    m_Bits: 512
+  sphereRadius: 0.05
+  isReflecting: 0
+  isActivatingItem: 0
   contactPoint: {x: 0, y: 0, z: 0}
   contactNormal: {x: 0, y: 0, z: 0}
   distance: 0
   otherCollider: {fileID: 0}
-  isReflecting: 0
-  lightSourcePrefab: {fileID: 1760394439993640}
+  contactGameObject: {fileID: 0}
   reflectedLight: {fileID: 0}
+  lightMecanism: {fileID: 0}
