@@ -9,8 +9,14 @@ public class SetColorMaterial : MonoBehaviour
     public bool desactivateOnExit = false;
     public float velocity = 1f;
     public GameObject luz;
-    public Color activeColor = Color.white;
-    public Color inactiveColor = Color.black;
+
+    public Color ActiveColor { get { return activeColor; } set { activeColor = value; OnColorsChanged(); } }
+    public Color InactiveColor { get { return inactiveColor; } set { inactiveColor = value; OnColorsChanged(); } }
+
+    [SerializeField]
+    private Color activeColor = Color.white;
+    [SerializeField]
+    private Color inactiveColor = Color.black;
 
     bool goActive = false;
     Renderer rend;
@@ -23,26 +29,34 @@ public class SetColorMaterial : MonoBehaviour
 
     void Start()
     {
+        goActive = false;
         rend = GetComponent<Renderer>();
         mat = rend.material;
-        mat.color = inactiveColor;
-        goActive = false;
-        colorsInRange = mat.color;
-        actualColor = mat.color;
-        colorsInRange.r = LFunctions.MapRange(colorsInRange.r, 0f, 1f, inactiveColor.r, activeColor.r);
-        colorsInRange.g = LFunctions.MapRange(colorsInRange.g, 0f, 1f, inactiveColor.g, activeColor.g);
-        colorsInRange.b = LFunctions.MapRange(colorsInRange.b, 0f, 1f, inactiveColor.b, activeColor.b);
+        switch (colorType)
+        {
+            case ColorType.Albedo:
+                mat.color = inactiveColor;
+                actualColor = mat.color;
+                break;
+            case ColorType.Emission:
+                mat.SetColor("_EmissionColor", inactiveColor);
+                actualColor = mat.GetColor("_EmissionColor");
+                break;
+        }
+        OnColorsChanged();
 
     }
 
     void Update()
     {
+        //when the colors are far away from target, change them. 
         if (DistantFromTargetColor())
         {
             SetColorInRange();
             SetFinalColor();
         }
 
+        //destroy light when not active and intensity is small. 
         if (!goActive && luzLight != null)
         {
             if (luzLight.intensity < 0.1f)
@@ -82,6 +96,8 @@ public class SetColorMaterial : MonoBehaviour
 
     void SetColorInRange()
     {
+        //change the colors in a range from 0-1 to avoid the colors to sum differently. check also 
+        //if the values of the target color is bigger or smaller to sum or substract them. 
         if (goActive)
         {
             colorsInRange.r = (activeColor.r > inactiveColor.r) ?
@@ -111,6 +127,7 @@ public class SetColorMaterial : MonoBehaviour
 
     void SetFinalColor()
     {
+        //return the values from 0 to 1 to its original range and then apply them in the color. 
         actualColor.r = LFunctions.MapRange(colorsInRange.r, inactiveColor.r, activeColor.r, 0f, 1f);
         actualColor.g = LFunctions.MapRange(colorsInRange.g, inactiveColor.g, activeColor.g, 0f, 1f);
         actualColor.b = LFunctions.MapRange(colorsInRange.b, inactiveColor.b, activeColor.b, 0f, 1f);
@@ -121,7 +138,8 @@ public class SetColorMaterial : MonoBehaviour
                 break;
             case ColorType.Emission:
                 mat.SetColor("_EmissionColor", actualColor);
-                //check why DynamicGI.SetEmissive is not working
+                //ERROR!!! check why DynamicGI.SetEmissive is not working
+                //it should be the better way as it takes less resources, but its not working. 
                 //DynamicGI.SetEmissive(rend, actualColor);
                 break;
         }
@@ -154,5 +172,22 @@ public class SetColorMaterial : MonoBehaviour
         }
 
         return false;
+    }
+
+
+    void OnColorsChanged()
+    {
+        switch (colorType)
+        {
+            case ColorType.Albedo:
+                colorsInRange = mat.color;
+                break;
+            case ColorType.Emission:
+                colorsInRange = mat.GetColor("_EmissionColor");
+                break;
+        }
+        colorsInRange.r = LFunctions.MapRange(colorsInRange.r, 0f, 1f, inactiveColor.r, activeColor.r);
+        colorsInRange.g = LFunctions.MapRange(colorsInRange.g, 0f, 1f, inactiveColor.g, activeColor.g);
+        colorsInRange.b = LFunctions.MapRange(colorsInRange.b, 0f, 1f, inactiveColor.b, activeColor.b);
     }
 }
