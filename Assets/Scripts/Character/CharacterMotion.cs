@@ -1,4 +1,4 @@
-﻿using ProjectGiants.GFunctions;
+﻿using ProjectLight.Functions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -701,7 +701,7 @@ public class CharacterMotion : MonoBehaviour
 
     private Quaternion UpdateInputRotation(Quaternion rotation, float deltaAngleInDegrees)
     {
-        m_tMove = GFunctions.NormalizedRangeValue(Speed, 0f, velMax);
+        m_tMove = LFunctions.NormalizeRange(Speed, 0f, velMax);
         float _currentRotationSpeed = ((m_maxRotSpeed - m_minRotSpeed) * m_rotationBySpeed.Evaluate(m_tMove)) + m_minRotSpeed;
         //Debug.LogFormat("speedValue:{0}, rotSpeed:{1}", m_tMove, _currentRotationSpeed);
         Quaternion _headingDelta = Quaternion.AngleAxis(deltaAngleInDegrees, transform.up);

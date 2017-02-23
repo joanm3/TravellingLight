@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using ProjectGiants.Editor;
+using ProjectLight.Editor;
 
 [CustomEditor(typeof(CharacterMotion))]
 [CanEditMultipleObjects]

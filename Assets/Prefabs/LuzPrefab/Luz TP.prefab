@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4696558813640124}
   - component: {fileID: 108010306157973288}
   m_Layer: 0
-  m_Name: Area Light (1)
+  m_Name: PointLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4234741836049800}
   m_Layer: 0
-  m_Name: Luz
+  m_Name: Luz TP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,9 +78,9 @@ Light:
   m_Enabled: 1
   serializedVersion: 7
   m_Type: 2
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 8
-  m_Range: 10
+  m_Color: {r: 0.9852941, g: 0.9360294, b: 0.8621323, a: 1}
+  m_Intensity: 1
+  m_Range: 20
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:

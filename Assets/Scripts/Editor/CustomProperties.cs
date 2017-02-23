@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-namespace ProjectGiants.Editor
+namespace ProjectLight.Editor
 {
     public class CustomProperties
     {

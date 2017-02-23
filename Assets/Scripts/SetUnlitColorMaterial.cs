@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using LightProject;
+using ProjectLight.Functions;
 
 [RequireComponent(typeof(Renderer))]
 public class SetUnlitColorMaterial : MonoBehaviour

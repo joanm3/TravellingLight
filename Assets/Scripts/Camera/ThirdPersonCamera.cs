@@ -1,4 +1,4 @@
-﻿using ProjectGiants.GFunctions;
+﻿using ProjectLight.Functions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -248,7 +248,7 @@ public class ThirdPersonCamera : MonoBehaviour
         firstDistanceAway = JFunctions.MapRange(distanceAwayNormalized, 0f, 1f, distanceAwayMinMax.x, distanceAwayMinMax.y);
         distanceAway = firstDistanceAway;
         //Debug.LogFormat("distance: {0}, {1}", distanceAway, distanceUp);
-        Debug.LogFormat("distance normalized: {0}, {1}", distanceAwayNormalized, distanceUpNormalizedCurve);
+        //Debug.LogFormat("distance normalized: {0}, {1}", distanceAwayNormalized, distanceUpNormalizedCurve);
 
         switch (cameraMode)
         {
@@ -274,7 +274,7 @@ public class ThirdPersonCamera : MonoBehaviour
                 Vector3 finalAngle = new Vector3(rotatedAngle.x, 0f, rotatedAngle.y);
                 Debug.DrawRay(characterMotion.transform.position, curLookDir * 10f, Color.red);
                 // Debug.DrawRay(characterMotion.transform.position, finalAngle * 10f, Color.magenta);
-                Debug.Log("targetPosition: " + targetPosition.ToString());
+                //Debug.Log("targetPosition: " + targetPosition.ToString());
 
                 //targetPosition = characterOffset + character.up * distanceUp - Vector3.Normalize(finalAngle) * distanceAway;
                 characterMotion.characterMovementType = CharacterMotion.CharacterMovementType.Relative;
@@ -319,7 +319,7 @@ public class ThirdPersonCamera : MonoBehaviour
             #region Target
             case CamMode.ThirdPersonTarget:
                 //ResetCamera();
-                // characterMotion.characterMovementType = CharacterMotion.CharacterMovementType.Absolute;
+                characterMotion.characterMovementType = CharacterMotion.CharacterMovementType.NoInput;
                 lookDir = character.forward;
                 curLookDir = character.forward;
 
@@ -356,7 +356,7 @@ public class ThirdPersonCamera : MonoBehaviour
                 this.transform.rotation = rotationShift * this.transform.rotation;
                 targetPosition = firstPersonCamPos.XForm.position;
                 float _distance = Vector3.Distance(this.transform.position, firstPersonCamPos.XForm.position);
-                float _goodDistance = (_distance > 0.1) ? GFunctions.NormalizedRangeValue(_distance, 0f, distanceStartWhenGoingToFPS) : 0f;
+                float _goodDistance = (_distance > 0.1) ? LFunctions.NormalizeRange(_distance, 0f, distanceStartWhenGoingToFPS) : 0f;
                 lookAt = (Vector3.Lerp(this.transform.position + this.transform.forward, lookAt, _goodDistance));
 
                 //later we can do that the character rotates with this, but not important now. 

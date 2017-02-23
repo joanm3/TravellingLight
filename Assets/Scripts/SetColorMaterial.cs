@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using LightProject;
+using ProjectLight.Functions;
 
 [RequireComponent(typeof(Renderer))]
 public class SetColorMaterial : MonoBehaviour
@@ -26,6 +26,7 @@ public class SetColorMaterial : MonoBehaviour
     Color colorsInRange;
     Color actualColor;
 
+    SinusMovement sinMovement;
 
     void Start()
     {
@@ -44,6 +45,10 @@ public class SetColorMaterial : MonoBehaviour
                 break;
         }
         OnColorsChanged();
+
+        sinMovement = GetComponent<SinusMovement>();
+        if (sinMovement)
+            sinMovement.move = false;
 
     }
 
@@ -82,15 +87,22 @@ public class SetColorMaterial : MonoBehaviour
                     luzLight.intensity = 0f;
             }
             goActive = true;
+            if (sinMovement)
+                sinMovement.move = true;
         }
     }
 
 
     void OnTriggerExit(Collider col)
     {
+        if (!desactivateOnExit)
+            return;
+
         if (col.gameObject.tag == ("LightSourceCollider"))
         {
             goActive = false;
+            if (sinMovement)
+                sinMovement.move = false;
         }
     }
 

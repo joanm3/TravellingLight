@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ProjectGiants.GFunctions
+namespace ProjectLight.Functions
 {
-    public static class GFunctions
+    public static class LFunctions
     {
         public static Renderer GetRendererFromCollision(RaycastHit hit)
         {
@@ -35,7 +35,7 @@ namespace ProjectGiants.GFunctions
         /// <param name="newMin"></param>
         /// <param name="newMax"></param>
         /// <returns></returns>
-        public static float MappedRangeValue(float valueToTransform, float oldMin, float oldMax, float newMin, float newMax)
+        public static float MapRange(float valueToTransform, float oldMin, float oldMax, float newMin, float newMax)
         {
             float oldRange = oldMax - oldMin;
             float newRange = newMax - newMin;
@@ -49,11 +49,13 @@ namespace ProjectGiants.GFunctions
         /// <param name="oldMin">old min = 0 in normalized range</param>
         /// <param name="oldMax">old max = 1 in normalized range</param>
         /// <returns></returns>
-        public static float NormalizedRangeValue(float valueToTransform, float oldMin, float oldMax)
+        public static float NormalizeRange(float valueToTransform, float oldMin, float oldMax)
         {
             float oldRange = oldMax - oldMin;
             return ((valueToTransform - oldMin) / oldRange);
         }
 
     }
+
+
 }
