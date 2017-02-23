@@ -157,6 +157,8 @@ public class CharacterMotion : MonoBehaviour
     private float m_lerpForcesVelocity = 1f;
     private bool m_snappedToPosition = false;
 
+    public string Animation = "idle";
+
     #endregion
 
     #region UNITY FUNCTIONS
@@ -348,36 +350,37 @@ public class CharacterMotion : MonoBehaviour
         switch (characterState)
         {
             case CharacterState.Idle:
-            case CharacterState.Walking:
-            case CharacterState.Running:
-            case CharacterState.Stopping:
                 {
+                    SetAnimation_Idle();
+                    OnGroundUpdate();
+                    break;
+                }
+            case CharacterState.Walking:
+            case CharacterState.Stopping:
+            case CharacterState.Running:
+            case CharacterState.GoingUp:
+            case CharacterState.GoingDown:
+            case CharacterState.Gliding:
+            case CharacterState.StrongGliding:
+                {
+                    SetAnimation_Run();
                     OnGroundUpdate();
                     break;
                 }
             case CharacterState.Falling:
+                {
+                    SetAnimation_Idle();
+                    OnGroundUpdate();
+                    break;
+                }
             case CharacterState.Jumping:
                 {
+                    SetAnimation_Idle();
                     //redo on air behaviour
                     OnAirUpdate(_dt);
                     break;
                 }
-            case CharacterState.GoingUp:
-                {
-                    OnGroundUpdate();
-                    break;
-                }
-            case CharacterState.GoingDown:
-                {
-                    OnGroundUpdate();
-                    break;
-                }
-            case CharacterState.Gliding:
-            case CharacterState.StrongGliding:
-                {
-                    OnGroundUpdate();
-                    break;
-                }
+
         }
 
         #endregion
@@ -755,5 +758,58 @@ public class CharacterMotion : MonoBehaviour
         return false;
     }
 
+    #endregion
+
+    #region ANIMATION TEMP
+    public void SetAnimation_Idle()
+    {
+        Animation = "idle";
+    }
+
+    public void SetAnimation_Run()
+    {
+        Animation = "running";
+    }
+
+    public void SetAnimation_Walk()
+    {
+        Animation = "walk";
+    }
+
+    public void SetAnimation_Jump()
+    {
+        Animation = "jump";
+    }
+
+
+    public void SetAnimation_WinPose()
+    {
+        Animation = "winpose";
+    }
+
+    public void SetAnimation_KO()
+    {
+        Animation = "ko_big";
+    }
+
+    public void SetAnimation_Damage()
+    {
+        Animation = "damage";
+    }
+
+    public void SetAnimation_Hit01()
+    {
+        Animation = "hit01";
+    }
+
+    public void SetAnimation_Hit02()
+    {
+        Animation = "hit02";
+    }
+
+    public void SetAnimation_Hit03()
+    {
+        Animation = "hit03";
+    }
     #endregion
 }
