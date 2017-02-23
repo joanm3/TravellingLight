@@ -9,6 +9,7 @@ public class SetColorMaterial : MonoBehaviour
     public bool desactivateOnExit = false;
     public float velocity = 1f;
     public GameObject luz;
+    public float lightIntensity = 6f;
 
     public Color ActiveColor { get { return activeColor; } set { activeColor = value; OnColorsChanged(); } }
     public Color InactiveColor { get { return inactiveColor; } set { inactiveColor = value; OnColorsChanged(); } }
@@ -158,7 +159,7 @@ public class SetColorMaterial : MonoBehaviour
 
         if (luzLight)
         {
-            luzLight.intensity = LFunctions.MapRange(colorsInRange.r, inactiveColor.r, activeColor.r, 0f, 8f);
+            luzLight.intensity = LFunctions.MapRange(colorsInRange.r, inactiveColor.r, activeColor.r, 0f, lightIntensity);
         }
     }
 
