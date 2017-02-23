@@ -140,7 +140,7 @@ MonoBehaviour:
   distanceAwayDefault: 8.87
   distanceUpDefault: 3.6
   distanceAwayMinMax: {x: 5, y: 20}
-  distanceUpMinMax: {x: 2, y: 5}
+  distanceUpMinMax: {x: 5, y: 5}
   distanceUpCurve:
     serializedVersion: 2
     m_Curve:

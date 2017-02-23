@@ -81,7 +81,7 @@ public class SetColorMaterial : MonoBehaviour
             if (luz != null && luzInstance == null)
             {
                 luzInstance = Instantiate(luz, gameObject.transform.position, Quaternion.identity);
-                luzInstance.transform.parent = this.transform;
+                //luzInstance.transform.parent = this.transform;
                 luzLight = luzInstance.GetComponentInChildren<Light>();
                 if (luzLight != null)
                     luzLight.intensity = 0f;
