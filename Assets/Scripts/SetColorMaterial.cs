@@ -9,6 +9,7 @@ public class SetColorMaterial : MonoBehaviour
     public bool desactivateOnExit = false;
     public float velocity = 1f;
     public GameObject luz;
+    public bool makeLuzChild = true;
     public float lightIntensity = 6f;
 
     public Color ActiveColor { get { return activeColor; } set { activeColor = value; OnColorsChanged(); } }
@@ -19,6 +20,10 @@ public class SetColorMaterial : MonoBehaviour
     [SerializeField]
     private Color inactiveColor = Color.black;
 
+    public bool GoActive { get { return goActive; } set { goActive = value; } }
+    public bool IsLightEnabled { get { return isLightEnabled; } set { isLightEnabled = value; } }
+
+    bool isLightEnabled = true;
     bool goActive = false;
     Renderer rend;
     Material mat;
@@ -68,21 +73,24 @@ public class SetColorMaterial : MonoBehaviour
             if (luzLight.intensity < 0.1f)
             {
                 //dont destroy it, put it in a pool later on
-                Destroy(luzInstance);
-                luzInstance = null;
-                luzLight = null;
+                //Destroy(luzInstance);
+                //luzInstance = null;
+                //luzLight = null;
             }
         }
     }
 
     void OnTriggerEnter(Collider col)
     {
+        if (!IsLightEnabled)
+            return;
+
         if (col.gameObject.tag == ("LightSourceCollider"))
         {
             if (luz != null && luzInstance == null)
             {
                 luzInstance = Instantiate(luz, gameObject.transform.position, Quaternion.identity);
-                //luzInstance.transform.parent = this.transform;
+                if (makeLuzChild) luzInstance.transform.parent = this.transform;
                 luzLight = luzInstance.GetComponentInChildren<Light>();
                 if (luzLight != null)
                     luzLight.intensity = 0f;
@@ -96,7 +104,7 @@ public class SetColorMaterial : MonoBehaviour
 
     void OnTriggerExit(Collider col)
     {
-        if (!desactivateOnExit)
+        if (!desactivateOnExit || !IsLightEnabled)
             return;
 
         if (col.gameObject.tag == ("LightSourceCollider"))

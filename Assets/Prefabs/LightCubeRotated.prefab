@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4083474135258468}
   - component: {fileID: 114054806318506322}
+  - component: {fileID: 114612452393807032}
   m_Layer: 0
   m_Name: LightCubeRotated
   m_TagString: Untagged
@@ -169,9 +170,30 @@ MonoBehaviour:
   desactivateOnExit: 0
   velocity: 1
   luz: {fileID: 1780563156533152, guid: 3ebcbc8742bfbc344840f93575c94530, type: 2}
+  makeLuzChild: 1
+  lightIntensity: 6
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   inactiveColor: {r: 0, g: 0, b: 0, a: 1}
   luzLight: {fileID: 0}
+--- !u!114 &114612452393807032
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1482528803304830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56660bb04016ff49b29c7f8f996d0c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInSphere: 0
+  selectedScale: 0.25
+  velocityToChange: 0.5
+  followSpeed: 3
+  distanceFromTarget: 2
+  orbitAroundCharacter: 0
+  rotationAngleForce: 20
+  isFollowing: 0
 --- !u!114 &114809200054902480
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 33830454461510808}
   - component: {fileID: 135621921792222184}
   - component: {fileID: 114124692379077760}
+  - component: {fileID: 114445990283694308}
   m_Layer: 0
   m_Name: LightSourceCollider
   m_TagString: LightSourceCollider
@@ -4937,6 +4938,23 @@ MonoBehaviour:
   lightStart: 50
   speedLightEnd: 1
   playerLight: {fileID: 1465796827004528}
+--- !u!114 &114445990283694308
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1043448928958392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 767690df6dbd36a4695bad404b583b7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  assignToCharacter: {fileID: 0}
+  lightFollowers: []
+  minDistanceFromCharacter: 3
+  distanceMultiplier: 1
+  positioningSpeed: 5
+  positioningYHeight: 5
 --- !u!114 &114710338781158312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4962,7 +4980,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   step: {fileID: 1637797086467950, guid: 18a3353f8e9c8e144aeee913bb5ad5ef, type: 2}
   timer: 0.3
-  avatarHight: 0.9
+  avatarHight: 1
   character: {fileID: 114792210110971422}
 --- !u!114 &114792210110971422
 MonoBehaviour:
