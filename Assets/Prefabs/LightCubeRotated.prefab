@@ -11,6 +11,21 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1482528803304830}
   m_IsPrefabParent: 1
+--- !u!1 &1473713878092554
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4603770614340988}
+  m_Layer: 0
+  m_Name: Target
+  m_TagString: WorldTarget
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1482528803304830
 GameObject:
   m_ObjectHideFlags: 0
@@ -55,14 +70,27 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1482528803304830}
-  m_LocalRotation: {x: -0, y: 0.6395061, z: -0, w: 0.768786}
-  m_LocalPosition: {x: -3.5943174, y: 14.827985, z: -10.720601}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.88, y: 5, z: 8.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4685173211795270}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 79.51, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4603770614340988
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1473713878092554}
+  m_LocalRotation: {x: -0.35355338, y: 0.1464466, z: -0.35355338, w: 0.8535535}
+  m_LocalPosition: {x: -0.75, y: -0.75000006, z: 1.0606602}
+  m_LocalScale: {x: 0.50000006, y: 0.5, z: 0.5}
+  m_Children: []
+  m_Father: {fileID: 4685173211795270}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4685173211795270
 Transform:
   m_ObjectHideFlags: 1
@@ -72,7 +100,8 @@ Transform:
   m_LocalRotation: {x: 0.35355338, y: -0.1464466, z: 0.35355338, w: 0.8535535}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
-  m_Children: []
+  m_Children:
+  - {fileID: 4603770614340988}
   m_Father: {fileID: 4083474135258468}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 45}
@@ -83,7 +112,7 @@ MeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1636753400080902}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -189,11 +218,11 @@ MonoBehaviour:
   isInSphere: 0
   selectedScale: 0.25
   velocityToChange: 0.5
-  followSpeed: 3
+  followSpeed: 4.5
   distanceFromTarget: 2
-  orbitAroundCharacter: 0
+  isFollowingCharacter: 0
   rotationAngleForce: 20
-  isFollowing: 0
+  desactivateWhenFollowing: 1
 --- !u!114 &114809200054902480
 MonoBehaviour:
   m_ObjectHideFlags: 1

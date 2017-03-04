@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 3300000}
   - component: {fileID: 2300000}
   - component: {fileID: 9500000}
-  m_Layer: 0
+  - component: {fileID: 114812955312590046}
+  m_Layer: 12
   m_Name: Mushroom_b
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,8 +25,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: -37.487957, y: -0.27978587, z: 0.8423242}
+  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.5605011, y: 0.0013335044, z: 3.979721}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,3 +98,18 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}
   m_IsPrefabParent: 1
+--- !u!114 &114812955312590046
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be424a8b6452664588ad34843c5b24a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maskShader: {fileID: 4800000, guid: c0b6a36c2dcfba44c959785b389207aa, type: 3}
+  target: {fileID: 0}
+  changeDistance: 10
+  cloak: 0
