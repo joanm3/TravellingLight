@@ -43,7 +43,7 @@ public class WorldMaskController : MonoBehaviour
         //target2 = target;
         //target3 = target;
         //target4 = target;
-
+        UpdateTargetsDone();
         UpdateUniforms();
         //UpdateTargets();
         // Debug.Log(target);
@@ -62,13 +62,13 @@ public class WorldMaskController : MonoBehaviour
             timeLeft -= Time.deltaTime;
             if (timeLeft < 0)
             {
-                UpdateTargets();
+                //UpdateTargetsDone();
                 timeLeft = Mathf.Abs(timeToCheck);
             }
         }
         else
         {
-            UpdateTargets();
+            //UpdateTargets();
         }
     }
 
@@ -83,6 +83,16 @@ public class WorldMaskController : MonoBehaviour
         maskMaterial.SetVector("_TargetPos4", target4.position);
 
     }
+
+    void UpdateTargetsDone()
+    {
+        target = WorldMaskManager.Instance.target1;
+        target2 = WorldMaskManager.Instance.target2;
+        target3 = WorldMaskManager.Instance.target3;
+        target4 = WorldMaskManager.Instance.target4;
+
+    }
+
     void UpdateTargets()
     {
         //try to find a way where i dont have to loop at every frame (start a coroutine or wait for time better at least). 

@@ -7,24 +7,27 @@
 		_Glossiness("Smoothness", Range(0,1)) = 0.5
 		_Metallic("Metallic", Range(0,1)) = 0.0
 
-		//noise settings
-		_NoiseSettings("Noise settings : scale xy, offset xy", Vector) = (1, 1, 0, 0)
-		_NoiseSettings2("Noise settings gain, frequencyMul, baseWeight, na", Vector) = (0.5, 2.5, 0.5, 0)
-		
-		//circle properties
-		_CircleForce("Circle Force", Range(0,1)) = 0.25
-		_Expand("Inner Expand", Range(0,1)) = 0.5
-		_Radius("Radius", FLOAT) = 0.75
-		//_WindowHeight("Window Height", FLOAT) = 0.0
-		_ChangePoint("Change at this distance", Float) = 5
-		//_MaxDistance("Max hide value", Float) = 5
+			//noise settings
+			_NoiseSettings("Noise settings : scale xy, offset xy", Vector) = (1, 1, 0, 0)
+			_NoiseSettings2("Noise settings gain, frequencyMul, baseWeight, na", Vector) = (0.5, 2.5, 0.5, 0)
 
-		//outline properties
-		_LineWidth("Line Width", Range(0,1)) = 0.025
-		_LineColor("Line Color (alpha = emission)", Color) = (1,1,1,0)
-		_Color("Color(not applied)", Color) = (1,1,1,1)
-		_Cloak("Hide Effect (1 = hide)", Range(0,1)) = 1
-		_TargetPosition("Target Pos", Vector) = (0,0,0)
+			//circle properties
+			_CircleForce("Circle Force", Range(0,1)) = 0.25
+			_Expand("Inner Expand", Range(0,1)) = 0.5
+			_Radius("Radius", FLOAT) = 0.75
+			//_WindowHeight("Window Height", FLOAT) = 0.0
+			_ChangePoint("Change at this distance", Float) = 5
+			//_MaxDistance("Max hide value", Float) = 5
+
+			//outline properties
+			_LineWidth("Line Width", Range(0,1)) = 0.025
+			_LineColor("Line Color (alpha = emission)", Color) = (1,1,1,0)
+			_Color("Color(not applied)", Color) = (1,1,1,1)
+			_Cloak("Hide Effect (1 = hide)", Range(0,1)) = 1
+			_TargetPosition("Target Pos 1", Vector) = (0,0,0)
+			 _TargetPos2("Target Pos 2", Vector) = (0,0,0)
+			 _TargetPos3("Target Pos 3", Vector) = (0,0,0)
+			 _TargetPos4("Target Pos 4", Vector) = (0,0,0)
 	}
 
 		SubShader
@@ -62,24 +65,24 @@
 			uniform float _WindowHeight;
 
 			//outline
-			uniform float _ChangePoint; 
-			uniform float4 _LineColor; 
-			uniform float _LineWidth; 
-			uniform float4 _Color; 
-			uniform float _MaxDistance; 
+			uniform float _ChangePoint;
+			uniform float4 _LineColor;
+			uniform float _LineWidth;
+			uniform float4 _Color;
+			uniform float _MaxDistance;
 
 			//target
-			uniform float3 _TargetPosition; 
-			uniform float3 _TargetPos2; 
-			uniform float3 _TargetPos3; 
-			uniform float3 _TargetPos4; 
+			uniform float3 _TargetPosition;
+			uniform float3 _TargetPos2;
+			uniform float3 _TargetPos3;
+			uniform float3 _TargetPos4;
 
 			struct Input
 			{
 				float2 uv_MainTex : TEXCOORD0;
 				float2 noiseUV : TEXCOORD1;
 				float4 screenPos;
-				float3 worldPos; 
+				float3 worldPos;
 			};
 
 
@@ -125,14 +128,14 @@
 				const float frequencyMul = _NoiseSettings2.y;
 				for (uint i = 0; i < 8; ++i)
 				{
-					noise += weight * NoiseFunction(snoise(screenUV * frequency), i);					
+					noise += weight * NoiseFunction(snoise(screenUV * frequency), i);
 					weight *= gain;
 					frequency *= frequencyMul;
 				}
 				float postNoise = saturate(PoseNoiseFunction(noise));
 
 
-				//***************************CIRCLE*********************//
+				//************************CIRCLE SCREEN*********************//
 				//float2 centerFromSfml = float2(0.5, _WindowHeight + 0.5);
 				float2 centerFromSfml = float2(0.5, 0.5);
 
@@ -140,21 +143,20 @@
 				float r = sqrt(dot(p, p));
 
 				//not exactly correct, 
-				float circleLerp = 1 - _CircleForce; 
+				float circleLerp = 1 - _CircleForce;
 				float circle = lerp(circleLerp, noise, (r - _Expand) / (1 - _Expand));
-				float maskClip = 0; 
+				float maskClip = maskClip = 1 - (postNoise - circle);
 
-				if (r < 1.0)
-				{
-					//maskClip = (postNoise - circle);
-					maskClip = 1 - (postNoise - circle); 
-					//uncomment to show circle
-					//float onlyCircle = lerp(circleLerp, 1, (r - _Expand) / (1 - _Expand));
-					//o.Albedo = onlyCircle; 
-					
-					//uncomment to show maskClip
-					//o.Albedo = maskClip; 
-				}
+				//if (r < 1.0)
+				//{
+				//	//maskClip = (postNoise - circle);
+				//	//uncomment to show circle
+				//	//float onlyCircle = lerp(circleLerp, 1, (r - _Expand) / (1 - _Expand));
+				//	//o.Albedo = onlyCircle; 
+
+				//	//uncomment to show maskClip
+				//	//o.Albedo = maskClip; 
+				//}
 				//else
 				//{
 				////	//o.Albedo = 1; 
@@ -166,7 +168,7 @@
 
 
 				//***************************DISTANCE*********************//
-				
+
 				//with target
 				float curDistance = distance(_TargetPosition.xyz, IN.worldPos);
 				float curDis2 = distance(_TargetPos2.xyz, IN.worldPos);
@@ -176,7 +178,7 @@
 
 				//with the camera
 				//float curDistance = distance(_WorldSpaceCameraPos.xyz, IN.worldPos);
-				
+
 				//if (curDistance < _MaxDistance)
 				//	curDistance = _MaxDistance;
 				//float changeFactor = maskClip - _Cloak;
@@ -185,10 +187,10 @@
 				float changeFactor2 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDis2 - _ChangePoint));
 				float changeFactor3 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDis3 - _ChangePoint));
 				float changeFactor4 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDis4 - _ChangePoint));
-				float changeFactor = changeFactor1 * changeFactor2 * changeFactor3 * changeFactor4;
+				float changeFactor = changeFactor1  * changeFactor2 * changeFactor3 * changeFactor4;
 
-				//float clipValue = 1. - changeFactor; 
-				float clipValue =  changeFactor;
+				float clipValue = 1. - changeFactor;
+
 
 				//hides pixels with value smaller than 0
 				//clip((maskClip - _Cloak - (1 - changeFactor)));
@@ -198,15 +200,15 @@
 				//*********************ASSIGN****************************//
 				float4 c = tex2D(_MainTex, IN.uv_MainTex);
 				o.Albedo = c.rgb;
-				o.Albedo.r = changeFactor1;
-				o.Albedo.g = changeFactor2; 
-				o.Albedo.b = changeFactor3 + changeFactor4; 
-				
+				o.Albedo.r = 1. - changeFactor3;
+				o.Albedo.g = 1. - changeFactor2;
+				o.Albedo.b = 1. - changeFactor1;
+
 
 				if (changeFactor > 1. - _LineWidth)
 				{
-					o.Albedo = c.rgb * _LineColor.rgb; 
-					o.Emission = _LineColor.a; 
+					//o.Albedo = c.rgb * _LineColor.rgb;
+					//o.Emission = _LineColor.a;
 				}
 
 				//o.Emission = _LineColor.a;

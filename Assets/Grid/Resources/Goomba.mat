@@ -75,7 +75,7 @@ Material:
       second: 1
     - first:
         name: _ChangePoint
-      second: 5
+      second: -1.83
     - first:
         name: _CircleForce
       second: 1
@@ -93,13 +93,13 @@ Material:
       second: 0
     - first:
         name: _Expand
-      second: 0.87
+      second: 0.933
     - first:
         name: _GlossMapScale
       second: 1
     - first:
         name: _Glossiness
-      second: 0.5
+      second: 0.218
     - first:
         name: _GlossyReflections
       second: 1
@@ -120,7 +120,7 @@ Material:
       second: 0.02
     - first:
         name: _Radius
-      second: 0.75
+      second: 1
     - first:
         name: _SmoothnessTextureChannel
       second: 0
@@ -139,19 +139,28 @@ Material:
     m_Colors:
     - first:
         name: _Color
-      second: {r: 1, g: 1, b: 1, a: 1}
+      second: {r: 1, g: 0.85294116, b: 0.85294116, a: 1}
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _LineColor
-      second: {r: 1, g: 1, b: 1, a: 1}
+      second: {r: 0, g: 1, b: 0.5862069, a: 1}
     - first:
         name: _NoiseSettings
-      second: {r: 1, g: 1, b: 0, a: 0}
+      second: {r: 2.48, g: 2.71, b: 0, a: 1}
     - first:
         name: _NoiseSettings2
-      second: {r: 0.5, g: 2.5, b: 0.5, a: 0}
+      second: {r: 1.26, g: 1.11, b: 0.09, a: 1.43}
+    - first:
+        name: _TargetPos2
+      second: {r: 0, g: 0, b: 16, a: 1}
+    - first:
+        name: _TargetPos3
+      second: {r: 0, g: 0, b: 9.75, a: 1}
+    - first:
+        name: _TargetPos4
+      second: {r: 0, g: 0, b: -9.7, a: 1}
     - first:
         name: _TargetPosition
-      second: {r: 0, g: 0, b: 0, a: 1}
+      second: {r: 5, g: 0, b: 13.12, a: 1}
