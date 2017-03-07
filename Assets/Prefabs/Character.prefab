@@ -1846,7 +1846,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1708615794593472
 GameObject:
   m_ObjectHideFlags: 1
@@ -5042,6 +5042,7 @@ MonoBehaviour:
   meshResolution: 0.2
   edgeResolveIterations: 4
   edgeDstThreshold: 0
+  maskCutawayDst: 0.1
   viewMeshFilter: {fileID: 33484600494221620}
 --- !u!114 &114792210110971422
 MonoBehaviour:

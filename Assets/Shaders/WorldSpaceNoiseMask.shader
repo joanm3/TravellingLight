@@ -70,6 +70,9 @@
 
 			//target
 			uniform float3 _TargetPosition; 
+			uniform float3 _TargetPos2; 
+			uniform float3 _TargetPos3; 
+			uniform float3 _TargetPos4; 
 
 			struct Input
 			{
@@ -166,6 +169,10 @@
 				
 				//with target
 				float curDistance = distance(_TargetPosition.xyz, IN.worldPos);
+				float curDis2 = distance(_TargetPos2.xyz, IN.worldPos);
+				float curDis3 = distance(_TargetPos3.xyz, IN.worldPos);
+				float curDis4 = distance(_TargetPos4.xyz, IN.worldPos);
+
 
 				//with the camera
 				//float curDistance = distance(_WorldSpaceCameraPos.xyz, IN.worldPos);
@@ -174,17 +181,27 @@
 				//	curDistance = _MaxDistance;
 				//float changeFactor = maskClip - _Cloak;
 				//float changeFactor = maskClip - (1 - (curDistance - _ChangePoint));
-				float changeFactor = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDistance - _ChangePoint));
+				float changeFactor1 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDistance - _ChangePoint));
+				float changeFactor2 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDis2 - _ChangePoint));
+				float changeFactor3 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDis3 - _ChangePoint));
+				float changeFactor4 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDis4 - _ChangePoint));
+				float changeFactor = changeFactor1 * changeFactor2 * changeFactor3 * changeFactor4;
 
+				//float clipValue = 1. - changeFactor; 
+				float clipValue =  changeFactor;
 
 				//hides pixels with value smaller than 0
 				//clip((maskClip - _Cloak - (1 - changeFactor)));
-				clip(1. - changeFactor);
+				//clip(clipValue);
 
 
 				//*********************ASSIGN****************************//
 				float4 c = tex2D(_MainTex, IN.uv_MainTex);
 				o.Albedo = c.rgb;
+				o.Albedo.r = changeFactor1;
+				o.Albedo.g = changeFactor2; 
+				o.Albedo.b = changeFactor3 + changeFactor4; 
+				
 
 				if (changeFactor > 1. - _LineWidth)
 				{
