@@ -6,8 +6,6 @@ public class WorldMaskController : MonoBehaviour
 {
     public Shader maskShader;
     public float changeDistance = 10f;
-    [Range(0, 1)]
-    public float cloak;
     public bool waitTimeToChange = true;
     public float timeToCheck = 1f;
     public bool updateTarget = true;
@@ -15,10 +13,17 @@ public class WorldMaskController : MonoBehaviour
     private Material maskMaterial;
     private float timeLeft = 1f;
     public Transform target;
+    [Range(0, 1)]
+    public float cloak;
     public Transform target2;
+    [Range(0, 1)]
+    public float cloak2;
     public Transform target3;
+    [Range(0, 1)]
+    public float cloak3;
     public Transform target4;
-
+    [Range(0, 1)]
+    public float cloak4;
     // Use this for initialization
     void Start()
     {

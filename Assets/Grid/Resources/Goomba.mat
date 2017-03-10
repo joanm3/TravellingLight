@@ -83,6 +83,15 @@ Material:
         name: _Cloak
       second: 0
     - first:
+        name: _Cloak2
+      second: 0
+    - first:
+        name: _Cloak3
+      second: 0
+    - first:
+        name: _Cloak4
+      second: 0
+    - first:
         name: _Cutoff
       second: 0.5
     - first:
@@ -105,7 +114,7 @@ Material:
       second: 1
     - first:
         name: _LineWidth
-      second: 1
+      second: 0.87
     - first:
         name: _Metallic
       second: 0
@@ -145,13 +154,13 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _LineColor
-      second: {r: 0, g: 1, b: 0.5862069, a: 0}
+      second: {r: 1, g: 1, b: 1, a: 0.272}
     - first:
         name: _NoiseSettings
       second: {r: 2.48, g: 2.71, b: 0, a: 1}
     - first:
         name: _NoiseSettings2
-      second: {r: 1.49, g: 1.62, b: 0.05, a: 1.43}
+      second: {r: 1.71, g: 1.37, b: 0.05, a: 1.43}
     - first:
         name: _TargetPos2
       second: {r: -10.93, g: 0, b: 0, a: 1}

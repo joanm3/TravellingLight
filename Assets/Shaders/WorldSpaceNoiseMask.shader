@@ -23,7 +23,10 @@
 			_LineWidth("Line Width", Range(0,1)) = 0.025
 			_LineColor("Line Color (alpha = emission)", Color) = (1,1,1,0)
 			_Color("Color(not applied)", Color) = (1,1,1,1)
-			_Cloak("Hide Effect (1 = hide)", Range(0,1)) = 1
+			_Cloak("Hide 1 (1 = hide)", Range(0,1)) = 1
+			_Cloak2("Hide 2 (1 = hide)", Range(0,1)) = 1
+			_Cloak3("Hide 3 (1 = hide)", Range(0,1)) = 1
+			_Cloak4("Hide 4 (1 = hide)", Range(0,1)) = 1
 			_TargetPosition("Target Pos 1", Vector) = (0,0,0)
 			 _TargetPos2("Target Pos 2", Vector) = (0,0,0)
 			 _TargetPos3("Target Pos 3", Vector) = (0,0,0)
@@ -53,6 +56,10 @@
 
 			//noise 
 			uniform float _Cloak;
+			uniform float _Cloak2;
+			uniform float _Cloak3;
+			uniform float _Cloak4;
+
 			uniform float4 _NoiseSettings;
 			uniform float4 _NoiseSettings2;
 
@@ -184,9 +191,9 @@
 				//float changeFactor = maskClip - _Cloak;
 				//float changeFactor = maskClip - (1 - (curDistance - _ChangePoint));
 				float changeFactor1 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDistance - _ChangePoint));
-				float changeFactor2 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDis2 - _ChangePoint));
-				float changeFactor3 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDis3 - _ChangePoint));
-				float changeFactor4 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDis4 - _ChangePoint));
+				float changeFactor2 = maskClip + (_Cloak2 * _ChangePoint * 1.1) - (1 - (curDis2 - _ChangePoint));
+				float changeFactor3 = maskClip + (_Cloak3 * _ChangePoint * 1.1) - (1 - (curDis3 - _ChangePoint));
+				float changeFactor4 = maskClip + (_Cloak4 * _ChangePoint * 1.1) - (1 - (curDis4 - _ChangePoint));
 
 				changeFactor1 = clamp(changeFactor1, -1, 1);
 				changeFactor2 = clamp(changeFactor2, -1, 1);

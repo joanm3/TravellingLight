@@ -24,41 +24,50 @@ Material:
     m_Floats:
     - first:
         name: _ChangePoint
-      second: 5
+      second: 8.28
     - first:
         name: _CircleForce
-      second: 0.25
+      second: 0
     - first:
         name: _Cloak
       second: 1
     - first:
         name: _Expand
-      second: 0.5
+      second: 0
     - first:
         name: _Glossiness
-      second: 0.5
+      second: 0
     - first:
         name: _LineWidth
-      second: 0.025
+      second: 0.25
     - first:
         name: _Metallic
       second: 0
     - first:
         name: _Radius
-      second: 0.75
+      second: 2
     m_Colors:
     - first:
         name: _Color
-      second: {r: 0.9632353, g: 0.9632353, b: 0.9632353, a: 1}
+      second: {r: 0, g: 0, b: 0, a: 0}
     - first:
         name: _LineColor
-      second: {r: 1, g: 1, b: 1, a: 0}
+      second: {r: 1, g: 1, b: 1, a: 0.566}
     - first:
         name: _NoiseSettings
       second: {r: 1, g: 1, b: 0, a: 0}
     - first:
         name: _NoiseSettings2
-      second: {r: 0.5, g: 2.5, b: 0.5, a: 0}
+      second: {r: 1.71, g: 1.27, b: 0.05, a: 1.4}
+    - first:
+        name: _TargetPos2
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _TargetPos3
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _TargetPos4
+      second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _TargetPosition
       second: {r: 0, g: 0, b: 0, a: 1}
