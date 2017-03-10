@@ -75,13 +75,25 @@ Material:
       second: 1
     - first:
         name: _ChangePoint
-      second: 5
+      second: 10
     - first:
         name: _CircleForce
-      second: 0.25
+      second: 0
+    - first:
+        name: _Clip
+      second: 0
     - first:
         name: _Cloak
-      second: 1
+      second: 0
+    - first:
+        name: _Cloak2
+      second: 0
+    - first:
+        name: _Cloak3
+      second: 0
+    - first:
+        name: _Cloak4
+      second: 0
     - first:
         name: _Cutoff
       second: 0.5
@@ -93,7 +105,7 @@ Material:
       second: 0
     - first:
         name: _Expand
-      second: 0.5
+      second: 0
     - first:
         name: _GlossMapScale
       second: 0.133
@@ -105,7 +117,7 @@ Material:
       second: 1
     - first:
         name: _LineWidth
-      second: 0.025
+      second: 0.25
     - first:
         name: _Metallic
       second: 0
@@ -120,7 +132,7 @@ Material:
       second: 0.02
     - first:
         name: _Radius
-      second: 0.75
+      second: 2.02
     - first:
         name: _SmoothnessTextureChannel
       second: 1
@@ -145,13 +157,22 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _LineColor
-      second: {r: 1, g: 1, b: 1, a: 0}
+      second: {r: 1, g: 1, b: 1, a: 0.309}
     - first:
         name: _NoiseSettings
       second: {r: 1, g: 1, b: 0, a: 0}
     - first:
         name: _NoiseSettings2
-      second: {r: 0.5, g: 2.5, b: 0.5, a: 0}
+      second: {r: 1.47, g: 1.37, b: 0.05, a: 0}
+    - first:
+        name: _TargetPos2
+      second: {r: 11.88, g: 1.9999998, b: 18.03, a: 0}
+    - first:
+        name: _TargetPos3
+      second: {r: 20.1, g: 1.9999998, b: 14.56, a: 0}
+    - first:
+        name: _TargetPos4
+      second: {r: 29.17, g: 1.9999998, b: 21.75, a: 0}
     - first:
         name: _TargetPosition
-      second: {r: 0, g: 0, b: 0, a: 1}
+      second: {r: -0.29999977, g: 1.9999998, b: 2.02, a: 0}

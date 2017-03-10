@@ -4,7 +4,10 @@ using ProjectLight.Functions;
 [RequireComponent(typeof(Renderer))]
 public class SetColorMaterial : MonoBehaviour
 {
+
+    public enum TargetIndex { one = 1, two = 2, three = 3, four = 4 };
     public enum ColorType { Albedo, Emission };
+    public TargetIndex targetIndex = TargetIndex.one;
     public ColorType colorType = ColorType.Albedo;
     public bool desactivateOnExit = false;
     public float velocity = 1f;
@@ -34,9 +37,14 @@ public class SetColorMaterial : MonoBehaviour
 
     SinusMovement sinMovement;
 
+    private float targetCloak = 0f;
+
     void Start()
     {
         goActive = false;
+        targetCloak = 1f;
+        InitializeTargetCloak(); 
+
         rend = GetComponent<Renderer>();
         mat = rend.material;
         switch (colorType)
@@ -67,6 +75,11 @@ public class SetColorMaterial : MonoBehaviour
             SetFinalColor();
         }
 
+        if (DistantFromTargetCloak())
+        {
+            SetTargetCloak(goActive);
+        }
+
         //destroy light when not active and intensity is small. 
         if (!goActive && luzLight != null)
         {
@@ -79,6 +92,8 @@ public class SetColorMaterial : MonoBehaviour
             }
         }
     }
+
+
 
     void OnTriggerEnter(Collider col)
     {
@@ -115,6 +130,28 @@ public class SetColorMaterial : MonoBehaviour
         }
     }
 
+    void InitializeTargetCloak()
+    {
+        switch (targetIndex)
+        {
+            case TargetIndex.one:
+                WorldMaskManager.Instance.cloak1 = targetCloak;
+                break;
+
+            case TargetIndex.two:
+                WorldMaskManager.Instance.cloak2 = targetCloak;
+                break;
+
+            case TargetIndex.three:
+                WorldMaskManager.Instance.cloak3 = targetCloak;
+                break;
+
+            case TargetIndex.four:
+                WorldMaskManager.Instance.cloak4 = targetCloak;
+                break;
+        }
+    }
+
     void SetColorInRange()
     {
         //change the colors in a range from 0-1 to avoid the colors to sum differently. check also 
@@ -142,6 +179,33 @@ public class SetColorMaterial : MonoBehaviour
             colorsInRange.b = (inactiveColor.b > activeColor.b) ?
                 colorsInRange.b + velocity * Time.deltaTime :
                 colorsInRange.b - velocity * Time.deltaTime;
+        }
+
+    }
+
+    void SetTargetCloak(bool goActive)
+    {
+        if (WorldMaskManager.Instance == null)
+            return;
+
+        targetCloak = goActive ? targetCloak - velocity * Time.deltaTime : targetCloak + velocity * Time.deltaTime;
+        switch (targetIndex)
+        {
+            case TargetIndex.one:
+                WorldMaskManager.Instance.cloak1 = targetCloak;
+                break;
+
+            case TargetIndex.two:
+                WorldMaskManager.Instance.cloak2 = targetCloak;
+                break;
+
+            case TargetIndex.three:
+                WorldMaskManager.Instance.cloak3 = targetCloak;
+                break;
+
+            case TargetIndex.four:
+                WorldMaskManager.Instance.cloak4 = targetCloak;
+                break;
         }
     }
 
@@ -189,6 +253,22 @@ public class SetColorMaterial : MonoBehaviour
             if (Mathf.Abs(actualColor.g - inactiveColor.g) > 0.01f)
                 return true;
             if (Mathf.Abs(actualColor.b - inactiveColor.b) > 0.01f)
+                return true;
+        }
+
+        return false;
+    }
+
+    bool DistantFromTargetCloak()
+    {
+        if (goActive)
+        {
+            if (Mathf.Abs(targetCloak) > 0.01f)
+                return true;
+        }
+        else
+        {
+            if (Mathf.Abs(targetCloak) < 0.99f)
                 return true;
         }
 

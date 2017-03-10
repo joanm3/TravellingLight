@@ -37,9 +37,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4000010589449690}
-  - component: {fileID: 114000012048521962}
   - component: {fileID: 65000013032029822}
-  m_Layer: 0
+  - component: {fileID: 114697815020705636}
+  m_Layer: 14
   m_Name: Standard SnapToGrid
   m_TagString: Untagged
   m_Icon: {fileID: 7882823752137805990, guid: 0000000000000000d000000000000000, type: 0}
@@ -53,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012108770696}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.0048, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4000011833329334}
@@ -67,8 +67,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010682873688}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13, y: 0, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 35.3, y: 0, z: -22.8}
+  m_LocalScale: {x: 4.643714, y: 4.643716, z: 4.643716}
   m_Children: []
   m_Father: {fileID: 4000010589449690}
   m_RootOrder: 0
@@ -121,9 +121,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 13.0048, y: 0, z: 13.004799}
-  m_Center: {x: 6.5024, y: 0, z: 6.5024004}
---- !u!114 &114000012048521962
+  m_Size: {x: 100, y: 0, z: 100}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114697815020705636
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -131,12 +131,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000012108770696}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e23057eb482bfbc44b23f06b621bcc6c, type: 3}
+  m_Script: {fileID: 11500000, guid: e2819eac387c94448aff04b3c8a91f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useChildBoxCollider: {fileID: 0}
-  removeBoxColliderInGame: 0
-  pivot: 0
+  hideUnityHandles: 0
+  autoRectTool: 1
+  snapToGrid: 1
+  gridSize: 512
+  heightGridSize: 128
+  height: 0
+  scaleFactor: 0.0254
+  heightIndex: 0
+  selectedGameObject: {fileID: 0}
+  showGrid: 1
+  sizeColums: 100
+  sizeRows: 100
+  boxCollider: {fileID: 65000013032029822}
+  parentGameObject: {fileID: 0}
 --- !u!114 &114748781264545986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -149,9 +160,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maskShader: {fileID: 4800000, guid: c0b6a36c2dcfba44c959785b389207aa, type: 3}
-  target: {fileID: 0}
   changeDistance: 10
-  cloak: 0
-  waitTimeToChange: 1
+  waitTimeToChange: 0
   timeToCheck: 0.2
-  updateTarget: 1
+  updateTarget: 0
+  target: {fileID: 0}
+  cloak1: 0
+  target2: {fileID: 0}
+  cloak2: 0
+  target3: {fileID: 0}
+  cloak3: 0
+  target4: {fileID: 0}
+  cloak4: 0

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+
 public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 {
     public static void Init(Transform parent = null)
@@ -32,6 +33,8 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
             OnAwake();
         }
     }
+
+
 
     protected virtual void OnAwake()
     {

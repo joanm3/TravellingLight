@@ -48,7 +48,7 @@ Material:
     - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 2800000, guid: 3aeb97c0f2e5f1546b1674aa03f75547, type: 3}
+        m_Texture: {fileID: 2800000, guid: f05549371eb437641adf6caba7e1c3a0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -75,12 +75,24 @@ Material:
       second: 1
     - first:
         name: _ChangePoint
-      second: 8.4
+      second: 10
     - first:
         name: _CircleForce
-      second: 0.55
+      second: 0
+    - first:
+        name: _Clip
+      second: 0
     - first:
         name: _Cloak
+      second: 0
+    - first:
+        name: _Cloak2
+      second: 0
+    - first:
+        name: _Cloak3
+      second: 0
+    - first:
+        name: _Cloak4
       second: 0
     - first:
         name: _Cutoff
@@ -93,7 +105,7 @@ Material:
       second: 0
     - first:
         name: _Expand
-      second: 0.833
+      second: 0
     - first:
         name: _GlossMapScale
       second: 1
@@ -105,7 +117,7 @@ Material:
       second: 1
     - first:
         name: _LineWidth
-      second: 0.303
+      second: 0.29
     - first:
         name: _Metallic
       second: 0
@@ -145,13 +157,22 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _LineColor
-      second: {r: 1, g: 1, b: 1, a: 0}
+      second: {r: 1, g: 1, b: 1, a: 0.309}
     - first:
         name: _NoiseSettings
       second: {r: 1, g: 1, b: 0, a: 0}
     - first:
         name: _NoiseSettings2
-      second: {r: 0.5, g: 2.5, b: 0.5, a: 0}
+      second: {r: 1.47, g: 1.37, b: 0.05, a: 0}
+    - first:
+        name: _TargetPos2
+      second: {r: 11.88, g: 1.9999998, b: 18.03, a: 0}
+    - first:
+        name: _TargetPos3
+      second: {r: 20.1, g: 1.9999998, b: 14.56, a: 0}
+    - first:
+        name: _TargetPos4
+      second: {r: 29.17, g: 1.9999998, b: 21.75, a: 0}
     - first:
         name: _TargetPosition
-      second: {r: -1.83, g: 0, b: 0, a: 1}
+      second: {r: -0.29999977, g: 1.9999998, b: 2.02, a: 0}

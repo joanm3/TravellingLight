@@ -52,13 +52,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1878074767048698}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.04, y: 0, z: 4.21}
+  m_LocalPosition: {x: 0, y: 0, z: 4.21}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4696979849294216}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -26.710001, z: 0}
 --- !u!4 &4696979849294216
 Transform:
   m_ObjectHideFlags: 1
@@ -134,6 +134,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maskShader: {fileID: 4800000, guid: c0b6a36c2dcfba44c959785b389207aa, type: 3}
-  target: {fileID: 0}
   changeDistance: 10
-  cloak: 0
+  waitTimeToChange: 1
+  timeToCheck: 1
+  updateTarget: 1
+  target: {fileID: 0}
+  cloak1: 0
+  target2: {fileID: 0}
+  cloak2: 0
+  target3: {fileID: 0}
+  cloak3: 0
+  target4: {fileID: 0}
+  cloak4: 0

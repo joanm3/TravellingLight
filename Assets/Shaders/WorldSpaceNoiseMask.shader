@@ -9,7 +9,7 @@
 
 			//noise settings
 			_NoiseSettings("Noise settings : scale xy, offset xy", Vector) = (1, 1, 0, 0)
-			_NoiseSettings2("Noise settings gain, frequencyMul, baseWeight, na", Vector) = (0.5, 2.5, 0.5, 0)
+			_NoiseSettings2("Noise settings gain, frequencyMul, baseWeight, na", Vector) = (0.5, 2.5, 0.5)
 
 			//circle properties
 			_CircleForce("Circle Force", Range(0,1)) = 0.25
@@ -22,15 +22,15 @@
 			//outline properties
 			_LineWidth("Line Width", Range(0,1)) = 0.025
 			_LineColor("Line Color (alpha = emission)", Color) = (1,1,1,0)
-			_Color("Color(not applied)", Color) = (1,1,1,1)
-			_Cloak("Hide 1 (1 = hide)", Range(0,1)) = 1
-			_Cloak2("Hide 2 (1 = hide)", Range(0,1)) = 1
-			_Cloak3("Hide 3 (1 = hide)", Range(0,1)) = 1
-			_Cloak4("Hide 4 (1 = hide)", Range(0,1)) = 1
-			_TargetPosition("Target Pos 1", Vector) = (0,0,0)
-			 _TargetPos2("Target Pos 2", Vector) = (0,0,0)
-			 _TargetPos3("Target Pos 3", Vector) = (0,0,0)
-			 _TargetPos4("Target Pos 4", Vector) = (0,0,0)
+			//_Cloak("Hide 1 (1 = hide)", Range(0,1)) = 1
+			//_Cloak2("Hide 2 (1 = hide)", Range(0,1)) = 1
+			//_Cloak3("Hide 3 (1 = hide)", Range(0,1)) = 1
+			//_Cloak4("Hide 4 (1 = hide)", Range(0,1)) = 1
+			//_TargetPosition("Target Pos 1", Vector) = (0,0,0)
+			// _TargetPos2("Target Pos 2", Vector) = (0,0,0)
+			// _TargetPos3("Target Pos 3", Vector) = (0,0,0)
+			// _TargetPos4("Target Pos 4", Vector) = (0,0,0)
+			//_Clip("Clip", Range(0,1)) = 0.025
 	}
 
 		SubShader
@@ -61,7 +61,7 @@
 			uniform float _Cloak4;
 
 			uniform float4 _NoiseSettings;
-			uniform float4 _NoiseSettings2;
+			uniform float3 _NoiseSettings2;
 
 			//radial gradient
 			uniform float4 _CircleColor;
@@ -83,6 +83,7 @@
 			uniform float3 _TargetPos2;
 			uniform float3 _TargetPos3;
 			uniform float3 _TargetPos4;
+			uniform float _Clip;
 
 			struct Input
 			{
@@ -152,25 +153,9 @@
 				//not exactly correct, 
 				float circleLerp = 1 - _CircleForce;
 				float circle = lerp(circleLerp, noise, (r - _Expand) / (1 - _Expand));
-				float maskClip = maskClip = 1 - (postNoise - circle);
+				float maskClip = 1 - (postNoise - circle);
 
-				//if (r < 1.0)
-				//{
-				//	//maskClip = (postNoise - circle);
-				//	//uncomment to show circle
-				//	//float onlyCircle = lerp(circleLerp, 1, (r - _Expand) / (1 - _Expand));
-				//	//o.Albedo = onlyCircle; 
-
-				//	//uncomment to show maskClip
-				//	//o.Albedo = maskClip; 
-				//}
-				//else
-				//{
-				////	//o.Albedo = 1; 
-				//}
-
-				//uncomment to show noise
-				//o.Albedo.rgb = postNoise; 
+				//maskClip =  1 - (postNoise);
 
 
 
@@ -216,7 +201,11 @@
 
 				float multV = 1 - (changeFactor3 * changeFactor2 * changeFactor1 * changeFactor4);
 				float multSum = sumV + multV;
+
+				if (_Clip > 0.5)
+				{
 				clip(multSum);
+				}
 				//clip( multV);
 
 				float4 c = tex2D(_MainTex, IN.uv_MainTex);
@@ -233,7 +222,6 @@
 					o.Emission = _LineColor.a;
 				}
 
-				//o.Emission = _LineColor.a;
 				o.Metallic = _Metallic;
 				o.Smoothness = _Glossiness;
 				o.Alpha = c.a;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class WorldMaskController : MonoBehaviour
 {
     public Shader maskShader;
@@ -9,12 +10,10 @@ public class WorldMaskController : MonoBehaviour
     public bool waitTimeToChange = true;
     public float timeToCheck = 1f;
     public bool updateTarget = true;
-
-    private Material maskMaterial;
-    private float timeLeft = 1f;
+    [Header("Forest")]
     public Transform target;
     [Range(0, 1)]
-    public float cloak;
+    public float cloak1;
     public Transform target2;
     [Range(0, 1)]
     public float cloak2;
@@ -24,7 +23,10 @@ public class WorldMaskController : MonoBehaviour
     public Transform target4;
     [Range(0, 1)]
     public float cloak4;
-    // Use this for initialization
+    private Material maskMaterial;
+    private float timeLeft = 1f;
+
+
     void Start()
     {
 
@@ -38,26 +40,47 @@ public class WorldMaskController : MonoBehaviour
             }
         }
 
-        maskMaterial = GetComponent<MeshRenderer>().material;
+        maskMaterial = (Application.isPlaying) ? GetComponent<MeshRenderer>().material : GetComponent<MeshRenderer>().sharedMaterial;
         if (!maskMaterial.shader.Equals(maskShader))
         {
             Debug.LogError("shader is not correct for " + name + ", please assign " + maskShader.name);
             Destroy(this);
         }
-        //target = GameObject.FindGameObjectWithTag("WorldTarget").transform;
-        //target2 = target;
-        //target3 = target;
-        //target4 = target;
+
+        if (Application.isPlaying)
+        {
+            maskMaterial.SetFloat("_Clip", 1f);
+        }
+
+        UpdateGlobalVariables();
+        UpdateCloaks();
         UpdateTargetsDone();
-        UpdateUniforms();
-        //UpdateTargets();
-        // Debug.Log(target);
+        UpdateTargetUniforms();
+
     }
 
 
     void Update()
     {
-        UpdateUniforms();
+        if (!Application.isPlaying)
+        {
+            UpdateGlobalVariables();
+            if (WorldMaskManager.Instance.showHidden)
+            {
+                maskMaterial.SetFloat("_Clip", 0f);
+            }
+            else
+            {
+                maskMaterial.SetFloat("_Clip", 1f);
+
+            }
+        }
+
+        UpdateCloaks();
+        UpdateTargetsDone();
+        UpdateTargetUniforms();
+
+
 
         if (!updateTarget)
             return;
@@ -67,20 +90,22 @@ public class WorldMaskController : MonoBehaviour
             timeLeft -= Time.deltaTime;
             if (timeLeft < 0)
             {
-                //UpdateTargetsDone();
+                UpdateTargetsDone();
                 timeLeft = Mathf.Abs(timeToCheck);
             }
         }
         else
         {
-            //UpdateTargets();
+            UpdateTargetsDone();
         }
     }
 
     // Update is called once per frame
-    void UpdateUniforms()
+    void UpdateTargetUniforms()
     {
-        maskMaterial.SetFloat("_Cloak", cloak);
+        if (maskMaterial == null)
+            return;
+
         maskMaterial.SetFloat("_ChangePoint", changeDistance);
         maskMaterial.SetVector("_TargetPosition", target.position);
         maskMaterial.SetVector("_TargetPos2", target2.position);
@@ -89,8 +114,38 @@ public class WorldMaskController : MonoBehaviour
 
     }
 
+    void UpdateGlobalVariables()
+    {
+        maskMaterial.SetVector("_NoiseSettings2", WorldMaskManager.Instance.worldMaskGlobalVariables.NoiseSettings);
+        maskMaterial.SetVector("_LineColor", WorldMaskManager.Instance.worldMaskGlobalVariables.LineColor);
+        maskMaterial.SetFloat("_CircleForce", WorldMaskManager.Instance.worldMaskGlobalVariables.CircleForce);
+        maskMaterial.SetFloat("_Expand", WorldMaskManager.Instance.worldMaskGlobalVariables.InnerExpand);
+    }
+
+    void UpdateCloaks()
+    {
+        if (WorldMaskManager.Instance == null)
+            return;
+
+        cloak1 = WorldMaskManager.Instance.cloak1;
+        cloak2 = WorldMaskManager.Instance.cloak2;
+        cloak3 = WorldMaskManager.Instance.cloak3;
+        cloak4 = WorldMaskManager.Instance.cloak4;
+
+        if (maskMaterial == null)
+            return;
+
+        maskMaterial.SetFloat("_Cloak", cloak1);
+        maskMaterial.SetFloat("_Cloak2", cloak2);
+        maskMaterial.SetFloat("_Cloak3", cloak3);
+        maskMaterial.SetFloat("_Cloak4", cloak4);
+    }
+
     void UpdateTargetsDone()
     {
+        if (WorldMaskManager.Instance == null)
+            return;
+
         target = WorldMaskManager.Instance.target1;
         target2 = WorldMaskManager.Instance.target2;
         target3 = WorldMaskManager.Instance.target3;
@@ -98,34 +153,33 @@ public class WorldMaskController : MonoBehaviour
 
     }
 
-    void UpdateTargets()
-    {
-        //try to find a way where i dont have to loop at every frame (start a coroutine or wait for time better at least). 
-        if (WorldMaskManager.Instance != null)
-        {
-            UpdateTarget(ref target, 1);
-            UpdateTarget(ref target2, 2);
-            UpdateTarget(ref target3, 3);
-            UpdateTarget(ref target4, 4);
+    //void UpdateTargets()
+    //{
+    //    //try to find a way where i dont have to loop at every frame (start a coroutine or wait for time better at least). 
+    //    if (WorldMaskManager.Instance != null)
+    //    {
+    //        UpdateTarget(ref target, 1);
+    //        UpdateTarget(ref target2, 2);
+    //        UpdateTarget(ref target3, 3);
+    //        UpdateTarget(ref target4, 4);
+    //    }
+    //}
 
-        }
-    }
 
-
-    void UpdateTarget(ref Transform target, int index)
-    {
-        if (WorldMaskManager.Instance.targets.Count > index - 1)
-        {
-            float distance = Vector3.Distance(transform.position, target.position);
-            for (int i = 0; i < WorldMaskManager.Instance.targets.Count; i++)
-            {
-                if (Vector3.Distance(transform.position, WorldMaskManager.Instance.targets[i].transform.position) < distance)
-                {
-                    target = WorldMaskManager.Instance.targets[i].transform;
-                    distance = Vector3.Distance(transform.position, WorldMaskManager.Instance.targets[i].transform.position);
-                }
-            }
-        }
-    }
+    //void UpdateTarget(ref Transform target, int index)
+    //{
+    //    if (WorldMaskManager.Instance.targets.Count > index - 1)
+    //    {
+    //        float distance = Vector3.Distance(transform.position, target.position);
+    //        for (int i = 0; i < WorldMaskManager.Instance.targets.Count; i++)
+    //        {
+    //            if (Vector3.Distance(transform.position, WorldMaskManager.Instance.targets[i].transform.position) < distance)
+    //            {
+    //                target = WorldMaskManager.Instance.targets[i].transform;
+    //                distance = Vector3.Distance(transform.position, WorldMaskManager.Instance.targets[i].transform.position);
+    //            }
+    //        }
+    //    }
+    //}
 
 }
