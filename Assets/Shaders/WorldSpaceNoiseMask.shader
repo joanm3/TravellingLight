@@ -188,21 +188,25 @@
 				float changeFactor3 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDis3 - _ChangePoint));
 				float changeFactor4 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDis4 - _ChangePoint));
 				float changeFactor = changeFactor1  * changeFactor2 * changeFactor3 * changeFactor4;
+				//changeFactor = clamp(changeFactor, 0, 1.);
 
 				float clipValue = 1. - changeFactor;
 
 
 				//hides pixels with value smaller than 0
 				//clip((maskClip - _Cloak - (1 - changeFactor)));
-				//clip(clipValue);
 
 
 				//*********************ASSIGN****************************//
+				float sumV = 1 - (changeFactor3 + changeFactor2 + changeFactor1 + changeFactor4);
+				float multV = 1 - (changeFactor3 * changeFactor2 * changeFactor1 * changeFactor4);
+				clip(sumV + multV);
+
 				float4 c = tex2D(_MainTex, IN.uv_MainTex);
 				o.Albedo = c.rgb;
-				o.Albedo.r = 1. - changeFactor3;
-				o.Albedo.g = 1. - changeFactor2;
-				o.Albedo.b = 1. - changeFactor1;
+				//o.Albedo.r = sumV; 
+				//o.Albedo.g = multV;
+				//o.Albedo.b = sumV + multV; 
 
 
 				if (changeFactor > 1. - _LineWidth)
