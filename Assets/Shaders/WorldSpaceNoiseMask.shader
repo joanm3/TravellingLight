@@ -220,11 +220,11 @@
 
 
 
-				//if (_LineWidth * 5 > 1 - changeFactor1)
-				//{
-				//	o.Albedo = c.rgb * _LineColor.rgb;
-				//	o.Emission = _LineColor.a;
-				//}
+				if (1 - _LineWidth < 1 - multSum)
+				{
+					o.Albedo = c.rgb * _LineColor.rgb;
+					o.Emission = _LineColor.a;
+				}
 
 				//o.Emission = _LineColor.a;
 				o.Metallic = _Metallic;
