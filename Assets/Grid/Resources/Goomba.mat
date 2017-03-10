@@ -75,10 +75,10 @@ Material:
       second: 1
     - first:
         name: _ChangePoint
-      second: -1.83
+      second: 8.28
     - first:
         name: _CircleForce
-      second: 1
+      second: 0
     - first:
         name: _Cloak
       second: 0
@@ -93,19 +93,19 @@ Material:
       second: 0
     - first:
         name: _Expand
-      second: 0.933
+      second: 0
     - first:
         name: _GlossMapScale
       second: 1
     - first:
         name: _Glossiness
-      second: 0.218
+      second: 0
     - first:
         name: _GlossyReflections
       second: 1
     - first:
         name: _LineWidth
-      second: 0
+      second: 1
     - first:
         name: _Metallic
       second: 0
@@ -120,7 +120,7 @@ Material:
       second: 0.02
     - first:
         name: _Radius
-      second: 1
+      second: 2.02
     - first:
         name: _SmoothnessTextureChannel
       second: 0
@@ -139,28 +139,28 @@ Material:
     m_Colors:
     - first:
         name: _Color
-      second: {r: 1, g: 0.85294116, b: 0.85294116, a: 1}
+      second: {r: 0.297, g: 1, b: 1, a: 1}
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _LineColor
-      second: {r: 0, g: 1, b: 0.5862069, a: 1}
+      second: {r: 0, g: 1, b: 0.5862069, a: 0}
     - first:
         name: _NoiseSettings
       second: {r: 2.48, g: 2.71, b: 0, a: 1}
     - first:
         name: _NoiseSettings2
-      second: {r: 1.26, g: 1.11, b: 0.09, a: 1.43}
+      second: {r: 1.49, g: 1.62, b: 0.05, a: 1.43}
     - first:
         name: _TargetPos2
-      second: {r: 0, g: 0, b: 16, a: 1}
+      second: {r: -10.93, g: 0, b: 0, a: 1}
     - first:
         name: _TargetPos3
-      second: {r: 0, g: 0, b: 9.75, a: 1}
+      second: {r: 24.03, g: 0, b: 0, a: 1}
     - first:
         name: _TargetPos4
-      second: {r: 0, g: 0, b: -9.7, a: 1}
+      second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _TargetPosition
-      second: {r: 5, g: 0, b: 13.12, a: 1}
+      second: {r: 12.29, g: 0, b: 0, a: 1}

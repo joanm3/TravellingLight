@@ -187,6 +187,13 @@
 				float changeFactor2 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDis2 - _ChangePoint));
 				float changeFactor3 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDis3 - _ChangePoint));
 				float changeFactor4 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDis4 - _ChangePoint));
+
+				changeFactor1 = clamp(changeFactor1, -1, 1);
+				changeFactor2 = clamp(changeFactor2, -1, 1);
+				changeFactor3 = clamp(changeFactor3, -1, 1);
+				changeFactor4 = clamp(changeFactor4, -1, 1);
+
+
 				float changeFactor = changeFactor1  * changeFactor2 * changeFactor3 * changeFactor4;
 				//changeFactor = clamp(changeFactor, 0, 1.);
 
@@ -199,8 +206,11 @@
 
 				//*********************ASSIGN****************************//
 				float sumV = 1 - (changeFactor3 + changeFactor2 + changeFactor1 + changeFactor4);
+
 				float multV = 1 - (changeFactor3 * changeFactor2 * changeFactor1 * changeFactor4);
-				clip(sumV + multV);
+				float multSum = sumV + multV;
+				clip(multSum);
+				//clip( multV);
 
 				float4 c = tex2D(_MainTex, IN.uv_MainTex);
 				o.Albedo = c.rgb;
@@ -209,11 +219,12 @@
 				//o.Albedo.b = sumV + multV; 
 
 
-				if (changeFactor > 1. - _LineWidth)
-				{
-					//o.Albedo = c.rgb * _LineColor.rgb;
-					//o.Emission = _LineColor.a;
-				}
+
+				//if (_LineWidth * 5 > 1 - changeFactor1)
+				//{
+				//	o.Albedo = c.rgb * _LineColor.rgb;
+				//	o.Emission = _LineColor.a;
+				//}
 
 				//o.Emission = _LineColor.a;
 				o.Metallic = _Metallic;
