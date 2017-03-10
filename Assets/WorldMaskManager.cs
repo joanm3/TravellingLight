@@ -10,6 +10,7 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
     public WorldMaskVariables worldMaskGlobalVariables = new WorldMaskVariables();
     public bool showHidden = true;
 
+    [Header("Forest")]
     public Transform target1;
     [Range(0, 1)]
     public float cloak1;
@@ -22,6 +23,20 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
     public Transform target4;
     [Range(0, 1)]
     public float cloak4;
+
+    [Header("City")]
+    public Transform targetA;
+    [Range(0, 1)]
+    public float cloakA;
+    public Transform targetB;
+    [Range(0, 1)]
+    public float cloakB;
+    public Transform targetC;
+    [Range(0, 1)]
+    public float cloakC;
+    public Transform targetD;
+    [Range(0, 1)]
+    public float cloakD;
 
 
     void OnEnable()

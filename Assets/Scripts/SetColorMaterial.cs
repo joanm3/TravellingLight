@@ -4,7 +4,8 @@ using ProjectLight.Functions;
 [RequireComponent(typeof(Renderer))]
 public class SetColorMaterial : MonoBehaviour
 {
-
+    public enum WorldType { Forest, City };
+    public WorldType worldType = WorldType.Forest;
     public enum TargetIndex { one = 1, two = 2, three = 3, four = 4 };
     public enum ColorType { Albedo, Emission };
     public TargetIndex targetIndex = TargetIndex.one;
@@ -43,7 +44,7 @@ public class SetColorMaterial : MonoBehaviour
     {
         goActive = false;
         targetCloak = 1f;
-        InitializeTargetCloak(); 
+        UpdateTargetCloak();
 
         rend = GetComponent<Renderer>();
         mat = rend.material;
@@ -130,24 +131,50 @@ public class SetColorMaterial : MonoBehaviour
         }
     }
 
-    void InitializeTargetCloak()
+    void UpdateTargetCloak()
     {
-        switch (targetIndex)
+        switch (worldType)
         {
-            case TargetIndex.one:
-                WorldMaskManager.Instance.cloak1 = targetCloak;
+            case WorldType.Forest:
+                switch (targetIndex)
+                {
+                    case TargetIndex.one:
+                        WorldMaskManager.Instance.cloak1 = targetCloak;
+                        break;
+
+                    case TargetIndex.two:
+                        WorldMaskManager.Instance.cloak2 = targetCloak;
+                        break;
+
+                    case TargetIndex.three:
+                        WorldMaskManager.Instance.cloak3 = targetCloak;
+                        break;
+
+                    case TargetIndex.four:
+                        WorldMaskManager.Instance.cloak4 = targetCloak;
+                        break;
+                }
                 break;
 
-            case TargetIndex.two:
-                WorldMaskManager.Instance.cloak2 = targetCloak;
-                break;
+            case WorldType.City:
+                switch (targetIndex)
+                {
+                    case TargetIndex.one:
+                        WorldMaskManager.Instance.cloakA = targetCloak;
+                        break;
 
-            case TargetIndex.three:
-                WorldMaskManager.Instance.cloak3 = targetCloak;
-                break;
+                    case TargetIndex.two:
+                        WorldMaskManager.Instance.cloakB = targetCloak;
+                        break;
 
-            case TargetIndex.four:
-                WorldMaskManager.Instance.cloak4 = targetCloak;
+                    case TargetIndex.three:
+                        WorldMaskManager.Instance.cloakC = targetCloak;
+                        break;
+
+                    case TargetIndex.four:
+                        WorldMaskManager.Instance.cloakD = targetCloak;
+                        break;
+                }
                 break;
         }
     }
@@ -189,24 +216,8 @@ public class SetColorMaterial : MonoBehaviour
             return;
 
         targetCloak = goActive ? targetCloak - velocity * Time.deltaTime : targetCloak + velocity * Time.deltaTime;
-        switch (targetIndex)
-        {
-            case TargetIndex.one:
-                WorldMaskManager.Instance.cloak1 = targetCloak;
-                break;
+        UpdateTargetCloak();
 
-            case TargetIndex.two:
-                WorldMaskManager.Instance.cloak2 = targetCloak;
-                break;
-
-            case TargetIndex.three:
-                WorldMaskManager.Instance.cloak3 = targetCloak;
-                break;
-
-            case TargetIndex.four:
-                WorldMaskManager.Instance.cloak4 = targetCloak;
-                break;
-        }
     }
 
 

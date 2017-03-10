@@ -31,6 +31,7 @@
 			// _TargetPos3("Target Pos 3", Vector) = (0,0,0)
 			// _TargetPos4("Target Pos 4", Vector) = (0,0,0)
 			//_Clip("Clip", Range(0,1)) = 0.025
+			_Invert("Invert", Range(0,1)) = 0.
 	}
 
 		SubShader
@@ -84,6 +85,7 @@
 			uniform float3 _TargetPos3;
 			uniform float3 _TargetPos4;
 			uniform float _Clip;
+			uniform float _Invert;
 
 			struct Input
 			{
@@ -155,10 +157,6 @@
 				float circle = lerp(circleLerp, noise, (r - _Expand) / (1 - _Expand));
 				float maskClip = 1 - (postNoise - circle);
 
-				//maskClip =  1 - (postNoise);
-
-
-
 				//***************************DISTANCE*********************//
 
 				//with target
@@ -185,26 +183,21 @@
 				changeFactor3 = clamp(changeFactor3, -1, 1);
 				changeFactor4 = clamp(changeFactor4, -1, 1);
 
-
-				float changeFactor = changeFactor1  * changeFactor2 * changeFactor3 * changeFactor4;
-				//changeFactor = clamp(changeFactor, 0, 1.);
-
-				float clipValue = 1. - changeFactor;
-
-
-				//hides pixels with value smaller than 0
-				//clip((maskClip - _Cloak - (1 - changeFactor)));
-
-
 				//*********************ASSIGN****************************//
 				float sumV = 1 - (changeFactor3 + changeFactor2 + changeFactor1 + changeFactor4);
 
 				float multV = 1 - (changeFactor3 * changeFactor2 * changeFactor1 * changeFactor4);
 				float multSum = sumV + multV;
-
-				if (_Clip > 0.5)
+				if (_Invert > 0.5)
 				{
-				clip(multSum);
+					multSum = 1 - (sumV + multV); 
+				}
+
+
+				//find anotherway to clip this. 
+				if (_Clip > 0.5 && _Invert < 0.5)
+				{
+					clip(multSum);
 				}
 				//clip( multV);
 
@@ -215,11 +208,19 @@
 				//o.Albedo.b = sumV + multV; 
 
 
-
+				//find anotherway to clip this. 
 				if (1 - _LineWidth < 1 - multSum)
 				{
-					o.Albedo = c.rgb * _LineColor.rgb;
-					o.Emission = _LineColor.a;
+					if (_Invert > 0.49)
+					{
+						clip(-1); 
+					}
+					else
+					{
+						o.Albedo = c.rgb * _LineColor.rgb;
+						o.Emission = _LineColor.a;
+					}
+
 				}
 
 				o.Metallic = _Metallic;

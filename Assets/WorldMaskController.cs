@@ -5,12 +5,17 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class WorldMaskController : MonoBehaviour
 {
+    
+    public enum WorldType { Forest, City };
+    public WorldType worldType = WorldType.Forest;
     public Shader maskShader;
     public float changeDistance = 10f;
     public bool waitTimeToChange = true;
     public float timeToCheck = 1f;
     public bool updateTarget = true;
-    [Header("Forest")]
+
+
+
     public Transform target;
     [Range(0, 1)]
     public float cloak1;
@@ -107,6 +112,7 @@ public class WorldMaskController : MonoBehaviour
             return;
 
         maskMaterial.SetFloat("_ChangePoint", changeDistance);
+
         maskMaterial.SetVector("_TargetPosition", target.position);
         maskMaterial.SetVector("_TargetPos2", target2.position);
         maskMaterial.SetVector("_TargetPos3", target3.position);
@@ -127,10 +133,21 @@ public class WorldMaskController : MonoBehaviour
         if (WorldMaskManager.Instance == null)
             return;
 
-        cloak1 = WorldMaskManager.Instance.cloak1;
-        cloak2 = WorldMaskManager.Instance.cloak2;
-        cloak3 = WorldMaskManager.Instance.cloak3;
-        cloak4 = WorldMaskManager.Instance.cloak4;
+        switch (worldType)
+        {
+            case WorldType.Forest:
+                cloak1 = WorldMaskManager.Instance.cloak1;
+                cloak2 = WorldMaskManager.Instance.cloak2;
+                cloak3 = WorldMaskManager.Instance.cloak3;
+                cloak4 = WorldMaskManager.Instance.cloak4;
+                break;
+            case WorldType.City:
+                cloak1 = WorldMaskManager.Instance.cloakA;
+                cloak2 = WorldMaskManager.Instance.cloakB;
+                cloak3 = WorldMaskManager.Instance.cloakC;
+                cloak4 = WorldMaskManager.Instance.cloakD;
+                break;
+        }
 
         if (maskMaterial == null)
             return;
@@ -146,40 +163,22 @@ public class WorldMaskController : MonoBehaviour
         if (WorldMaskManager.Instance == null)
             return;
 
-        target = WorldMaskManager.Instance.target1;
-        target2 = WorldMaskManager.Instance.target2;
-        target3 = WorldMaskManager.Instance.target3;
-        target4 = WorldMaskManager.Instance.target4;
+        switch (worldType)
+        {
+            case WorldType.Forest:
+                target = WorldMaskManager.Instance.target1;
+                target2 = WorldMaskManager.Instance.target2;
+                target3 = WorldMaskManager.Instance.target3;
+                target4 = WorldMaskManager.Instance.target4;
+                break;
+            case WorldType.City:
+                target = WorldMaskManager.Instance.targetA;
+                target2 = WorldMaskManager.Instance.targetB;
+                target3 = WorldMaskManager.Instance.targetC;
+                target4 = WorldMaskManager.Instance.targetD;
+                break;
+        }
 
     }
-
-    //void UpdateTargets()
-    //{
-    //    //try to find a way where i dont have to loop at every frame (start a coroutine or wait for time better at least). 
-    //    if (WorldMaskManager.Instance != null)
-    //    {
-    //        UpdateTarget(ref target, 1);
-    //        UpdateTarget(ref target2, 2);
-    //        UpdateTarget(ref target3, 3);
-    //        UpdateTarget(ref target4, 4);
-    //    }
-    //}
-
-
-    //void UpdateTarget(ref Transform target, int index)
-    //{
-    //    if (WorldMaskManager.Instance.targets.Count > index - 1)
-    //    {
-    //        float distance = Vector3.Distance(transform.position, target.position);
-    //        for (int i = 0; i < WorldMaskManager.Instance.targets.Count; i++)
-    //        {
-    //            if (Vector3.Distance(transform.position, WorldMaskManager.Instance.targets[i].transform.position) < distance)
-    //            {
-    //                target = WorldMaskManager.Instance.targets[i].transform;
-    //                distance = Vector3.Distance(transform.position, WorldMaskManager.Instance.targets[i].transform.position);
-    //            }
-    //        }
-    //    }
-    //}
 
 }

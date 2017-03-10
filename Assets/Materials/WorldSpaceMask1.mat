@@ -116,6 +116,9 @@ Material:
         name: _GlossyReflections
       second: 1
     - first:
+        name: _Invert
+      second: 0
+    - first:
         name: _LineWidth
       second: 0.29
     - first:
@@ -169,10 +172,10 @@ Material:
       second: {r: 11.88, g: 1.9999998, b: 18.03, a: 0}
     - first:
         name: _TargetPos3
-      second: {r: 20.1, g: 1.9999998, b: 14.56, a: 0}
+      second: {r: -8.1, g: 1.9999998, b: 30.37, a: 0}
     - first:
         name: _TargetPos4
       second: {r: 29.17, g: 1.9999998, b: 21.75, a: 0}
     - first:
         name: _TargetPosition
-      second: {r: -0.29999977, g: 1.9999998, b: 2.02, a: 0}
+      second: {r: 4.1900005, g: 1.9999998, b: 1.77, a: 0}

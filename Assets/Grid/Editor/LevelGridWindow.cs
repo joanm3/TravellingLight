@@ -154,8 +154,6 @@ public class LevelGridWindow : EditorWindow
         }
 
         GUIStyle _foldout = EditorStyles.foldout;
-        _foldout.font = (Font)Resources.Load("CalligraphyFLF");
-        _foldout.fontSize = 24;
         _showControls = EditorGUILayout.Foldout(_showControls, "Controls", _foldout);
         EditorGUILayout.Space();
         if (_showControls)

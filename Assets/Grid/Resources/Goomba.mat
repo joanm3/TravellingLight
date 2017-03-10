@@ -75,7 +75,7 @@ Material:
       second: 1
     - first:
         name: _ChangePoint
-      second: 8.28
+      second: 10
     - first:
         name: _CircleForce
       second: 0
@@ -112,6 +112,9 @@ Material:
     - first:
         name: _GlossyReflections
       second: 1
+    - first:
+        name: _Invert
+      second: 0
     - first:
         name: _LineWidth
       second: 0.87
@@ -154,22 +157,22 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _LineColor
-      second: {r: 1, g: 1, b: 1, a: 0.272}
+      second: {r: 1, g: 1, b: 1, a: 0.309}
     - first:
         name: _NoiseSettings
       second: {r: 2.48, g: 2.71, b: 0, a: 1}
     - first:
         name: _NoiseSettings2
-      second: {r: 1.71, g: 1.37, b: 0.05, a: 1.43}
+      second: {r: 1.47, g: 1.37, b: 0.05, a: 0}
     - first:
         name: _TargetPos2
-      second: {r: -10.93, g: 0, b: 0, a: 1}
+      second: {r: 11.88, g: 1.9999998, b: 18.03, a: 0}
     - first:
         name: _TargetPos3
-      second: {r: 24.03, g: 0, b: 0, a: 1}
+      second: {r: -8.1, g: 1.9999998, b: 30.37, a: 0}
     - first:
         name: _TargetPos4
-      second: {r: 0, g: 0, b: 0, a: 1}
+      second: {r: 29.17, g: 1.9999998, b: 21.75, a: 0}
     - first:
         name: _TargetPosition
-      second: {r: 12.29, g: 0, b: 0, a: 1}
+      second: {r: 4.1900005, g: 1.9999998, b: 1.77, a: 0}
