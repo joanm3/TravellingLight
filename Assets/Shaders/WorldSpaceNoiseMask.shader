@@ -51,6 +51,12 @@
 			#pragma target 4.0
 			#include "Assets/Shaders/Include/snoise.cginc"
 
+			//#define count 36
+			uniform float table[100];
+			//always smaller than 100
+			uniform int length;
+			//other option = texture; 
+
 			uniform sampler2D _MainTex;
 			uniform float _Glossiness;
 			uniform float _Metallic;
@@ -85,7 +91,7 @@
 			uniform float3 _TargetPos3;
 			uniform float3 _TargetPos4;
 			uniform float _Clip;
-			uniform float _Invert;
+			uniform int _Invert;
 
 			struct Input
 			{
@@ -148,14 +154,12 @@
 				//************************CIRCLE SCREEN*********************//
 				//float2 centerFromSfml = float2(0.5, _WindowHeight + 0.5);
 				float2 centerFromSfml = float2(0.5, 0.5);
-
 				float2 p = (screenUV.xy - centerFromSfml) / _Radius;
 				float r = sqrt(dot(p, p));
-
-				//not exactly correct, 
 				float circleLerp = 1 - _CircleForce;
 				float circle = lerp(circleLerp, noise, (r - _Expand) / (1 - _Expand));
 				float maskClip = 1 - (postNoise - circle);
+				
 
 				//***************************DISTANCE*********************//
 
@@ -185,47 +189,23 @@
 
 				//*********************ASSIGN****************************//
 				float sumV = 1 - (changeFactor3 + changeFactor2 + changeFactor1 + changeFactor4);
-
 				float multV = 1 - (changeFactor3 * changeFactor2 * changeFactor1 * changeFactor4);
 				float multSum = sumV + multV;
-				if (_Invert > 0.5)
-				{
-					multSum = 1 - (sumV + multV); 
-				}
+				float inverse = 1 - multSum;
+				float clipValue = lerp(multSum, inverse, _Invert);
+				clipValue = lerp(1, clipValue, _Clip);
+				clip(clipValue);
 
-
-				//find anotherway to clip this. 
-				if (_Clip > 0.5 && _Invert < 0.5)
-				{
-					clip(multSum);
-				}
-				//clip( multV);
-
+				//*********************TEXTURE****************************//
 				float4 c = tex2D(_MainTex, IN.uv_MainTex);
 				o.Albedo = c.rgb;
-				//o.Albedo.r = sumV; 
-				//o.Albedo.g = multV;
-				//o.Albedo.b = sumV + multV; 
-
-
-				//find anotherway to clip this. 
-				if (1 - _LineWidth < 1 - multSum)
-				{
-					if (_Invert > 0.49)
-					{
-						clip(-1); 
-					}
-					else
-					{
-						o.Albedo = c.rgb * _LineColor.rgb;
-						o.Emission = _LineColor.a;
-					}
-
-				}
-
+				float shouldLine = step(1 - _LineWidth, 1 - multSum); 				
+				o.Albedo = lerp(o.Albedo, c.rgb * _LineColor.rgb, shouldLine);
+				o.Emission = lerp(o.Emission, _LineColor.a, shouldLine);		
 				o.Metallic = _Metallic;
 				o.Smoothness = _Glossiness;
 				o.Alpha = c.a;
+
 			}
 			ENDCG
 		}
