@@ -49,6 +49,7 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
     int oldForestCount;
     int oldCityCount;
+    Shader maskShader;
 
 
     void OnEnable()
@@ -60,6 +61,19 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
         oldForestCount = forestTargets.Count;
         oldCityCount = cityTargets.Count;
+        maskShader = Shader.Find("Custom/WorldSpaceNoiseMask");
+
+
+        if (Application.isPlaying)
+        {
+
+            for (int i = 0; i < forestTargets.Count; i++)
+            {
+                forestTargets[i].maskMaterial.SetFloat("_Clip", 1f);
+            }
+            //maskMaterial.SetFloat("_Clip", 1f);
+        }
+
     }
 
     void Update()
@@ -101,14 +115,21 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
         {
             for (int i = oldCount; i < targets.Count; i++)
             {
-
-
                 targets[i].target = (!Application.isPlaying) ? (GameObject)PrefabUtility.InstantiatePrefab(prefab) : Instantiate(prefab);
                 targets[i].target.transform.parent = this.transform;
                 targets[i].target.transform.position = new Vector3(0f, standardHeight, 0f);
                 targets[i].target.transform.rotation = Quaternion.identity;
                 targets[i].target.name = prefab.name + "_" + (i + 1).ToString();
                 targets[i].cloak = 0f;
+                //I THINK BETTER TO USE ONLY SHARED MATERIAL FOR ALL OF THEM NO NEED TO MULTIPLY. 
+                targets[i].maskMaterial = (Application.isPlaying) ? GetComponent<MeshRenderer>().material : GetComponent<MeshRenderer>().sharedMaterial;
+                if (targets[i].maskMaterial == null)
+                    targets[i].maskMaterial = (Application.isPlaying) ? GetComponentInChildren<MeshRenderer>().material : GetComponentInChildren<MeshRenderer>().sharedMaterial;
+
+                if (!targets[i].maskMaterial.shader.Equals(maskShader))
+                {
+                    Debug.LogError("shader is not correct for " + name + ", please assign " + maskShader.name);
+                }
 
             }
         }
@@ -158,5 +179,5 @@ public class WorldTarget
     [Range(0, 1)]
     public float cloak = 0f;
     [HideInInspector]
-    public Material material;
+    public Material maskMaterial;
 }
