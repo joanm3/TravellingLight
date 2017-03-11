@@ -1,14 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [ExecuteInEditMode]
 public class WorldMaskManager : Singleton<WorldMaskManager>
 {
-    //public List<GameObject> targets = new List<GameObject>();
-
     public WorldMaskVariables worldMaskGlobalVariables = new WorldMaskVariables();
     public bool showHidden = true;
+    public float standardHeight = 5f;
+
+    [Header("Forest")]
+    public GameObject forestPrefab;
+    public List<WorldTarget> forestTargets = new List<WorldTarget>();
+
+    [Header("City")]
+    public GameObject cityPrefab;
+    public List<WorldTarget> cityTargets = new List<WorldTarget>();
+
 
     [Header("Forest")]
     public Transform target1;
@@ -38,6 +47,9 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
     [Range(0, 1)]
     public float cloakD;
 
+    int oldForestCount;
+    int oldCityCount;
+
 
     void OnEnable()
     {
@@ -45,23 +57,86 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
         {
             Init();
         }
+
+        oldForestCount = forestTargets.Count;
+        oldCityCount = cityTargets.Count;
     }
 
-    //// Use this for initialization
-    //override protected void OnAwake()
-    //{
-    //    GameObject[] _targets = GameObject.FindGameObjectsWithTag("WorldTarget");
-    //    for (int i = 0; i < _targets.Length; i++)
-    //    {
-    //        targets.Add(_targets[i]);
-    //    }
-    //}
+    void Update()
+    {
+        UpdateList(ref forestTargets, ref oldForestCount, forestPrefab);
+        UpdateList(ref cityTargets, ref oldCityCount, cityPrefab);
 
-    //// Update is called once per frame
-    //void Update()
-    //{
 
-    //}
+        //if (oldForestCount < forestTargets.Count)
+        //{
+        //    for (int i = oldForestCount; i < forestTargets.Count; i++)
+        //    {
+        //        forestTargets[i].target = Instantiate(forestPrefab, transform);
+        //        forestTargets[i].target.transform.position = new Vector3(0f, standardHeight, 0f);
+        //        forestTargets[i].target.transform.rotation = Quaternion.identity;
+        //        forestTargets[i].target.name = forestPrefab.name + "_" + (i + 1).ToString();
+        //        forestTargets[i].cloak = 0f;
+        //    }
+        //}
+        //else if (oldForestCount > forestTargets.Count)
+        //{
+        //    Debug.Log("reading list");
+
+        //    List<GameObject> toDelete = FindAllInstances(forestPrefab, oldForestCount, forestTargets.Count);
+        //    for (int i = 0; i < toDelete.Count; i++)
+        //    {
+        //        //put it to a pool later on better. 
+        //        DestroyImmediate(toDelete[i]);
+        //    }
+        //}
+        //oldForestCount = forestTargets.Count;
+
+    }
+
+
+    void UpdateList(ref List<WorldTarget> targets, ref int oldCount, GameObject prefab)
+    {
+        if (oldCount < targets.Count)
+        {
+            for (int i = oldCount; i < targets.Count; i++)
+            {
+
+
+                targets[i].target = (!Application.isPlaying) ? (GameObject)PrefabUtility.InstantiatePrefab(prefab) : Instantiate(prefab);
+                targets[i].target.transform.parent = this.transform;
+                targets[i].target.transform.position = new Vector3(0f, standardHeight, 0f);
+                targets[i].target.transform.rotation = Quaternion.identity;
+                targets[i].target.name = prefab.name + "_" + (i + 1).ToString();
+                targets[i].cloak = 0f;
+
+            }
+        }
+        else if (oldForestCount > targets.Count)
+        {
+            List<GameObject> toDelete = FindAllInstances(prefab, oldCount, targets.Count);
+            for (int i = 0; i < toDelete.Count; i++)
+            {
+                //put it to a pool later on better. 
+                DestroyImmediate(toDelete[i]);
+            }
+        }
+        oldCount = targets.Count;
+    }
+
+    List<GameObject> FindAllInstances(GameObject myPrefab, int oldLength, int newLength)
+    {
+        List<GameObject> result = new List<GameObject>();
+        for (int i = oldLength; i > newLength; i--)
+        {
+            GameObject obj = GameObject.Find(myPrefab.name + "_" + i) as GameObject;
+            if (obj != null)
+            {
+                result.Add(obj);
+            }
+        }
+        return result;
+    }
 }
 
 [System.Serializable]
@@ -69,9 +144,19 @@ public class WorldMaskVariables
 {
     public Vector3 NoiseSettings;
     public Color LineColor;
-    [Range(0,1)]
+    [Range(0, 1)]
     public float CircleForce;
     [Range(0, 1)]
     public float InnerExpand;
 
+}
+
+[System.Serializable]
+public class WorldTarget
+{
+    public GameObject target;
+    [Range(0, 1)]
+    public float cloak = 0f;
+    [HideInInspector]
+    public Material material;
 }

@@ -6,32 +6,34 @@
 		[NoScaleOffset] _MainTex("Albedo (RGB)", 2D) = "white" {}
 		_Glossiness("Smoothness", Range(0,1)) = 0.5
 		_Metallic("Metallic", Range(0,1)) = 0.0
+		_Length("Length", Range(1,99)) = 10
 
-			//noise settings
-			_NoiseSettings("Noise settings : scale xy, offset xy", Vector) = (1, 1, 0, 0)
-			_NoiseSettings2("Noise settings gain, frequencyMul, baseWeight, na", Vector) = (0.5, 2.5, 0.5)
+		//noise settings
+		_NoiseSettings("Noise settings : scale xy, offset xy", Vector) = (1, 1, 0, 0)
+		_NoiseSettings2("Noise settings gain, frequencyMul, baseWeight, na", Vector) = (0.5, 2.5, 0.5)
 
-			//circle properties
-			_CircleForce("Circle Force", Range(0,1)) = 0.25
-			_Expand("Inner Expand", Range(0,1)) = 0.5
-			_Radius("Radius", FLOAT) = 0.75
-			//_WindowHeight("Window Height", FLOAT) = 0.0
-			_ChangePoint("Change at this distance", Float) = 5
-			//_MaxDistance("Max hide value", Float) = 5
+		//circle properties
+		_CircleForce("Circle Force", Range(0,1)) = 0.25
+		_Expand("Inner Expand", Range(0,1)) = 0.5
+		_Radius("Radius", FLOAT) = 0.75
+		//_WindowHeight("Window Height", FLOAT) = 0.0
+		_ChangePoint("Change at this distance", Float) = 5
+		//_MaxDistance("Max hide value", Float) = 5
 
-			//outline properties
-			_LineWidth("Line Width", Range(0,1)) = 0.025
-			_LineColor("Line Color (alpha = emission)", Color) = (1,1,1,0)
-			//_Cloak("Hide 1 (1 = hide)", Range(0,1)) = 1
-			//_Cloak2("Hide 2 (1 = hide)", Range(0,1)) = 1
-			//_Cloak3("Hide 3 (1 = hide)", Range(0,1)) = 1
-			//_Cloak4("Hide 4 (1 = hide)", Range(0,1)) = 1
-			//_TargetPosition("Target Pos 1", Vector) = (0,0,0)
-			// _TargetPos2("Target Pos 2", Vector) = (0,0,0)
-			// _TargetPos3("Target Pos 3", Vector) = (0,0,0)
-			// _TargetPos4("Target Pos 4", Vector) = (0,0,0)
-			//_Clip("Clip", Range(0,1)) = 0.025
-			_Invert("Invert", Range(0,1)) = 0.
+		//outline properties
+		_LineWidth("Line Width", Range(0,1)) = 0.025
+		_LineColor("Line Color (alpha = emission)", Color) = (1,1,1,0)
+		//_Cloak("Hide 1 (1 = hide)", Range(0,1)) = 1
+		//_Cloak2("Hide 2 (1 = hide)", Range(0,1)) = 1
+		//_Cloak3("Hide 3 (1 = hide)", Range(0,1)) = 1
+		//_Cloak4("Hide 4 (1 = hide)", Range(0,1)) = 1
+		//_TargetPosition("Target Pos 1", Vector) = (0,0,0)
+		// _TargetPos2("Target Pos 2", Vector) = (0,0,0)
+		// _TargetPos3("Target Pos 3", Vector) = (0,0,0)
+		// _TargetPos4("Target Pos 4", Vector) = (0,0,0)
+		//_Clip("Clip", Range(0,1)) = 0.025
+		_Invert("Invert", Range(0,1)) = 0.
+
 	}
 
 		SubShader
@@ -51,11 +53,14 @@
 			#pragma target 4.0
 			#include "Assets/Shaders/Include/snoise.cginc"
 
-			//#define count 36
-			uniform float table[100];
-			//always smaller than 100
-			uniform int length;
-			//other option = texture; 
+			//TABLE!
+			#define count 100
+			uniform int _Length;
+			uniform float3 _Positions[count]; 
+			uniform float _Cloaks[count];
+
+			uniform float _ChangeFactors[count]; 
+			uniform float _CurDistances[count];
 
 			uniform sampler2D _MainTex;
 			uniform float _Glossiness;
@@ -163,43 +168,30 @@
 
 				//***************************DISTANCE*********************//
 
-				//with target
-				float curDistance = distance(_TargetPosition.xyz, IN.worldPos);
-				float curDis2 = distance(_TargetPos2.xyz, IN.worldPos);
-				float curDis3 = distance(_TargetPos3.xyz, IN.worldPos);
-				float curDis4 = distance(_TargetPos4.xyz, IN.worldPos);
+				_CurDistances[0] = distance(_Positions[0].xyz, IN.worldPos);
+				_ChangeFactors[0] = maskClip + (_Cloaks[0] * _ChangePoint * 1.1) - (1 - (_CurDistances[0] - _ChangePoint));
+				float sumT = _ChangeFactors[0];
+				float multT = _ChangeFactors[0]; 
 
+				for (uint i = 1; i < _Length; ++i)
+				{
+					_CurDistances[i] = distance(_Positions[i].xyz, IN.worldPos);
+					_ChangeFactors[i] = maskClip + (_Cloaks[i] * _ChangePoint * 1.1) - (1 - (_CurDistances[i] - _ChangePoint));
+					_ChangeFactors[i] = clamp(_ChangeFactors[i], -1, 1);
+					sumT += _ChangeFactors[i]; 
+					multT *= _ChangeFactors[i];
+				}
 
-				//with the camera
-				//float curDistance = distance(_WorldSpaceCameraPos.xyz, IN.worldPos);
-
-				//if (curDistance < _MaxDistance)
-				//	curDistance = _MaxDistance;
-				//float changeFactor = maskClip - _Cloak;
-				//float changeFactor = maskClip - (1 - (curDistance - _ChangePoint));
-				float changeFactor1 = maskClip + (_Cloak * _ChangePoint * 1.1) - (1 - (curDistance - _ChangePoint));
-				float changeFactor2 = maskClip + (_Cloak2 * _ChangePoint * 1.1) - (1 - (curDis2 - _ChangePoint));
-				float changeFactor3 = maskClip + (_Cloak3 * _ChangePoint * 1.1) - (1 - (curDis3 - _ChangePoint));
-				float changeFactor4 = maskClip + (_Cloak4 * _ChangePoint * 1.1) - (1 - (curDis4 - _ChangePoint));
-
-				changeFactor1 = clamp(changeFactor1, -1, 1);
-				changeFactor2 = clamp(changeFactor2, -1, 1);
-				changeFactor3 = clamp(changeFactor3, -1, 1);
-				changeFactor4 = clamp(changeFactor4, -1, 1);
-
-				//*********************ASSIGN****************************//
-				float sumV = 1 - (changeFactor3 + changeFactor2 + changeFactor1 + changeFactor4);
-				float multV = 1 - (changeFactor3 * changeFactor2 * changeFactor1 * changeFactor4);
-				float multSum = sumV + multV;
-				float inverse = 1 - multSum;
-				float clipValue = lerp(multSum, inverse, _Invert);
-				clipValue = lerp(1, clipValue, _Clip);
-				clip(clipValue);
-
+				float finalValue = sumT + multT; 
+				float finalInvers = 1 - finalValue;
+				float finalClipValue = lerp(finalInvers, finalValue, _Invert);
+				finalClipValue = lerp(1, finalClipValue, _Clip);
+				clip(finalClipValue);
+				
 				//*********************TEXTURE****************************//
 				float4 c = tex2D(_MainTex, IN.uv_MainTex);
 				o.Albedo = c.rgb;
-				float shouldLine = step(1 - _LineWidth, 1 - multSum); 				
+				float shouldLine = step(1 - _LineWidth, finalValue);
 				o.Albedo = lerp(o.Albedo, c.rgb * _LineColor.rgb, shouldLine);
 				o.Emission = lerp(o.Emission, _LineColor.a, shouldLine);		
 				o.Metallic = _Metallic;

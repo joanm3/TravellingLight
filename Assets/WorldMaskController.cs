@@ -5,7 +5,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class WorldMaskController : MonoBehaviour
 {
-    
+
     public enum WorldType { Forest, City };
     public WorldType worldType = WorldType.Forest;
     public Shader maskShader;
@@ -112,6 +112,9 @@ public class WorldMaskController : MonoBehaviour
             return;
 
         maskMaterial.SetFloat("_ChangePoint", changeDistance);
+
+        if (target == null || target2 == null || target3 == null || target4 == null)
+            return;
 
         maskMaterial.SetVector("_TargetPosition", target.position);
         maskMaterial.SetVector("_TargetPos2", target2.position);

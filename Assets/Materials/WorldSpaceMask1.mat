@@ -119,6 +119,9 @@ Material:
         name: _Invert
       second: 0
     - first:
+        name: _Length
+      second: 10
+    - first:
         name: _LineWidth
       second: 0.29
     - first:
