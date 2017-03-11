@@ -12,10 +12,12 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
     [Header("Forest")]
     public GameObject forestPrefab;
+    public Material forestMaterial;
     public List<WorldTarget> forestTargets = new List<WorldTarget>();
 
     [Header("City")]
     public GameObject cityPrefab;
+    public Material cityMaterial;
     public List<WorldTarget> cityTargets = new List<WorldTarget>();
 
 
@@ -80,36 +82,10 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
     {
         UpdateList(ref forestTargets, ref oldForestCount, forestPrefab);
         UpdateList(ref cityTargets, ref oldCityCount, cityPrefab);
-
-
-        //if (oldForestCount < forestTargets.Count)
-        //{
-        //    for (int i = oldForestCount; i < forestTargets.Count; i++)
-        //    {
-        //        forestTargets[i].target = Instantiate(forestPrefab, transform);
-        //        forestTargets[i].target.transform.position = new Vector3(0f, standardHeight, 0f);
-        //        forestTargets[i].target.transform.rotation = Quaternion.identity;
-        //        forestTargets[i].target.name = forestPrefab.name + "_" + (i + 1).ToString();
-        //        forestTargets[i].cloak = 0f;
-        //    }
-        //}
-        //else if (oldForestCount > forestTargets.Count)
-        //{
-        //    Debug.Log("reading list");
-
-        //    List<GameObject> toDelete = FindAllInstances(forestPrefab, oldForestCount, forestTargets.Count);
-        //    for (int i = 0; i < toDelete.Count; i++)
-        //    {
-        //        //put it to a pool later on better. 
-        //        DestroyImmediate(toDelete[i]);
-        //    }
-        //}
-        //oldForestCount = forestTargets.Count;
-
     }
 
 
-    void UpdateList(ref List<WorldTarget> targets, ref int oldCount, GameObject prefab)
+    void UpdateList(ref List<WorldTarget> targets, ref int oldCount, GameObject prefab, Material sharedMaterial)
     {
         if (oldCount < targets.Count)
         {
@@ -121,10 +97,21 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
                 targets[i].target.transform.rotation = Quaternion.identity;
                 targets[i].target.name = prefab.name + "_" + (i + 1).ToString();
                 targets[i].cloak = 0f;
+
                 //I THINK BETTER TO USE ONLY SHARED MATERIAL FOR ALL OF THEM NO NEED TO MULTIPLY. 
-                targets[i].maskMaterial = (Application.isPlaying) ? GetComponent<MeshRenderer>().material : GetComponent<MeshRenderer>().sharedMaterial;
+                //targets[i].maskMaterial = (Application.isPlaying) ? GetComponent<MeshRenderer>().material : GetComponent<MeshRenderer>().sharedMaterial;
+                //if (targets[i].maskMaterial == null)
+                //    targets[i].maskMaterial = (Application.isPlaying) ? GetComponentInChildren<MeshRenderer>().material : GetComponentInChildren<MeshRenderer>().sharedMaterial;
+                
+                //not good for what i want. 
+                //if (GetComponent<MeshRenderer>() != null) GetComponent<MeshRenderer>().material = sharedMaterial;
+                //else if (GetComponentInChildren<MeshRenderer>().material != null) GetComponentInChildren<MeshRenderer>().material = sharedMaterial;
+
+                targets[i].maskMaterial = GetComponent<MeshRenderer>().sharedMaterial;
                 if (targets[i].maskMaterial == null)
-                    targets[i].maskMaterial = (Application.isPlaying) ? GetComponentInChildren<MeshRenderer>().material : GetComponentInChildren<MeshRenderer>().sharedMaterial;
+                    targets[i].maskMaterial = GetComponentInChildren<MeshRenderer>().sharedMaterial;
+
+
 
                 if (!targets[i].maskMaterial.shader.Equals(maskShader))
                 {
