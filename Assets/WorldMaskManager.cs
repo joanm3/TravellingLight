@@ -12,12 +12,10 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
     [Header("Forest")]
     public GameObject forestPrefab;
-    public Material forestMaterial;
     public List<WorldTarget> forestTargets = new List<WorldTarget>();
 
     [Header("City")]
     public GameObject cityPrefab;
-    public Material cityMaterial;
     public List<WorldTarget> cityTargets = new List<WorldTarget>();
 
 
@@ -85,7 +83,7 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
     }
 
 
-    void UpdateList(ref List<WorldTarget> targets, ref int oldCount, GameObject prefab, Material sharedMaterial)
+    void UpdateList(ref List<WorldTarget> targets, ref int oldCount, GameObject prefab)
     {
         if (oldCount < targets.Count)
         {
