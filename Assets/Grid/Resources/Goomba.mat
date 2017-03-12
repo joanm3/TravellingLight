@@ -116,8 +116,11 @@ Material:
         name: _Invert
       second: 0
     - first:
+        name: _Length
+      second: 4
+    - first:
         name: _LineWidth
-      second: 0.87
+      second: 0.8
     - first:
         name: _Metallic
       second: 0
@@ -132,7 +135,7 @@ Material:
       second: 0.02
     - first:
         name: _Radius
-      second: 2.02
+      second: 2
     - first:
         name: _SmoothnessTextureChannel
       second: 0
