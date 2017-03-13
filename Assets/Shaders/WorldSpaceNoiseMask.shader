@@ -54,7 +54,7 @@
 			#include "Assets/Shaders/Include/snoise.cginc"
 
 			//TABLE!
-			#define count 100
+			#define count 6
 			uniform int _Length;
 			uniform float3 _Positions[count];
 			uniform float _Cloaks[count];
@@ -185,7 +185,8 @@
 					multT *= _ChangeFactors[i];
 				}
 
-				//multT *= _LineWidth;
+				multT *= _Length;
+				sumT *= _Length; 
 				//sumT = clamp(sumT, -1, 1); 
 				//multT = clamp(multT, 0, 1); 
 				//if (multT == 0)
@@ -202,9 +203,10 @@
 				//*********************TEXTURE****************************//
 				float4 c = tex2D(_MainTex, IN.uv_MainTex);
 				//o.Albedo = clipRange;
-				o.Albedo.r = 1 - _ChangeFactors[1];
-				o.Albedo.g = 1 - _ChangeFactors[0];
-				o.Albedo.b = 1 - (_ChangeFactors[0] + _ChangeFactors[1]);
+				//o.Albedo.r = 1 - _ChangeFactors[1];
+				//o.Albedo.g = 1 - _ChangeFactors[0];
+				o.Albedo.b =  (_ChangeFactors[0] + _ChangeFactors[1] + _ChangeFactors[2] + _ChangeFactors[3] + _ChangeFactors[4] + _ChangeFactors[5]);
+				o.Albedo.r =  sumT; 
 				//o.Albedo.b = 1 - (_CurDistances[0] - _ChangePoint); 
 				//float shouldLine1 = step(_LineWidth, clipV);
 				//float shouldLine2 = step(0, clipV);
