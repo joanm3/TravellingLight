@@ -80,6 +80,9 @@ Material:
         name: _CircleForce
       second: 0
     - first:
+        name: _Clip
+      second: 1
+    - first:
         name: _Cloak
       second: 0
     - first:
@@ -120,7 +123,7 @@ Material:
       second: 4
     - first:
         name: _LineWidth
-      second: 0.8
+      second: 1
     - first:
         name: _Metallic
       second: 0
@@ -169,13 +172,13 @@ Material:
       second: {r: 1.5, g: 1.3, b: 0.05, a: 0}
     - first:
         name: _TargetPos2
-      second: {r: 3.3300002, g: 1.9999998, b: 10.99, a: 0}
+      second: {r: 9.56, g: 5, b: 0, a: 0}
     - first:
         name: _TargetPos3
-      second: {r: 18.46, g: 1.9999998, b: 8.74, a: 0}
+      second: {r: 0, g: 5, b: -9.86, a: 0}
     - first:
         name: _TargetPos4
-      second: {r: 29.17, g: 1.9999998, b: 21.75, a: 0}
+      second: {r: 0, g: 5, b: 15.28, a: 0}
     - first:
         name: _TargetPosition
-      second: {r: -14.88, g: 1.9999998, b: -2.02, a: 0}
+      second: {r: -8.2300005, g: 5, b: 0, a: 0}

@@ -82,7 +82,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.7529412, g: 0.78039217, b: 0.56078434, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -139,8 +139,8 @@ MonoBehaviour:
   parentRig: {fileID: 4929063131095926}
   distanceAwayDefault: 8.87
   distanceUpDefault: 3.6
-  distanceAwayMinMax: {x: 5, y: 20}
-  distanceUpMinMax: {x: 5, y: 5}
+  distanceAwayMinMax: {x: 3, y: 15}
+  distanceUpMinMax: {x: 0.5, y: 5}
   distanceUpCurve:
     serializedVersion: 2
     m_Curve:

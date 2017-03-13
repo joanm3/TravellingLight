@@ -6,9 +6,9 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: WaveCube
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _EMISSION _NORMALMAP
+  m_Name: ExtCube
+  m_Shader: {fileID: 10755, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -18,7 +18,7 @@ Material:
     - first:
         name: _BumpMap
       second:
-        m_Texture: {fileID: 2800000, guid: 99d2cdba8fb69544c85a1d31afe4d740, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -48,7 +48,7 @@ Material:
     - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 2800000, guid: b8cbfecd1f61fc84bad0b7e66c7ba794, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -80,41 +80,14 @@ Material:
         name: _DetailNormalMapScale
       second: 1
     - first:
-        name: _Distance1
-      second: 0
-    - first:
-        name: _Distance2
-      second: 0
-    - first:
-        name: _Distance3
-      second: 0
-    - first:
-        name: _Distance4
-      second: 0
-    - first:
-        name: _Distance5
-      second: 0
-    - first:
-        name: _Distance6
-      second: 0
-    - first:
-        name: _Distance7
-      second: 0
-    - first:
-        name: _Distance8
-      second: 0
-    - first:
         name: _DstBlend
       second: 0
-    - first:
-        name: _Frequency
-      second: 1
     - first:
         name: _GlossMapScale
       second: 1
     - first:
         name: _Glossiness
-      second: 0.233
+      second: 0.5
     - first:
         name: _GlossyReflections
       second: 1
@@ -131,16 +104,10 @@ Material:
         name: _Parallax
       second: 0.02
     - first:
-        name: _Scale
-      second: 1
-    - first:
         name: _SmoothnessTextureChannel
       second: 0
     - first:
         name: _SpecularHighlights
-      second: 1
-    - first:
-        name: _Speed
       second: 1
     - first:
         name: _SrcBlend
@@ -149,84 +116,12 @@ Material:
         name: _UVSec
       second: 0
     - first:
-        name: _WaveAmplitude1
-      second: 0
-    - first:
-        name: _WaveAmplitude2
-      second: 0
-    - first:
-        name: _WaveAmplitude3
-      second: 0
-    - first:
-        name: _WaveAmplitude4
-      second: 0
-    - first:
-        name: _WaveAmplitude5
-      second: 0
-    - first:
-        name: _WaveAmplitude6
-      second: 0
-    - first:
-        name: _WaveAmplitude7
-      second: 0
-    - first:
-        name: _WaveAmplitude8
-      second: 0
-    - first:
         name: _ZWrite
       second: 1
-    - first:
-        name: _xImpact1
-      second: 0
-    - first:
-        name: _xImpact2
-      second: 0
-    - first:
-        name: _xImpact3
-      second: 0
-    - first:
-        name: _xImpact4
-      second: 0
-    - first:
-        name: _xImpact5
-      second: 0
-    - first:
-        name: _xImpact6
-      second: 0
-    - first:
-        name: _xImpact7
-      second: 0
-    - first:
-        name: _xImpact8
-      second: 0
-    - first:
-        name: _zImpact1
-      second: 0
-    - first:
-        name: _zImpact2
-      second: 0
-    - first:
-        name: _zImpact3
-      second: 0
-    - first:
-        name: _zImpact4
-      second: 0
-    - first:
-        name: _zImpact5
-      second: 0
-    - first:
-        name: _zImpact6
-      second: 0
-    - first:
-        name: _zImpact7
-      second: 0
-    - first:
-        name: _zImpact8
-      second: 0
     m_Colors:
     - first:
         name: _Color
-      second: {r: 1, g: 1, b: 1, a: 1}
+      second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}

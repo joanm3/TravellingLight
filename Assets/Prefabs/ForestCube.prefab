@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4493456577109726}
-  - component: {fileID: 114971448776364520}
   - component: {fileID: 114780643272753824}
+  - component: {fileID: 114668349635531574}
   m_Layer: 0
   m_Name: ForestCube
   m_TagString: Untagged
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 23948279464785350}
   - component: {fileID: 54358713919414332}
   - component: {fileID: 114325719884464732}
-  - component: {fileID: 114065766486210660}
+  - component: {fileID: 114600206768385894}
   m_Layer: 0
   m_Name: LightCubeV3
   m_TagString: LightSource
@@ -84,8 +84,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1346599705816042}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.88, y: 5, z: 18.03}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.43, y: 3.96, z: 9.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4279126359018004}
@@ -170,21 +170,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114065766486210660
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1358246138294096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: deee2b9452d3c9748839dd62157fb7c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementAxis: 1
-  move: 1
-  velocity: 1
-  intensity: 1
 --- !u!114 &114325719884464732
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -207,6 +192,35 @@ MonoBehaviour:
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   inactiveColor: {r: 0.09926471, g: 0.19852942, b: 0.13280936, a: 0}
   luzLight: {fileID: 0}
+--- !u!114 &114600206768385894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1358246138294096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deee2b9452d3c9748839dd62157fb7c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementAxis: 1
+  move: 1
+  velocity: 1
+  intensity: 1
+--- !u!114 &114668349635531574
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1346599705816042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c94f9521ae852be4e8c5ca9556245bb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAxis: 1
+  rotate: 1
+  velocity: 15
 --- !u!114 &114780643272753824
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -226,17 +240,3 @@ MonoBehaviour:
   isFollowingCharacter: 0
   rotationAngleForce: 20
   desactivateWhenFollowing: 1
---- !u!114 &114971448776364520
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1346599705816042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c94f9521ae852be4e8c5ca9556245bb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationAxis: 1
-  rotate: 1
-  velocity: 15

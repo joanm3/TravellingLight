@@ -35,22 +35,22 @@ public class WorldMaskController : MonoBehaviour
     void Start()
     {
 
-        if (!maskShader)
-        {
-            maskShader = Shader.Find("Custom/WorldSpaceNoiseMask");
-            if (!maskShader)
-            {
-                Debug.LogError("no maskShader assigned for " + name);
-                Destroy(this);
-            }
-        }
+        //if (!maskShader)
+        //{
+        //    maskShader = Shader.Find("Custom/WorldSpaceNoiseMask");
+        //    if (!maskShader)
+        //    {
+        //        Debug.LogError("no maskShader assigned for " + name);
+        //        Destroy(this);
+        //    }
+        //}
 
         maskMaterial = (Application.isPlaying) ? GetComponent<MeshRenderer>().material : GetComponent<MeshRenderer>().sharedMaterial;
-        if (!maskMaterial.shader.Equals(maskShader))
-        {
-            Debug.LogError("shader is not correct for " + name + ", please assign " + maskShader.name);
-            Destroy(this);
-        }
+        //if (!maskMaterial.shader.Equals(maskShader))
+        //{
+        //    Debug.LogError("shader is not correct for " + name + ", please assign " + maskShader.name);
+        //    Destroy(this);
+        //}
 
         if (Application.isPlaying)
         {

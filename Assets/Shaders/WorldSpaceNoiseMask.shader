@@ -8,31 +8,31 @@
 		_Metallic("Metallic", Range(0,1)) = 0.0
 		_Length("Length", Range(1,99)) = 10
 
-		//noise settings
-		_NoiseSettings("Noise settings : scale xy, offset xy", Vector) = (1, 1, 0, 0)
-		_NoiseSettings2("Noise settings gain, frequencyMul, baseWeight, na", Vector) = (0.5, 2.5, 0.5)
+			//noise settings
+			_NoiseSettings("Noise settings : scale xy, offset xy", Vector) = (1, 1, 0, 0)
+			_NoiseSettings2("Noise settings gain, frequencyMul, baseWeight, na", Vector) = (0.5, 2.5, 0.5)
 
-		//circle properties
-		_CircleForce("Circle Force", Range(0,1)) = 0.25
-		_Expand("Inner Expand", Range(0,1)) = 0.5
-		_Radius("Radius", FLOAT) = 0.75
-		//_WindowHeight("Window Height", FLOAT) = 0.0
-		_ChangePoint("Change at this distance", Float) = 5
-		//_MaxDistance("Max hide value", Float) = 5
+			//circle properties
+			_CircleForce("Circle Force", Range(0,1)) = 0.25
+			_Expand("Inner Expand", Range(0,1)) = 0.5
+			_Radius("Radius", FLOAT) = 0.75
+			//_WindowHeight("Window Height", FLOAT) = 0.0
+			_ChangePoint("Change at this distance", Float) = 5
+			//_MaxDistance("Max hide value", Float) = 5
 
-		//outline properties
-		_LineWidth("Line Width", Range(0,1)) = 0.025
-		_LineColor("Line Color (alpha = emission)", Color) = (1,1,1,0)
-		//_Cloak("Hide 1 (1 = hide)", Range(0,1)) = 1
-		//_Cloak2("Hide 2 (1 = hide)", Range(0,1)) = 1
-		//_Cloak3("Hide 3 (1 = hide)", Range(0,1)) = 1
-		//_Cloak4("Hide 4 (1 = hide)", Range(0,1)) = 1
-		//_TargetPosition("Target Pos 1", Vector) = (0,0,0)
-		// _TargetPos2("Target Pos 2", Vector) = (0,0,0)
-		// _TargetPos3("Target Pos 3", Vector) = (0,0,0)
-		// _TargetPos4("Target Pos 4", Vector) = (0,0,0)
-		//_Clip("Clip", Range(0,1)) = 0.025
-		_Invert("Invert", Range(0,1)) = 0.
+			//outline properties
+			_LineWidth("Line Width", Range(0,0.1)) = 0.025
+			_LineColor("Line Color (alpha = emission)", Color) = (1,1,1,0)
+			//_Cloak("Hide 1 (1 = hide)", Range(0,1)) = 1
+			//_Cloak2("Hide 2 (1 = hide)", Range(0,1)) = 1
+			//_Cloak3("Hide 3 (1 = hide)", Range(0,1)) = 1
+			//_Cloak4("Hide 4 (1 = hide)", Range(0,1)) = 1
+			//_TargetPosition("Target Pos 1", Vector) = (0,0,0)
+			// _TargetPos2("Target Pos 2", Vector) = (0,0,0)
+			// _TargetPos3("Target Pos 3", Vector) = (0,0,0)
+			// _TargetPos4("Target Pos 4", Vector) = (0,0,0)
+			//_Clip("Clip", Range(0,1)) = 0.025
+			_Invert("Invert", Range(0,1)) = 0.
 
 	}
 
@@ -56,10 +56,10 @@
 			//TABLE!
 			#define count 100
 			uniform int _Length;
-			uniform float3 _Positions[count]; 
+			uniform float3 _Positions[count];
 			uniform float _Cloaks[count];
 
-			uniform float _ChangeFactors[count]; 
+			uniform float _ChangeFactors[count];
 			uniform float _CurDistances[count];
 
 			uniform sampler2D _MainTex;
@@ -164,36 +164,53 @@
 				float circleLerp = 1 - _CircleForce;
 				float circle = lerp(circleLerp, noise, (r - _Expand) / (1 - _Expand));
 				float maskClip = 1 - (postNoise - circle);
-				
+
 
 				//***************************DISTANCE*********************//
 
 				_CurDistances[0] = distance(_Positions[0].xyz, IN.worldPos);
-				_ChangeFactors[0] = maskClip + (_Cloaks[0] * _ChangePoint * 1.1) - (1 - (_CurDistances[0] - _ChangePoint));
+				_ChangeFactors[0] = maskClip + (_Cloaks[0] * _ChangePoint) - (1 - (_CurDistances[0] - _ChangePoint));
+				_ChangeFactors[0] = clamp(_ChangeFactors[0], -1, 1);
+
 				float sumT = _ChangeFactors[0];
-				float multT = _ChangeFactors[0]; 
+				float multT = _ChangeFactors[0];
 
 				for (uint i = 1; i < _Length; ++i)
 				{
 					_CurDistances[i] = distance(_Positions[i].xyz, IN.worldPos);
-					_ChangeFactors[i] = maskClip + (_Cloaks[i] * _ChangePoint * 1.1) - (1 - (_CurDistances[i] - _ChangePoint));
+					_ChangeFactors[i] = maskClip + (_Cloaks[i] * _ChangePoint) - (1 - (_CurDistances[i] - _ChangePoint));
 					_ChangeFactors[i] = clamp(_ChangeFactors[i], -1, 1);
-					sumT += _ChangeFactors[i]; 
+					sumT += _ChangeFactors[i];
 					multT *= _ChangeFactors[i];
 				}
 
-				float finalValue = sumT + multT; 
+				//multT *= _LineWidth;
+				//sumT = clamp(sumT, -1, 1); 
+				//multT = clamp(multT, 0, 1); 
+				//if (multT == 0)
+				//{
+				//	multT = -1; 
+				//}
+				float finalValue = multT;
 				float finalInvers = 1 - finalValue;
-				float finalClipValue = lerp(finalInvers, finalValue, _Invert);
-				finalClipValue = lerp(1, finalClipValue, _Clip);
-				clip(finalClipValue);
-				
+				float clipRange = lerp(finalInvers, finalValue, _Invert);
+				/*clipRange *= 1 + _LineWidth; */
+				float clipV = lerp(1, clipRange, _Clip);
+				clip(clipV);
+
 				//*********************TEXTURE****************************//
 				float4 c = tex2D(_MainTex, IN.uv_MainTex);
-				o.Albedo = c.rgb;
-				float shouldLine = step(1 - _LineWidth, finalValue);
-				o.Albedo = lerp(o.Albedo, c.rgb * _LineColor.rgb, shouldLine);
-				o.Emission = lerp(o.Emission, _LineColor.a, shouldLine);		
+				//o.Albedo = clipRange;
+				o.Albedo.r = 1 - multT;
+				//o.Albedo.g = 1 - sumT; 
+				//float shouldLine1 = step(_LineWidth, clipV);
+				//float shouldLine2 = step(0, clipV);
+				//float shouldLine = shouldLine1 - shouldLine2;
+
+				//o.Albedo = lerp(o.Albedo, c.rgb * _LineColor.rgb, shouldLine);
+				//o.Emission = lerp(o.Emission, _LineColor.a, shouldLine);
+				//o.Albedo.r = shouldLine1; 
+				//o.Albedo.g = shouldLine2; 
 				o.Metallic = _Metallic;
 				o.Smoothness = _Glossiness;
 				o.Alpha = c.a;
