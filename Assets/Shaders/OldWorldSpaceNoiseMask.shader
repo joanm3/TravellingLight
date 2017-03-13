@@ -60,6 +60,8 @@
 	uniform float _Cloak2;
 	uniform float _Cloak3;
 	uniform float _Cloak4;
+	uniform float _Cloak5;
+	uniform float _Cloak6;
 
 	uniform float4 _NoiseSettings;
 	uniform float3 _NoiseSettings2;
@@ -84,6 +86,8 @@
 	uniform float3 _TargetPos2;
 	uniform float3 _TargetPos3;
 	uniform float3 _TargetPos4;
+	uniform float3 _TargetPos5;
+	uniform float3 _TargetPos6;
 	uniform float _Clip;
 	uniform float _Invert;
 
@@ -164,7 +168,8 @@
 		float curDis2 = distance(_TargetPos2.xyz, IN.worldPos);
 		float curDis3 = distance(_TargetPos3.xyz, IN.worldPos);
 		float curDis4 = distance(_TargetPos4.xyz, IN.worldPos);
-
+		float curDis5 = distance(_TargetPos5.xyz, IN.worldPos);
+		float curDis6 = distance(_TargetPos6.xyz, IN.worldPos);
 
 		//with the camera
 		//float curDistance = distance(_WorldSpaceCameraPos.xyz, IN.worldPos);
@@ -177,16 +182,21 @@
 		float changeFactor2 = maskClip + (_Cloak2 * _ChangePoint * 1.1) - (1 - (curDis2 - _ChangePoint));
 		float changeFactor3 = maskClip + (_Cloak3 * _ChangePoint * 1.1) - (1 - (curDis3 - _ChangePoint));
 		float changeFactor4 = maskClip + (_Cloak4 * _ChangePoint * 1.1) - (1 - (curDis4 - _ChangePoint));
+		float changeFactor5 = maskClip + (_Cloak3 * _ChangePoint * 1.1) - (1 - (curDis3 - _ChangePoint));
+		float changeFactor6 = maskClip + (_Cloak4 * _ChangePoint * 1.1) - (1 - (curDis4 - _ChangePoint));
+
 
 		changeFactor1 = clamp(changeFactor1, -1, 1);
 		changeFactor2 = clamp(changeFactor2, -1, 1);
 		changeFactor3 = clamp(changeFactor3, -1, 1);
 		changeFactor4 = clamp(changeFactor4, -1, 1);
+		changeFactor5 = clamp(changeFactor3, -1, 1);
+		changeFactor6 = clamp(changeFactor4, -1, 1);
 
 		//*********************ASSIGN****************************//
-		float sumV = 1 - (changeFactor3 + changeFactor2 + changeFactor1 + changeFactor4);
+		float sumV = 1 - (changeFactor3 + changeFactor2 + changeFactor1 + changeFactor4 + changeFactor5 + changeFactor6);
 
-		float multV = 1 - (changeFactor3 * changeFactor2 * changeFactor1 * changeFactor4);
+		float multV = 1 - (changeFactor3 * changeFactor2 * changeFactor1 * changeFactor4 * changeFactor5 * changeFactor6);
 		float multSum = sumV + multV;
 		if (_Invert > 0.5)
 		{

@@ -28,6 +28,13 @@ public class WorldMaskController : MonoBehaviour
     public Transform target4;
     [Range(0, 1)]
     public float cloak4;
+    public Transform target5;
+    [Range(0, 1)]
+    public float cloak5;
+    public Transform target6;
+    [Range(0, 1)]
+    public float cloak6;
+
     private Material maskMaterial;
     private float timeLeft = 1f;
 
@@ -113,13 +120,17 @@ public class WorldMaskController : MonoBehaviour
 
         maskMaterial.SetFloat("_ChangePoint", changeDistance);
 
-        if (target == null || target2 == null || target3 == null || target4 == null)
+        if (target == null || target2 == null
+            || target3 == null || target4 == null
+            || target5 == null || target6 == null)
             return;
 
         maskMaterial.SetVector("_TargetPosition", target.position);
         maskMaterial.SetVector("_TargetPos2", target2.position);
         maskMaterial.SetVector("_TargetPos3", target3.position);
         maskMaterial.SetVector("_TargetPos4", target4.position);
+        maskMaterial.SetVector("_TargetPos5", target5.position);
+        maskMaterial.SetVector("_TargetPos6", target6.position);
 
     }
 
@@ -143,12 +154,16 @@ public class WorldMaskController : MonoBehaviour
                 cloak2 = WorldMaskManager.Instance.cloak2;
                 cloak3 = WorldMaskManager.Instance.cloak3;
                 cloak4 = WorldMaskManager.Instance.cloak4;
+                cloak5 = WorldMaskManager.Instance.cloak5;
+                cloak6 = WorldMaskManager.Instance.cloak6;
                 break;
             case WorldType.City:
                 cloak1 = WorldMaskManager.Instance.cloakA;
                 cloak2 = WorldMaskManager.Instance.cloakB;
                 cloak3 = WorldMaskManager.Instance.cloakC;
                 cloak4 = WorldMaskManager.Instance.cloakD;
+                cloak3 = WorldMaskManager.Instance.cloakE;
+                cloak4 = WorldMaskManager.Instance.cloakF;
                 break;
         }
 
@@ -173,12 +188,16 @@ public class WorldMaskController : MonoBehaviour
                 target2 = WorldMaskManager.Instance.target2;
                 target3 = WorldMaskManager.Instance.target3;
                 target4 = WorldMaskManager.Instance.target4;
+                target5 = WorldMaskManager.Instance.target5;
+                target6 = WorldMaskManager.Instance.target6;
                 break;
             case WorldType.City:
                 target = WorldMaskManager.Instance.targetA;
                 target2 = WorldMaskManager.Instance.targetB;
                 target3 = WorldMaskManager.Instance.targetC;
                 target4 = WorldMaskManager.Instance.targetD;
+                target5 = WorldMaskManager.Instance.targetE;
+                target6 = WorldMaskManager.Instance.targetF;
                 break;
         }
 

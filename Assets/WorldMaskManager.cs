@@ -51,6 +51,12 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
     public Transform target4;
     [Range(0, 1)]
     public float cloak4;
+    public Transform target5;
+    [Range(0, 1)]
+    public float cloak5;
+    public Transform target6;
+    [Range(0, 1)]
+    public float cloak6;
 
     [Header("City")]
     public Transform targetA;
@@ -65,6 +71,12 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
     public Transform targetD;
     [Range(0, 1)]
     public float cloakD;
+    public Transform targetE;
+    [Range(0, 1)]
+    public float cloakE;
+    public Transform targetF;
+    [Range(0, 1)]
+    public float cloakF;
 
 
     void OnEnable()

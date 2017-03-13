@@ -78,10 +78,10 @@ Material:
       second: 10
     - first:
         name: _CircleForce
-      second: 0
+      second: 0.5
     - first:
         name: _Clip
-      second: 0
+      second: 1
     - first:
         name: _Cloak
       second: 0
@@ -105,7 +105,7 @@ Material:
       second: 0
     - first:
         name: _Expand
-      second: 0
+      second: 0.5
     - first:
         name: _GlossMapScale
       second: 1
@@ -120,7 +120,7 @@ Material:
       second: 0
     - first:
         name: _Length
-      second: 5
+      second: 4
     - first:
         name: _LineWidth
       second: 0.29
@@ -169,7 +169,7 @@ Material:
       second: {r: 1, g: 1, b: 0, a: 0}
     - first:
         name: _NoiseSettings2
-      second: {r: 1.72, g: 1.35, b: 0.05, a: 0}
+      second: {r: 1.2, g: 1.2, b: 0.05, a: 0}
     - first:
         name: _TargetPos2
       second: {r: 9.56, g: 5, b: 0, a: 0}

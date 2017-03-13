@@ -21,7 +21,7 @@
 			//_MaxDistance("Max hide value", Float) = 5
 
 			//outline properties
-			_LineWidth("Line Width", Range(0,0.1)) = 0.025
+			_LineWidth("Line Width", Range(0,1)) = 0.5
 			_LineColor("Line Color (alpha = emission)", Color) = (1,1,1,0)
 			//_Cloak("Hide 1 (1 = hide)", Range(0,1)) = 1
 			//_Cloak2("Hide 2 (1 = hide)", Range(0,1)) = 1
@@ -168,12 +168,12 @@
 
 				//***************************DISTANCE*********************//
 				//maskClip *= 0.5; 
-				float inLine = 0.2; 
+				float inLine = 1;
 				_CurDistances[0] = distance(_Positions[0].xyz, IN.worldPos);
 				_ChangeFactors[0] = maskClip + ((_Cloaks[0] * _ChangePoint) * inLine) - (1 - (_CurDistances[0] - _ChangePoint));
 				_ChangeFactors[0] = clamp(_ChangeFactors[0], -1, 1);
 
-				float sumT = _ChangeFactors[0];
+				float sumT = 1 - _ChangeFactors[0];
 				float multT = _ChangeFactors[0];
 
 				for (uint i = 1; i < _Length; ++i)
@@ -181,41 +181,29 @@
 					_CurDistances[i] = distance(_Positions[i].xyz, IN.worldPos);
 					_ChangeFactors[i] = maskClip + ((_Cloaks[i] * _ChangePoint) * inLine) - (1 - (_CurDistances[i] - _ChangePoint));
 					_ChangeFactors[i] = clamp(_ChangeFactors[i], -1, 1);
-					sumT += _ChangeFactors[i];
-					multT *= _ChangeFactors[i];
+					sumT += 1 - _ChangeFactors[i];
+					multT *= 1 - _ChangeFactors[i];
 				}
 
-				multT *= _Length;
-				sumT *= _Length; 
-				//sumT = clamp(sumT, -1, 1); 
-				//multT = clamp(multT, 0, 1); 
-				//if (multT == 0)
-				//{
-				//	multT = -1; 
-				//}
-				float finalValue = multT;
+				float finalValue = sumT + multT;
+				finalValue = sumT;
+
 				float finalInvers = 1 - finalValue;
 				float clipRange = lerp(finalInvers, finalValue, _Invert);
 				/*clipRange *= 1 + _LineWidth; */
-				float clipV = lerp(1, clipRange, _Clip);
-				clip(clipV);
+				float clipV = lerp(-1, clipRange, _Clip);
+				clip(-clipV + _LineWidth);
 
 				//*********************TEXTURE****************************//
 				float4 c = tex2D(_MainTex, IN.uv_MainTex);
-				//o.Albedo = clipRange;
-				//o.Albedo.r = 1 - _ChangeFactors[1];
-				//o.Albedo.g = 1 - _ChangeFactors[0];
-				o.Albedo.b =  (_ChangeFactors[0] + _ChangeFactors[1] + _ChangeFactors[2] + _ChangeFactors[3] + _ChangeFactors[4] + _ChangeFactors[5]);
-				o.Albedo.r =  sumT; 
-				//o.Albedo.b = 1 - (_CurDistances[0] - _ChangePoint); 
-				//float shouldLine1 = step(_LineWidth, clipV);
-				//float shouldLine2 = step(0, clipV);
-				//float shouldLine = shouldLine1 - shouldLine2;
 
-				//o.Albedo = lerp(o.Albedo, c.rgb * _LineColor.rgb, shouldLine);
-				//o.Emission = lerp(o.Emission, _LineColor.a, shouldLine);
-				//o.Albedo.r = shouldLine1; 
-				//o.Albedo.g = shouldLine2; 
+				float shouldLine1 = step(-_LineWidth, -clipRange);
+				float shouldLine2 = step(0, -clipRange);
+				float shouldLine = shouldLine1 - shouldLine2;
+				o.Albedo = c.rgb;
+				//o.Albedo.b = shouldLine; 
+				o.Albedo = lerp(o.Albedo, c.rgb * _LineColor.rgb, shouldLine);
+				o.Emission = lerp(o.Emission, _LineColor.a, shouldLine);
 				o.Metallic = _Metallic;
 				o.Smoothness = _Glossiness;
 				o.Alpha = c.a;

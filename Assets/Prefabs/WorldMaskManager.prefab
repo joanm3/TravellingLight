@@ -34,7 +34,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1654048433457090}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.41, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -6.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -53,10 +53,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
   worldMaskGlobalVariables:
-    NoiseSettings: {x: 1.5, y: 1.3, z: 0.05}
+    NoiseSettings: {x: 1.2, y: 1.2, z: 0.05}
     LineColor: {r: 1, g: 1, b: 1, a: 0.359}
-    CircleForce: 0
-    InnerExpand: 0
+    CircleForce: 0.5
+    InnerExpand: 0.5
   showHidden: 0
   standardHeight: 4
   forestPrefab: {fileID: 1346599705816042, guid: 6a56370063916404f9a70837d3a33282,
@@ -78,8 +78,31 @@ MonoBehaviour:
     index: 3
     cloak: 0
     maskMaterial: {fileID: 0}
+  forestMaterials:
+  - {fileID: 2100000, guid: 5d40a2089dd9afe4d835d914af8fce20, type: 2}
+  - {fileID: 2100000, guid: 43b4b81157f6e114e9763a00807065d5, type: 2}
   cityPrefab: {fileID: 1801652433295718, guid: 5cbf3ac60bc565d47aecc31d7606729f, type: 2}
-  cityTargets: []
+  cityTargets:
+  - target: {fileID: 0}
+    index: 0
+    cloak: 0
+    maskMaterial: {fileID: 0}
+  cityMaterials:
+  - {fileID: 2100000, guid: 25b05982ae2f412458285ebd8d696c3b, type: 2}
+  forestCloaks:
+  - 0
+  - 0
+  - 0
+  - 0
+  cityCloaks:
+  - 0
+  forestTargetPositions:
+  - {x: 0, y: 4, z: 20.1, w: 0}
+  - {x: 0, y: 4, z: 0, w: 0}
+  - {x: -17.3, y: 4, z: 0, w: 0}
+  - {x: -9.32, y: 3.4, z: -14.32, w: 0}
+  cityTargetPositions:
+  - {x: 44.5, y: 4, z: 0, w: 0}
   target1: {fileID: 0}
   cloak1: 0
   target2: {fileID: 0}
@@ -88,6 +111,10 @@ MonoBehaviour:
   cloak3: 0
   target4: {fileID: 0}
   cloak4: 0
+  target5: {fileID: 0}
+  cloak5: 0
+  target6: {fileID: 0}
+  cloak6: 0
   targetA: {fileID: 0}
   cloakA: 0
   targetB: {fileID: 0}
@@ -96,3 +123,7 @@ MonoBehaviour:
   cloakC: 0
   targetD: {fileID: 0}
   cloakD: 0
+  targetE: {fileID: 0}
+  cloakE: 0
+  targetF: {fileID: 0}
+  cloakF: 0
