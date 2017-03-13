@@ -167,9 +167,10 @@
 
 
 				//***************************DISTANCE*********************//
-
+				//maskClip *= 0.5; 
+				float inLine = 0.2; 
 				_CurDistances[0] = distance(_Positions[0].xyz, IN.worldPos);
-				_ChangeFactors[0] = maskClip + (_Cloaks[0] * _ChangePoint) - (1 - (_CurDistances[0] - _ChangePoint));
+				_ChangeFactors[0] = maskClip + ((_Cloaks[0] * _ChangePoint) * inLine) - (1 - (_CurDistances[0] - _ChangePoint));
 				_ChangeFactors[0] = clamp(_ChangeFactors[0], -1, 1);
 
 				float sumT = _ChangeFactors[0];
@@ -178,7 +179,7 @@
 				for (uint i = 1; i < _Length; ++i)
 				{
 					_CurDistances[i] = distance(_Positions[i].xyz, IN.worldPos);
-					_ChangeFactors[i] = maskClip + (_Cloaks[i] * _ChangePoint) - (1 - (_CurDistances[i] - _ChangePoint));
+					_ChangeFactors[i] = maskClip + ((_Cloaks[i] * _ChangePoint) * inLine) - (1 - (_CurDistances[i] - _ChangePoint));
 					_ChangeFactors[i] = clamp(_ChangeFactors[i], -1, 1);
 					sumT += _ChangeFactors[i];
 					multT *= _ChangeFactors[i];
@@ -201,8 +202,10 @@
 				//*********************TEXTURE****************************//
 				float4 c = tex2D(_MainTex, IN.uv_MainTex);
 				//o.Albedo = clipRange;
-				o.Albedo.r = 1 - multT;
-				//o.Albedo.g = 1 - sumT; 
+				o.Albedo.r = 1 - _ChangeFactors[1];
+				o.Albedo.g = 1 - _ChangeFactors[0];
+				o.Albedo.b = 1 - (_ChangeFactors[0] + _ChangeFactors[1]);
+				//o.Albedo.b = 1 - (_CurDistances[0] - _ChangePoint); 
 				//float shouldLine1 = step(_LineWidth, clipV);
 				//float shouldLine2 = step(0, clipV);
 				//float shouldLine = shouldLine1 - shouldLine2;

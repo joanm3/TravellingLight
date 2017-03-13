@@ -81,7 +81,7 @@ Material:
       second: 0
     - first:
         name: _Clip
-      second: 1
+      second: 0
     - first:
         name: _Cloak
       second: 0
@@ -120,7 +120,7 @@ Material:
       second: 0
     - first:
         name: _Length
-      second: 4
+      second: 2
     - first:
         name: _LineWidth
       second: 0.29
