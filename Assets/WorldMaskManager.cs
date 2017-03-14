@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 #endif
 using UnityEngine;
+using ProjectLight.Functions;
 
 [ExecuteInEditMode]
 public class WorldMaskManager : Singleton<WorldMaskManager>
@@ -96,7 +97,6 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
         UpdateTargetPositions(forestTargets, ref forestTargetPositions);
         UpdateTargetPositions(cityTargets, ref cityTargetPositions);
 
-
         if (Application.isPlaying)
         {
             for (int i = 0; i < forestMaterials.Count; i++)
@@ -108,6 +108,7 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
             {
                 cityMaterials[i].SetFloat("_Clip", 1f);
             }
+            ResetCloaks(true);
         }
 
     }
@@ -196,12 +197,8 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
                 targets[i].target.name = prefab.name + "_" + (i + 1).ToString();
                 targets[i].cloak = 0f;
                 targets[i].index = i;
-
-                //if (!targets[i].maskMaterial.shader.Equals(maskShader))
-                //{
-                //    Debug.LogError("shader is not correct for " + name + ", please assign " + maskShader.name);
-                //}
-
+                targets[i].colorSetter = targets[i].target.transform.GetComponentInAll<SetColorMaterial>();
+                targets[i].colorSetter.index = targets[i].index;
             }
         }
         else if (oldForestCount > targets.Count)
@@ -236,7 +233,22 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
         }
         for (int i = 0; i < cityTargets.Count; i++)
         {
-            forestCloaks[i] = forestTargets[i].cloak;
+            cityCloaks[i] = cityTargets[i].cloak;
+        }
+    }
+
+    void ResetCloaks(bool equalOne)
+    {
+        float value = (equalOne) ? 1f : 0f;
+
+        for (int i = 0; i < forestTargets.Count; i++)
+        {
+            forestTargets[i].cloak = value;
+        }
+
+        for (int i = 0; i < cityTargets.Count; i++)
+        {
+            cityTargets[i].cloak = value;
         }
     }
 
@@ -276,6 +288,8 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
             matList[i].SetVector("_NoiseSettings2", Instance.worldMaskGlobalVariables.NoiseSettings);
             matList[i].SetVector("_LineColor", Instance.worldMaskGlobalVariables.LineColor);
             matList[i].SetFloat("_CircleForce", Instance.worldMaskGlobalVariables.CircleForce);
+            matList[i].SetFloat("_LineWidth", Instance.worldMaskGlobalVariables.LineWidth);
+
             matList[i].SetFloat("_Expand", Instance.worldMaskGlobalVariables.InnerExpand);
             matList[i].SetFloat("_Length", worldTargets.Count);
             matList[i].SetFloatArray("_Cloaks", cloakValues);
@@ -304,6 +318,8 @@ public class WorldMaskVariables
 {
     public Vector3 NoiseSettings;
     public Color LineColor;
+    [Range(0, 0.99f)]
+    public float LineWidth = 0.2f;
     [Range(0, 1)]
     public float CircleForce;
     [Range(0, 1)]
@@ -315,9 +331,8 @@ public class WorldMaskVariables
 public class WorldTarget
 {
     public GameObject target;
+    public SetColorMaterial colorSetter;
     public int index = 0;
     [Range(0, 1)]
     public float cloak = 0f;
-    [HideInInspector]
-    public Material maskMaterial;
 }

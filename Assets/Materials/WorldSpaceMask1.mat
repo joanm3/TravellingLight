@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: WorldSpaceMask1
-  m_Shader: {fileID: 4800000, guid: c0b6a36c2dcfba44c959785b389207aa, type: 3}
+  m_Shader: {fileID: 4800000, guid: 6e67ffcd3649144418fcb164d3dd79f0, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -49,6 +49,12 @@ Material:
         name: _MainTex
       second:
         m_Texture: {fileID: 2800000, guid: f05549371eb437641adf6caba7e1c3a0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MainTex2
+      second:
+        m_Texture: {fileID: 2800000, guid: 55bb554bc7a59254d9e67b8a502f8354, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -113,6 +119,9 @@ Material:
         name: _Glossiness
       second: 0.5
     - first:
+        name: _Glossiness2
+      second: 0.5
+    - first:
         name: _GlossyReflections
       second: 1
     - first:
@@ -120,12 +129,15 @@ Material:
       second: 0
     - first:
         name: _Length
-      second: 4
+      second: 6
     - first:
         name: _LineWidth
-      second: 0.29
+      second: 0.186
     - first:
         name: _Metallic
+      second: 0
+    - first:
+        name: _Metallic2
       second: 0
     - first:
         name: _Mode
