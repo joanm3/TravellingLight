@@ -18,6 +18,16 @@ namespace ProjectLight.Functions
             return t;
         }
 
+        public static T GetComponentInAll<T>(this GameObject gameObject)
+        {
+            T t = gameObject.GetComponent<T>();
+            if (t == null)
+                t = gameObject.GetComponentInChildren<T>();
+            if (t == null)
+                t = gameObject.GetComponentInParent<T>();
+            return t;
+        }
+
         public static Renderer GetRendererFromCollision(RaycastHit hit)
         {
             Renderer _colliderRend = (Renderer)hit.collider.GetComponent<MeshRenderer>();

@@ -41,9 +41,20 @@ public class SetColorMaterial : MonoBehaviour
 
     private float targetCloak = 0f;
 
+    public bool manualActivation = false;
+
+    private bool oldManualActivation = false;
+
+    void ChangeGoActive()
+    {
+        GoActive = !GoActive;
+    }
+
     void Start()
     {
         goActive = false;
+        manualActivation = goActive;
+        oldManualActivation = manualActivation;
         worldType = GetComponent<WorldType>();
         targetCloak = 1f;
         SetTargetCloak();
@@ -71,6 +82,12 @@ public class SetColorMaterial : MonoBehaviour
 
     void Update()
     {
+        if (oldManualActivation != manualActivation)
+        {
+            ChangeGoActive();
+            oldManualActivation = manualActivation;
+        }
+
         //CHECK: it never gets to the target value, you should assing
         //the values to 1-0 when DistantFromTarget... is false. 
 
@@ -80,9 +97,19 @@ public class SetColorMaterial : MonoBehaviour
             SetColorInRange();
             SetFinalColor();
         }
+        else
+        {
+            actualColor = GoActive ? activeColor : inactiveColor;
+        }
 
         if (DistantFromTargetCloak())
-            UpdateTargetCloak(goActive);
+        {
+            UpdateTargetCloaks(GoActive);
+        }
+        else
+        {
+
+        }
     }
 
 
@@ -102,7 +129,7 @@ public class SetColorMaterial : MonoBehaviour
                 if (luzLight != null)
                     luzLight.intensity = 0f;
             }
-            goActive = true;
+            GoActive = true;
             if (sinMovement)
                 sinMovement.move = true;
         }
@@ -116,7 +143,7 @@ public class SetColorMaterial : MonoBehaviour
 
         if (col.gameObject.tag == ("LightSourceCollider"))
         {
-            goActive = false;
+            GoActive = false;
             if (sinMovement)
                 sinMovement.move = false;
         }
@@ -200,7 +227,7 @@ public class SetColorMaterial : MonoBehaviour
     {
         //change the colors in a range from 0-1 to avoid the colors to sum differently. check also 
         //if the values of the target color is bigger or smaller to sum or substract them. 
-        if (goActive)
+        if (GoActive)
         {
             colorsInRange.r = (activeColor.r > inactiveColor.r) ?
                 colorsInRange.r + velocity * Time.deltaTime :
@@ -227,17 +254,6 @@ public class SetColorMaterial : MonoBehaviour
 
     }
 
-    void UpdateTargetCloak(bool goActive)
-    {
-        if (WorldMaskManager.Instance == null)
-            return;
-
-        targetCloak = goActive ? targetCloak - velocity * Time.deltaTime : targetCloak + velocity * Time.deltaTime;
-        SetTargetCloak();
-        SetTargetCloaks();
-    }
-
-
     void SetFinalColor()
     {
         //return the values from 0 to 1 to its original range and then apply them in the color. 
@@ -263,24 +279,34 @@ public class SetColorMaterial : MonoBehaviour
         }
     }
 
+    void UpdateTargetCloaks(bool goActive)
+    {
+        if (WorldMaskManager.Instance == null)
+            return;
+
+        targetCloak = goActive ? targetCloak - velocity * Time.deltaTime : targetCloak + velocity * Time.deltaTime;
+        SetTargetCloak();
+        SetTargetCloaks();
+    }
+
     bool DistantFromTargetColor()
     {
-        if (goActive)
+        if (GoActive)
         {
-            if (Mathf.Abs(actualColor.r - activeColor.r) > 0.01f)
+            if (Mathf.Abs(actualColor.r - activeColor.r) > 0.05f)
                 return true;
-            if (Mathf.Abs(actualColor.g - activeColor.g) > 0.01f)
+            if (Mathf.Abs(actualColor.g - activeColor.g) > 0.05f)
                 return true;
-            if (Mathf.Abs(actualColor.b - activeColor.b) > 0.01f)
+            if (Mathf.Abs(actualColor.b - activeColor.b) > 0.05f)
                 return true;
         }
         else
         {
-            if (Mathf.Abs(actualColor.r - inactiveColor.r) > 0.01f)
+            if (Mathf.Abs(actualColor.r - inactiveColor.r) > 0.05f)
                 return true;
-            if (Mathf.Abs(actualColor.g - inactiveColor.g) > 0.01f)
+            if (Mathf.Abs(actualColor.g - inactiveColor.g) > 0.05f)
                 return true;
-            if (Mathf.Abs(actualColor.b - inactiveColor.b) > 0.01f)
+            if (Mathf.Abs(actualColor.b - inactiveColor.b) > 0.05f)
                 return true;
         }
 
@@ -289,7 +315,7 @@ public class SetColorMaterial : MonoBehaviour
 
     bool DistantFromTargetCloak()
     {
-        if (goActive)
+        if (GoActive)
         {
             if (Mathf.Abs(targetCloak) > 0.01f)
                 return true;

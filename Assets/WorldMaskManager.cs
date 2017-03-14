@@ -94,20 +94,31 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
         LoadMaterials();
         UpdateLengths();
         UpdateCloaks();
+        //if (forestTargets != null && forestTargets.Count > 0)
+        //{
         UpdateTargetPositions(forestTargets, ref forestTargetPositions);
+        //}
+        //if (forestTargets != null && forestTargets.Count > 0)
+        //{
         UpdateTargetPositions(cityTargets, ref cityTargetPositions);
+        //}
 
         if (Application.isPlaying)
         {
+            //if (forestMaterials != null && forestMaterials.Count < 0)
+            //{
             for (int i = 0; i < forestMaterials.Count; i++)
             {
                 forestMaterials[i].SetFloat("_Clip", 1f);
             }
-
+            //}
+            //if (cityMaterials != null && forestMaterials.Count < 0)
+            //{
             for (int i = 0; i < cityMaterials.Count; i++)
             {
                 cityMaterials[i].SetFloat("_Clip", 1f);
             }
+            //}
             ResetCloaks(true);
         }
 
@@ -181,6 +192,9 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
     void UpdateList(ref List<WorldTarget> targets, ref int oldCount, GameObject prefab)
     {
+        //if (targets.Count == 0)
+        //    return;
+
         if (oldCount < targets.Count)
         {
             for (int i = oldCount; i < targets.Count; i++)
@@ -216,7 +230,8 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
     void UpdateCloaks()
     {
-
+        //if (forestTargets.Count < 0)
+        //{
         if (forestCloaks.Length != forestTargets.Count)
         {
             forestCloaks = new float[forestTargets.Count];
@@ -225,8 +240,10 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
         {
             forestCloaks[i] = forestTargets[i].cloak;
         }
+        //}
 
-
+        //if (cityTargets.Count < 0)
+        //{
         if (cityCloaks.Length != cityTargets.Count)
         {
             cityCloaks = new float[cityTargets.Count];
@@ -235,21 +252,28 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
         {
             cityCloaks[i] = cityTargets[i].cloak;
         }
+        //}
+
     }
 
     void ResetCloaks(bool equalOne)
     {
         float value = (equalOne) ? 1f : 0f;
 
+        //if (forestTargets != null)
+        //{
         for (int i = 0; i < forestTargets.Count; i++)
         {
             forestTargets[i].cloak = value;
         }
-
+        //}
+        //if (cityTargets != null)
+        //{
         for (int i = 0; i < cityTargets.Count; i++)
         {
             cityTargets[i].cloak = value;
         }
+        //}
     }
 
     void UpdateLengths()
@@ -260,20 +284,25 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
         }
         for (int i = 0; i < cityMaterials.Count; i++)
         {
-            forestMaterials[i].SetFloat("_Length", cityTargets.Count);
+            cityMaterials[i].SetFloat("_Length", cityTargets.Count);
         }
     }
 
 
     void UpdateTargetPositions(List<WorldTarget> targets, ref Vector4[] targetPositions)
     {
+        //if (targets == null)
+        //    return;
+        //if (targets.Count <= 0)
+        //    return;
+
         if (targetPositions.Length != targets.Count)
         {
             targetPositions = new Vector4[targets.Count];
         }
         for (int i = 0; i < targetPositions.Length; i++)
         {
-            targetPositions[i] = targets[i].target.GetComponentInChildren<SinusMovement>().transform.position;
+            targetPositions[i] = targets[i].target.GetComponentInAll<SinusMovement>().transform.position;
             if (targetPositions[i] == null)
                 targetPositions[i] = targets[i].target.transform.position;
             //targetPositions[i].w = 0f;

@@ -129,7 +129,7 @@ Material:
       second: 0
     - first:
         name: _Length
-      second: 6
+      second: 4
     - first:
         name: _LineWidth
       second: 0.186

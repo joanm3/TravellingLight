@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 114536186560552970}
   - component: {fileID: 114143747123119924}
   m_Layer: 0
-  m_Name: CubeTest
+  m_Name: ForestDoubleCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 114952528466653282}
   - component: {fileID: 65483043505104858}
   - component: {fileID: 54483706472436444}
+  - component: {fileID: 114548197149612896}
   m_Layer: 0
   m_Name: InCube
   m_TagString: Untagged
@@ -139,7 +140,7 @@ Transform:
   m_GameObject: {fileID: 1312073287685958}
   m_LocalRotation: {x: 0.18905546, y: -0.084124945, z: -0.17396764, w: 0.962765}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children: []
   m_Father: {fileID: 4211621339053882}
   m_RootOrder: 1
@@ -191,7 +192,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1313352315478006}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.63, y: 4.93, z: -2.11}
+  m_LocalPosition: {x: 17.22, y: 5, z: -10.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4211621339053882}
@@ -307,13 +308,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1313352315478006}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c94f9521ae852be4e8c5ca9556245bb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rotationAxis: 1
-  rotate: 0
+  rotate: 1
   velocity: 15
 --- !u!114 &114384226762756718
 MonoBehaviour:
@@ -349,6 +350,18 @@ MonoBehaviour:
   isFollowingCharacter: 0
   rotationAngleForce: 20
   desactivateWhenFollowing: 1
+--- !u!114 &114548197149612896
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1521761559197802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 787997e6b37651c408bf75d8ea6ddb1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldType: 0
 --- !u!114 &114847662562950300
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -374,10 +387,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 196a37ffcfb8eff43a72a12a52b45f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldType: 1
-  targetIndex: 2
+  worldType: {fileID: 0}
+  index: 6
+  targetIndex: 1
   colorType: 0
-  desactivateOnExit: 1
+  desactivateOnExit: 0
   velocity: 1
   luz: {fileID: 1780563156533152, guid: 3ebcbc8742bfbc344840f93575c94530, type: 2}
   makeLuzChild: 0
@@ -385,6 +399,7 @@ MonoBehaviour:
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   inactiveColor: {r: 0.29853615, g: 0.49264705, b: 0.11229457, a: 1}
   luzLight: {fileID: 0}
+  manualActivation: 0
 --- !u!114 &114989106480952152
 MonoBehaviour:
   m_ObjectHideFlags: 1
