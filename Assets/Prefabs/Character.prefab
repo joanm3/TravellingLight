@@ -4991,7 +4991,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_surfaceAngle: 0
-  m_isGrounded: 0
+  m_isGrounded: 1
   m_airGravForce: 100
   m_gravForceOverTime:
     serializedVersion: 2
@@ -5013,24 +5013,24 @@ MonoBehaviour:
     m_RotationOrder: 0
   m_jumpForce: 2.59
   m_gravVector: {x: -0, y: -1, z: -0}
-  m_inputGravityMultiplier: 0
+  m_inputGravityMultiplier: 1
   m_tJumpCooldown: 0.2
   characterState: 0
-  m_characterDirection: {x: 0, y: 0, z: 0}
+  m_characterDirection: {x: -0.74025184, y: 0, z: 0.67232966}
   m_characterSpeed: 0
   m_characterCurrentSpeed: 0
-  massPlayer: 0.29
-  friction: 0.718
+  massPlayer: 0.15
+  friction: 0.8
   velMax: 7
   stopThreshold: 0.95
   Glide: 1
   StartForcesAngle: 45
   FallInflectionAngle: 70
-  m_gravForce: 1
-  m_maxForce: 1
+  m_gravForce: 278.10513
+  m_maxForce: 39.2
   m_inputCurrentForce: 0
-  m_surfaceCurrentDescentForce: 0
-  m_currentTotalForce: 0
+  m_surfaceCurrentDescentForce: -0
+  m_currentTotalForce: -0.73518527
   m_characterInitialJumpSpeed: 1
   m_lerpForcesVelocity: 1
   Animation: idle

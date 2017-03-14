@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
   worldMaskGlobalVariables:
-    NoiseSettings: {x: 1.2, y: 1.2, z: 0.05}
+    NoiseSettings: {x: 1.2, y: 1.35, z: 0.06}
     LineColor: {r: 1, g: 1, b: 1, a: 0.359}
     CircleForce: 0.5
     InnerExpand: 0.5
@@ -79,8 +79,8 @@ MonoBehaviour:
     cloak: 0
     maskMaterial: {fileID: 0}
   forestMaterials:
-  - {fileID: 2100000, guid: 5d40a2089dd9afe4d835d914af8fce20, type: 2}
   - {fileID: 2100000, guid: 43b4b81157f6e114e9763a00807065d5, type: 2}
+  - {fileID: 2100000, guid: 5d40a2089dd9afe4d835d914af8fce20, type: 2}
   cityPrefab: {fileID: 1801652433295718, guid: 5cbf3ac60bc565d47aecc31d7606729f, type: 2}
   cityTargets:
   - target: {fileID: 0}

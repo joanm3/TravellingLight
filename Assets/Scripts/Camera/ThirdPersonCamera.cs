@@ -30,7 +30,6 @@ struct CameraPosition
 //[RequireComponent(typeof(BarsEffect))]
 public class ThirdPersonCamera : MonoBehaviour
 {
-
     [SerializeField]
     private CamMode cameraMode = CamMode.ThirdPersonOrbit;
     [SerializeField]
@@ -41,6 +40,11 @@ public class ThirdPersonCamera : MonoBehaviour
     private Transform secondPersonCameraPosition;
     [SerializeField]
     private Transform parentRig;
+    [SerializeField]
+    private bool inverseCameraMovement = false;
+    [SerializeField]
+    [Range(0.1f, 1.5f)]
+    private float mouseSensibility = 0.5f;
     [SerializeField]
     private float distanceAwayDefault;
     [SerializeField]
@@ -163,8 +167,8 @@ public class ThirdPersonCamera : MonoBehaviour
     {
 
         float leftArrowY = Input.GetAxis("FirstPerson");
-        float rightX = Input.GetAxis("Mouse X");
-        float rightY = Input.GetAxis("Mouse Y");
+        float rightX = (!inverseCameraMovement) ? -Input.GetAxis("Mouse X") * mouseSensibility : Input.GetAxis("Mouse X") * mouseSensibility;
+        float rightY = Input.GetAxis("Mouse Y") * mouseSensibility;
 
         //IT IS DOING DISGUSTING STUFF SMOOOTH IT!!!! 
         smoothLookAtPosition = Mathf.Lerp(smoothLookAtPosition, distanceUp, Time.deltaTime * lookAtSmoothFactor);
@@ -347,7 +351,9 @@ public class ThirdPersonCamera : MonoBehaviour
             case CamMode.FirstPerson:
                 //clamp this to a max.
                 //ResetCamera();
-                fpXRot += rightX * fpLookSpeed;
+
+
+                fpXRot += (!inverseCameraMovement) ? rightX * -fpLookSpeed : rightX * fpLookSpeed;
                 fpYRot += rightY * -fpLookSpeed;
                 fpXRot = Mathf.Clamp(fpXRot, fpsXYminAndMaxClampAngles.x, fpsXYminAndMaxClampAngles.y);
                 fpYRot = Mathf.Clamp(fpYRot, -fpsXYminAndMaxClampAngles.z, -fpsXYminAndMaxClampAngles.w);

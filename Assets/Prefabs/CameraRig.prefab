@@ -159,7 +159,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  camSmoothDampTime: 0.1
+  camSmoothDampTime: 0.2
   firstPersonCameraPosition: {fileID: 0}
   firstPersonThreshold: 0.3
   fpLookSpeed: 1
