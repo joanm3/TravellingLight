@@ -1,38 +1,42 @@
-﻿Shader "Custom/WorldSpaceNoiseMask"
+﻿Shader "Custom/NoiseMaskTwoWorlds"
 {
 	Properties
 	{
 		//material 
-		/*[NoScaleOffset]*/ _MainTex("Albedo (RGB)", 2D) = "white" {}
-		_Glossiness("Smoothness", Range(0,1)) = 0.5
-		_Metallic("Metallic", Range(0,1)) = 0.0
+		/*[NoScaleOffset]*/ _MainTex("Albedo World 1", 2D) = "white" {}
+		_Glossiness("Smoothness 1", Range(0,1)) = 0.5
+		_Metallic("Metallic 1", Range(0,1)) = 0.0
+		_MainTex2("Albedo World 2", 2D) = "white" {}
+		_Glossiness2("Smoothness 2", Range(0,1)) = 0.5
+		_Metallic2("Metallic 3", Range(0,1)) = 0.0
+
 		_Length("Length", Range(1,99)) = 10
 
-			//noise settings
-			_NoiseSettings("Noise settings : scale xy, offset xy", Vector) = (1, 1, 0, 0)
-			_NoiseSettings2("Noise settings gain, frequencyMul, baseWeight, na", Vector) = (0.5, 2.5, 0.5)
+		//noise settings
+		_NoiseSettings("Noise settings : scale xy, offset xy", Vector) = (1, 1, 0, 0)
+		_NoiseSettings2("Noise settings gain, frequencyMul, baseWeight, na", Vector) = (0.5, 2.5, 0.5)
 
-			//circle properties
-			_CircleForce("Circle Force", Range(0,1)) = 0.25
-			_Expand("Inner Expand", Range(0,1)) = 0.5
-			_Radius("Radius", FLOAT) = 0.75
-			//_WindowHeight("Window Height", FLOAT) = 0.0
-			_ChangePoint("Change at this distance", Float) = 5
-			//_MaxDistance("Max hide value", Float) = 5
+		//circle properties
+		_CircleForce("Circle Force", Range(0,1)) = 0.25
+		_Expand("Inner Expand", Range(0,1)) = 0.5
+		_Radius("Radius", FLOAT) = 0.75
+		//_WindowHeight("Window Height", FLOAT) = 0.0
+		_ChangePoint("Change at this distance", Float) = 5
+		//_MaxDistance("Max hide value", Float) = 5
 
-			//outline properties
-			_LineWidth("Line Width", Range(0,1)) = 0.5
-			_LineColor("Line Color (alpha = emission)", Color) = (1,1,1,0)
-			//_Cloak("Hide 1 (1 = hide)", Range(0,1)) = 1
-			//_Cloak2("Hide 2 (1 = hide)", Range(0,1)) = 1
-			//_Cloak3("Hide 3 (1 = hide)", Range(0,1)) = 1
-			//_Cloak4("Hide 4 (1 = hide)", Range(0,1)) = 1
-			//_TargetPosition("Target Pos 1", Vector) = (0,0,0)
-			// _TargetPos2("Target Pos 2", Vector) = (0,0,0)
-			// _TargetPos3("Target Pos 3", Vector) = (0,0,0)
-			// _TargetPos4("Target Pos 4", Vector) = (0,0,0)
-			//_Clip("Clip", Range(0,1)) = 0.025
-			_Invert("Invert", Range(0,1)) = 0.
+		//outline properties
+		_LineWidth("Line Width", Range(0,1)) = 0.5
+		_LineColor("Line Color (alpha = emission)", Color) = (1,1,1,0)
+		//_Cloak("Hide 1 (1 = hide)", Range(0,1)) = 1
+		//_Cloak2("Hide 2 (1 = hide)", Range(0,1)) = 1
+		//_Cloak3("Hide 3 (1 = hide)", Range(0,1)) = 1
+		//_Cloak4("Hide 4 (1 = hide)", Range(0,1)) = 1
+		//_TargetPosition("Target Pos 1", Vector) = (0,0,0)
+		// _TargetPos2("Target Pos 2", Vector) = (0,0,0)
+		// _TargetPos3("Target Pos 3", Vector) = (0,0,0)
+		// _TargetPos4("Target Pos 4", Vector) = (0,0,0)
+		//_Clip("Clip", Range(0,1)) = 0.025
+		_Invert("Invert", Range(0,1)) = 0.
 
 	}
 
@@ -65,6 +69,11 @@
 			uniform sampler2D _MainTex;
 			uniform float _Glossiness;
 			uniform float _Metallic;
+
+
+			uniform sampler2D _MainTex2;
+			uniform float _Glossiness2;
+			uniform float _Metallic2;
 
 			//noise 
 			uniform float _Cloak;
@@ -102,6 +111,7 @@
 			{
 				float2 uv_MainTex : TEXCOORD0;
 				float2 noiseUV : TEXCOORD1;
+				float2 uv_MainTex2 : TEXCOORD2; 
 				float4 screenPos;
 				float3 worldPos;
 			};
@@ -113,6 +123,7 @@
 				UNITY_INITIALIZE_OUTPUT(Input,o);
 				o.uv_MainTex = v.texcoord.xy;
 				o.noiseUV = (v.texcoord.xy + _NoiseSettings.zw) * _NoiseSettings.xy;
+				o.uv_MainTex2 = v.texcoord1.xy; 
 			}
 
 			float NoiseFunction(float baseNoiseValue, uint generation)
@@ -192,16 +203,17 @@
 				float clipRange = lerp(finalInvers, finalValue, _Invert);
 				/*clipRange *= 1 + _LineWidth; */
 				float clipV = lerp(-1, clipRange, _Clip);
-				clip(-clipV + _LineWidth);
+				//clip(-clipV + _LineWidth);
 
 				//*********************TEXTURE****************************//
 				float4 c = tex2D(_MainTex, IN.uv_MainTex);
+				float4 c2 = tex2D(_MainTex2, IN.uv_MainTex); 
 
 				float shouldLine1 = step(-_LineWidth, -clipRange);
 				float shouldLine2 = step(0, -clipRange);
 				float shouldLine = shouldLine1 - shouldLine2;
 				o.Albedo = c.rgb;
-				//o.Albedo.b = shouldLine; 
+				o.Albedo = lerp(c2.rgb, c.rgb, shouldLine1);
 				o.Albedo = lerp(o.Albedo, c.rgb * _LineColor.rgb, shouldLine);
 				o.Emission = lerp(o.Emission, _LineColor.a, shouldLine);
 				o.Metallic = _Metallic;

@@ -10,9 +10,8 @@ GameObject:
   - component: {fileID: 400000}
   - component: {fileID: 3300000}
   - component: {fileID: 2300000}
-  - component: {fileID: 9500000}
   - component: {fileID: 65591840530103350}
-  - component: {fileID: 114387243717303896}
+  - component: {fileID: 114296986829476442}
   m_Layer: 12
   m_Name: Stone rock_b
   m_TagString: Untagged
@@ -26,8 +25,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: 0.00000001812735, y: 0.5586391, z: 0.000000012209447, w: 0.8294109}
-  m_LocalPosition: {x: 25.92, y: 0.02, z: 8.59}
+  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10.242569, y: 0.01767514, z: 28.322342}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -71,23 +70,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_Mesh: {fileID: 4300000, guid: 30a3b61ed3db98746bea5d1beaf0738b, type: 3}
---- !u!95 &9500000
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 30a3b61ed3db98746bea5d1beaf0738b, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -111,7 +93,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.655828, y: 1.0631902, z: 2.2752998}
   m_Center: {x: -0.0000014305115, y: 0.51391995, z: -0.00000011920929}
---- !u!114 &114387243717303896
+--- !u!114 &114296986829476442
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -119,19 +101,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5be424a8b6452664588ad34843c5b24a, type: 3}
+  m_Script: {fileID: 11500000, guid: 787997e6b37651c408bf75d8ea6ddb1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maskShader: {fileID: 4800000, guid: c0b6a36c2dcfba44c959785b389207aa, type: 3}
-  changeDistance: 10
-  waitTimeToChange: 0
-  timeToCheck: 1
-  updateTarget: 0
-  target: {fileID: 0}
-  cloak1: 0
-  target2: {fileID: 0}
-  cloak2: 0
-  target3: {fileID: 0}
-  cloak3: 0
-  target4: {fileID: 0}
-  cloak4: 0
+  worldType: 0

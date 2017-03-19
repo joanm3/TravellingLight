@@ -96,13 +96,12 @@ public class AssignToCharacter : MonoBehaviour
     }
 
 
-    void OnIsFollowingCharacterChanged(bool value)
+    void OnIsFollowingCharacterChanged(bool following)
     {
-        if (value)
+        if (following)
         {
             lightIntegrator.LightFollowers.Add(this);
-            if (desactivateWhenFollowing)
-                colorMat.GoActive = false;
+            colorMat.GoActive = false;
             isInSphere = false;
         }
         else
@@ -111,7 +110,7 @@ public class AssignToCharacter : MonoBehaviour
             lightIntegrator.LightFollowers.Remove(this);
             isInSphere = true;
         }
-        colorMat.IsLightEnabled = !value;
+        colorMat.IsLightEnabled = !following;
     }
 
     bool DistantFromTarget()

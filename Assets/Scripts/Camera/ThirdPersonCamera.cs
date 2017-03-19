@@ -30,7 +30,6 @@ struct CameraPosition
 //[RequireComponent(typeof(BarsEffect))]
 public class ThirdPersonCamera : MonoBehaviour
 {
-
     [SerializeField]
     private CamMode cameraMode = CamMode.ThirdPersonOrbit;
     [SerializeField]
@@ -41,6 +40,13 @@ public class ThirdPersonCamera : MonoBehaviour
     private Transform secondPersonCameraPosition;
     [SerializeField]
     private Transform parentRig;
+    [SerializeField]
+    private bool inverseCameraX = false;
+    [SerializeField]
+    private bool inverseCameraY = false;
+    [SerializeField]
+    [Range(0.1f, 1.5f)]
+    private float mouseSensibility = 0.5f;
     [SerializeField]
     private float distanceAwayDefault;
     [SerializeField]
@@ -163,8 +169,8 @@ public class ThirdPersonCamera : MonoBehaviour
     {
 
         float leftArrowY = Input.GetAxis("FirstPerson");
-        float rightX = Input.GetAxis("Mouse X");
-        float rightY = Input.GetAxis("Mouse Y");
+        float rightX = (!inverseCameraX) ? -Input.GetAxis("Mouse X") * mouseSensibility : Input.GetAxis("Mouse X") * mouseSensibility;
+        float rightY = (!inverseCameraY) ? Input.GetAxis("Mouse Y") * mouseSensibility : -Input.GetAxis("Mouse Y") * mouseSensibility;
 
         //IT IS DOING DISGUSTING STUFF SMOOOTH IT!!!! 
         smoothLookAtPosition = Mathf.Lerp(smoothLookAtPosition, distanceUp, Time.deltaTime * lookAtSmoothFactor);
@@ -347,7 +353,9 @@ public class ThirdPersonCamera : MonoBehaviour
             case CamMode.FirstPerson:
                 //clamp this to a max.
                 //ResetCamera();
-                fpXRot += rightX * fpLookSpeed;
+
+
+                fpXRot += (!inverseCameraX) ? rightX * -fpLookSpeed : rightX * fpLookSpeed;
                 fpYRot += rightY * -fpLookSpeed;
                 fpXRot = Mathf.Clamp(fpXRot, fpsXYminAndMaxClampAngles.x, fpsXYminAndMaxClampAngles.y);
                 fpYRot = Mathf.Clamp(fpYRot, -fpsXYminAndMaxClampAngles.z, -fpsXYminAndMaxClampAngles.w);
@@ -356,7 +364,7 @@ public class ThirdPersonCamera : MonoBehaviour
                 this.transform.rotation = rotationShift * this.transform.rotation;
                 targetPosition = firstPersonCamPos.XForm.position;
                 float _distance = Vector3.Distance(this.transform.position, firstPersonCamPos.XForm.position);
-                float _goodDistance = (_distance > 0.1) ? LFunctions.NormalizeRange(_distance, 0f, distanceStartWhenGoingToFPS) : 0f;
+                float _goodDistance = (_distance > 0.1) ? Functions.NormalizeRange(_distance, 0f, distanceStartWhenGoingToFPS) : 0f;
                 lookAt = (Vector3.Lerp(this.transform.position + this.transform.forward, lookAt, _goodDistance));
 
                 //later we can do that the character rotates with this, but not important now. 

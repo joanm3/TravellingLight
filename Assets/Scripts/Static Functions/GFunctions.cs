@@ -4,8 +4,30 @@ using UnityEngine;
 
 namespace ProjectLight.Functions
 {
-    public static class LFunctions
+
+    public static class Functions
     {
+
+        public static T GetComponentInAll<T>(this Transform transform)
+        {
+            T t = transform.GetComponent<T>();
+            if (t == null)
+                t = transform.GetComponentInChildren<T>();
+            if (t == null)
+                t = transform.GetComponentInParent<T>();
+            return t;
+        }
+
+        public static T GetComponentInAll<T>(this GameObject gameObject)
+        {
+            T t = gameObject.GetComponent<T>();
+            if (t == null)
+                t = gameObject.GetComponentInChildren<T>();
+            if (t == null)
+                t = gameObject.GetComponentInParent<T>();
+            return t;
+        }
+
         public static Renderer GetRendererFromCollision(RaycastHit hit)
         {
             Renderer _colliderRend = (Renderer)hit.collider.GetComponent<MeshRenderer>();

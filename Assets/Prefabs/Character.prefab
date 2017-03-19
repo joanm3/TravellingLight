@@ -84,7 +84,6 @@ GameObject:
   - component: {fileID: 143741196125698316}
   - component: {fileID: 114792210110971422}
   - component: {fileID: 114722032729395720}
-  - component: {fileID: 114772091388366418}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -1258,22 +1257,6 @@ GameObject:
   - component: {fileID: 4952137507651816}
   m_Layer: 0
   m_Name: Hair_Side_01_L
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1465796827004528
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4212352427208346}
-  - component: {fileID: 108394262820812394}
-  m_Layer: 0
-  m_Name: Area Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2529,7 +2512,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4030402383319472}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4013098680354030
 Transform:
@@ -2583,7 +2566,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4030402383319472}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4025117785395638
 Transform:
@@ -2646,7 +2629,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 1.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4212352427208346}
   - {fileID: 4012842106845004}
   - {fileID: 4556275807984914}
   - {fileID: 4649253985040948}
@@ -3193,19 +3175,6 @@ Transform:
   m_Father: {fileID: 4446371530318658}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4212352427208346
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1465796827004528}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.11, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4030402383319472}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!4 &4215180777028734
 Transform:
   m_ObjectHideFlags: 1
@@ -3313,7 +3282,7 @@ Transform:
   - {fileID: 4645151239005368}
   - {fileID: 4723275689421908}
   m_Father: {fileID: 4030402383319472}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4266420675546872
 Transform:
@@ -3771,7 +3740,7 @@ Transform:
   m_LocalScale: {x: 0.4329391, y: 0.43293932, z: 0.43293932}
   m_Children: []
   m_Father: {fileID: 4030402383319472}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4557866200874496
 Transform:
@@ -3930,7 +3899,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4030402383319472}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4662379747016198
 Transform:
@@ -4927,54 +4896,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!108 &108394262820812394
-Light:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1465796827004528}
-  m_Enabled: 1
-  serializedVersion: 7
-  m_Type: 2
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 3
-  m_Range: 5
-  m_SpotAngle: 30
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_Lightmapping: 4
-  m_AreaSize: {x: 10, y: 10}
-  m_BounceIntensity: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
 --- !u!114 &114124692379077760
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1043448928958392}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c7fc774826a84b41b27e95962280625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lightStart: 50
   speedLightEnd: 1
-  playerLight: {fileID: 1465796827004528}
+  playerLight: {fileID: 0}
 --- !u!114 &114445990283694308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5019,31 +4954,6 @@ MonoBehaviour:
   timer: 0.3
   avatarHight: 1
   character: {fileID: 114792210110971422}
---- !u!114 &114772091388366418
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1041642679849176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4d1c86941e679a44918d98cdf4319d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewRadius: 12.62
-  viewAngle: 88
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 8192
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 4096
-  visibleTargets: []
-  meshResolution: 0.2
-  edgeResolveIterations: 4
-  edgeDstThreshold: 0
-  maskCutawayDst: 0.1
-  viewMeshFilter: {fileID: 33484600494221620}
 --- !u!114 &114792210110971422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5081,7 +4991,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_surfaceAngle: 0
-  m_isGrounded: 0
+  m_isGrounded: 1
   m_airGravForce: 100
   m_gravForceOverTime:
     serializedVersion: 2
@@ -5103,24 +5013,24 @@ MonoBehaviour:
     m_RotationOrder: 0
   m_jumpForce: 2.59
   m_gravVector: {x: -0, y: -1, z: -0}
-  m_inputGravityMultiplier: 0
+  m_inputGravityMultiplier: 1
   m_tJumpCooldown: 0.2
   characterState: 0
-  m_characterDirection: {x: 0, y: 0, z: 0}
+  m_characterDirection: {x: -0.74025184, y: 0, z: 0.67232966}
   m_characterSpeed: 0
   m_characterCurrentSpeed: 0
-  massPlayer: 0.29
-  friction: 0.718
+  massPlayer: 0.15
+  friction: 0.8
   velMax: 7
   stopThreshold: 0.95
   Glide: 1
   StartForcesAngle: 45
   FallInflectionAngle: 70
-  m_gravForce: 1
-  m_maxForce: 1
+  m_gravForce: 278.10513
+  m_maxForce: 39.2
   m_inputCurrentForce: 0
-  m_surfaceCurrentDescentForce: 0
-  m_currentTotalForce: 0
+  m_surfaceCurrentDescentForce: -0
+  m_currentTotalForce: -0.73518527
   m_characterInitialJumpSpeed: 1
   m_lerpForcesVelocity: 1
   Animation: idle
@@ -5134,8 +5044,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 3.5
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!137 &137019237544016718
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

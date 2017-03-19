@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4493456577109726}
-  - component: {fileID: 114971448776364520}
   - component: {fileID: 114780643272753824}
+  - component: {fileID: 114668349635531574}
   m_Layer: 0
   m_Name: ForestCube
   m_TagString: Untagged
@@ -41,7 +41,8 @@ GameObject:
   - component: {fileID: 23948279464785350}
   - component: {fileID: 54358713919414332}
   - component: {fileID: 114325719884464732}
-  - component: {fileID: 114065766486210660}
+  - component: {fileID: 114600206768385894}
+  - component: {fileID: 114957601697745292}
   m_Layer: 0
   m_Name: LightCubeV3
   m_TagString: LightSource
@@ -84,8 +85,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1346599705816042}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.88, y: 5, z: 18.03}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 24.16, y: 5, z: 11.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4279126359018004}
@@ -165,12 +166,35 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1358246138294096}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114065766486210660
+--- !u!114 &114325719884464732
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1358246138294096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 196a37ffcfb8eff43a72a12a52b45f24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldType: {fileID: 0}
+  index: 0
+  targetIndex: 2
+  colorType: 1
+  desactivateOnExit: 0
+  velocity: 1
+  luz: {fileID: 1780563156533152, guid: 3ebcbc8742bfbc344840f93575c94530, type: 2}
+  makeLuzChild: 1
+  lightIntensity: 6
+  activeColor: {r: 1, g: 1, b: 1, a: 1}
+  inactiveColor: {r: 0.09926471, g: 0.19852942, b: 0.13280936, a: 0}
+  luzLight: {fileID: 0}
+--- !u!114 &114600206768385894
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -185,28 +209,20 @@ MonoBehaviour:
   move: 1
   velocity: 1
   intensity: 1
---- !u!114 &114325719884464732
+--- !u!114 &114668349635531574
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1358246138294096}
+  m_GameObject: {fileID: 1346599705816042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 196a37ffcfb8eff43a72a12a52b45f24, type: 3}
+  m_Script: {fileID: 11500000, guid: c94f9521ae852be4e8c5ca9556245bb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldType: 0
-  targetIndex: 2
-  colorType: 1
-  desactivateOnExit: 0
-  velocity: 1
-  luz: {fileID: 1780563156533152, guid: 3ebcbc8742bfbc344840f93575c94530, type: 2}
-  makeLuzChild: 1
-  lightIntensity: 6
-  activeColor: {r: 1, g: 1, b: 1, a: 1}
-  inactiveColor: {r: 0.09926471, g: 0.19852942, b: 0.13280936, a: 0}
-  luzLight: {fileID: 0}
+  rotationAxis: 1
+  rotate: 1
+  velocity: 15
 --- !u!114 &114780643272753824
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -226,17 +242,15 @@ MonoBehaviour:
   isFollowingCharacter: 0
   rotationAngleForce: 20
   desactivateWhenFollowing: 1
---- !u!114 &114971448776364520
+--- !u!114 &114957601697745292
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1346599705816042}
+  m_GameObject: {fileID: 1358246138294096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c94f9521ae852be4e8c5ca9556245bb2, type: 3}
+  m_Script: {fileID: 11500000, guid: 787997e6b37651c408bf75d8ea6ddb1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationAxis: 1
-  rotate: 1
-  velocity: 15
+  worldType: 0

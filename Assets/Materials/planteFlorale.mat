@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: planteFlorale
-  m_Shader: {fileID: 4800000, guid: c0b6a36c2dcfba44c959785b389207aa, type: 3}
+  m_Shader: {fileID: 4800000, guid: 6e67ffcd3649144418fcb164d3dd79f0, type: 3}
   m_ShaderKeywords: _EMISSION _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -52,6 +52,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
+        name: _MainTex2
+      second:
+        m_Texture: {fileID: 2800000, guid: ec8e7c912677b8b44974f61a0e0776cd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
         name: _MetallicGlossMap
       second:
         m_Texture: {fileID: 0}
@@ -78,7 +84,7 @@ Material:
       second: 10
     - first:
         name: _CircleForce
-      second: 0
+      second: 0.5
     - first:
         name: _Clip
       second: 0
@@ -105,13 +111,16 @@ Material:
       second: 0
     - first:
         name: _Expand
-      second: 0
+      second: 0.5
     - first:
         name: _GlossMapScale
       second: 0.133
     - first:
         name: _Glossiness
       second: 0.14
+    - first:
+        name: _Glossiness2
+      second: 0.5
     - first:
         name: _GlossyReflections
       second: 1
@@ -120,12 +129,15 @@ Material:
       second: 0
     - first:
         name: _Length
-      second: 10
+      second: 4
     - first:
         name: _LineWidth
-      second: 0.25
+      second: 0.186
     - first:
         name: _Metallic
+      second: 0
+    - first:
+        name: _Metallic2
       second: 0
     - first:
         name: _Mode
@@ -169,16 +181,16 @@ Material:
       second: {r: 1, g: 1, b: 0, a: 0}
     - first:
         name: _NoiseSettings2
-      second: {r: 1.5, g: 1.3, b: 0.05, a: 0}
+      second: {r: 1.2, g: 1.35, b: 0.06, a: 0}
     - first:
         name: _TargetPos2
-      second: {r: 3.3300002, g: 1.9999998, b: 10.99, a: 0}
+      second: {r: 9.56, g: 5, b: 0, a: 0}
     - first:
         name: _TargetPos3
-      second: {r: 18.46, g: 1.9999998, b: 8.74, a: 0}
+      second: {r: 0, g: 5, b: -9.86, a: 0}
     - first:
         name: _TargetPos4
-      second: {r: 29.17, g: 1.9999998, b: 21.75, a: 0}
+      second: {r: 0, g: 5, b: 15.28, a: 0}
     - first:
         name: _TargetPosition
-      second: {r: -14.88, g: 1.9999998, b: -2.02, a: 0}
+      second: {r: -8.2300005, g: 5, b: 0, a: 0}

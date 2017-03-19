@@ -24,8 +24,8 @@ public class PlayerLightManager : MonoBehaviour {
             currentLight -= speedLightEnd * Time.deltaTime;
             lightRange = currentLight / 10;
         }
-        playerLight.GetComponent<Light>().range = lightRange;
-        gameObject.transform.localScale = new Vector3(lightRange, lightRange, lightRange);
+        //playerLight.GetComponent<Light>().range = lightRange;
+        //gameObject.transform.localScale = new Vector3(lightRange, lightRange, lightRange);
     }
 
     void OnTriggerEnter(Collider col)

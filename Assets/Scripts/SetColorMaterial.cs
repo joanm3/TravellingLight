@@ -2,10 +2,11 @@
 using ProjectLight.Functions;
 
 [RequireComponent(typeof(Renderer))]
+[RequireComponent(typeof(WorldType))]
 public class SetColorMaterial : MonoBehaviour
 {
-    public enum WorldType { Forest, City };
-    public WorldType worldType = WorldType.Forest;
+    public WorldType worldType;
+    public int index = 0;
     public enum TargetIndex { one = 1, two = 2, three = 3, four = 4 };
     public enum ColorType { Albedo, Emission };
     public TargetIndex targetIndex = TargetIndex.one;
@@ -40,11 +41,23 @@ public class SetColorMaterial : MonoBehaviour
 
     private float targetCloak = 0f;
 
+    public bool manualActivation = false;
+
+    private bool oldManualActivation = false;
+
+    void ChangeGoActive()
+    {
+        GoActive = !GoActive;
+    }
+
     void Start()
     {
         goActive = false;
+        manualActivation = goActive;
+        oldManualActivation = manualActivation;
+        worldType = GetComponent<WorldType>();
         targetCloak = 1f;
-        UpdateTargetCloak();
+        SetTargetCloak();
 
         rend = GetComponent<Renderer>();
         mat = rend.material;
@@ -69,28 +82,33 @@ public class SetColorMaterial : MonoBehaviour
 
     void Update()
     {
+        if (oldManualActivation != manualActivation)
+        {
+            ChangeGoActive();
+            oldManualActivation = manualActivation;
+        }
+
+        //CHECK: it never gets to the target value, you should assing
+        //the values to 1-0 when DistantFromTarget... is false. 
+
         //when the colors are far away from target, change them. 
         if (DistantFromTargetColor())
         {
             SetColorInRange();
             SetFinalColor();
         }
+        else
+        {
+            actualColor = GoActive ? activeColor : inactiveColor;
+        }
 
         if (DistantFromTargetCloak())
         {
-            SetTargetCloak(goActive);
+            UpdateTargetCloaks(GoActive);
         }
-
-        //destroy light when not active and intensity is small. 
-        if (!goActive && luzLight != null)
+        else
         {
-            if (luzLight.intensity < 0.1f)
-            {
-                //dont destroy it, put it in a pool later on
-                //Destroy(luzInstance);
-                //luzInstance = null;
-                //luzLight = null;
-            }
+
         }
     }
 
@@ -111,7 +129,7 @@ public class SetColorMaterial : MonoBehaviour
                 if (luzLight != null)
                     luzLight.intensity = 0f;
             }
-            goActive = true;
+            GoActive = true;
             if (sinMovement)
                 sinMovement.move = true;
         }
@@ -125,17 +143,43 @@ public class SetColorMaterial : MonoBehaviour
 
         if (col.gameObject.tag == ("LightSourceCollider"))
         {
-            goActive = false;
+            GoActive = false;
             if (sinMovement)
                 sinMovement.move = false;
         }
     }
 
-    void UpdateTargetCloak()
+    void SetTargetCloaks()
     {
-        switch (worldType)
+        switch (worldType.worldType)
         {
-            case WorldType.Forest:
+            case WorldType.InWorld.Forest:
+                for (int i = 0; i < WorldMaskManager.Instance.forestCloaks.Length; i++)
+                {
+                    if (index == i)
+                    {
+                        WorldMaskManager.Instance.forestTargets[i].cloak = targetCloak;
+                    }
+                }
+                break;
+
+            case WorldType.InWorld.City:
+                for (int i = 0; i < WorldMaskManager.Instance.cityCloaks.Length; i++)
+                {
+                    if (index == i)
+                    {
+                        WorldMaskManager.Instance.cityTargets[i].cloak = targetCloak;
+                    }
+                }
+                break;
+        }
+    }
+
+    void SetTargetCloak()
+    {
+        switch (worldType.worldType)
+        {
+            case WorldType.InWorld.Forest:
                 switch (targetIndex)
                 {
                     case TargetIndex.one:
@@ -156,7 +200,7 @@ public class SetColorMaterial : MonoBehaviour
                 }
                 break;
 
-            case WorldType.City:
+            case WorldType.InWorld.City:
                 switch (targetIndex)
                 {
                     case TargetIndex.one:
@@ -183,7 +227,7 @@ public class SetColorMaterial : MonoBehaviour
     {
         //change the colors in a range from 0-1 to avoid the colors to sum differently. check also 
         //if the values of the target color is bigger or smaller to sum or substract them. 
-        if (goActive)
+        if (GoActive)
         {
             colorsInRange.r = (activeColor.r > inactiveColor.r) ?
                 colorsInRange.r + velocity * Time.deltaTime :
@@ -210,23 +254,12 @@ public class SetColorMaterial : MonoBehaviour
 
     }
 
-    void SetTargetCloak(bool goActive)
-    {
-        if (WorldMaskManager.Instance == null)
-            return;
-
-        targetCloak = goActive ? targetCloak - velocity * Time.deltaTime : targetCloak + velocity * Time.deltaTime;
-        UpdateTargetCloak();
-
-    }
-
-
     void SetFinalColor()
     {
         //return the values from 0 to 1 to its original range and then apply them in the color. 
-        actualColor.r = LFunctions.MapRange(colorsInRange.r, inactiveColor.r, activeColor.r, 0f, 1f);
-        actualColor.g = LFunctions.MapRange(colorsInRange.g, inactiveColor.g, activeColor.g, 0f, 1f);
-        actualColor.b = LFunctions.MapRange(colorsInRange.b, inactiveColor.b, activeColor.b, 0f, 1f);
+        actualColor.r = Functions.MapRange(colorsInRange.r, inactiveColor.r, activeColor.r, 0f, 1f);
+        actualColor.g = Functions.MapRange(colorsInRange.g, inactiveColor.g, activeColor.g, 0f, 1f);
+        actualColor.b = Functions.MapRange(colorsInRange.b, inactiveColor.b, activeColor.b, 0f, 1f);
         switch (colorType)
         {
             case ColorType.Albedo:
@@ -242,28 +275,38 @@ public class SetColorMaterial : MonoBehaviour
 
         if (luzLight)
         {
-            luzLight.intensity = LFunctions.MapRange(colorsInRange.r, inactiveColor.r, activeColor.r, 0f, lightIntensity);
+            luzLight.intensity = Functions.MapRange(colorsInRange.r, inactiveColor.r, activeColor.r, 0f, lightIntensity);
         }
+    }
+
+    void UpdateTargetCloaks(bool goActive)
+    {
+        if (WorldMaskManager.Instance == null)
+            return;
+
+        targetCloak = goActive ? targetCloak - velocity * Time.deltaTime : targetCloak + velocity * Time.deltaTime;
+        SetTargetCloak();
+        SetTargetCloaks();
     }
 
     bool DistantFromTargetColor()
     {
-        if (goActive)
+        if (GoActive)
         {
-            if (Mathf.Abs(actualColor.r - activeColor.r) > 0.01f)
+            if (Mathf.Abs(actualColor.r - activeColor.r) > 0.05f)
                 return true;
-            if (Mathf.Abs(actualColor.g - activeColor.g) > 0.01f)
+            if (Mathf.Abs(actualColor.g - activeColor.g) > 0.05f)
                 return true;
-            if (Mathf.Abs(actualColor.b - activeColor.b) > 0.01f)
+            if (Mathf.Abs(actualColor.b - activeColor.b) > 0.05f)
                 return true;
         }
         else
         {
-            if (Mathf.Abs(actualColor.r - inactiveColor.r) > 0.01f)
+            if (Mathf.Abs(actualColor.r - inactiveColor.r) > 0.05f)
                 return true;
-            if (Mathf.Abs(actualColor.g - inactiveColor.g) > 0.01f)
+            if (Mathf.Abs(actualColor.g - inactiveColor.g) > 0.05f)
                 return true;
-            if (Mathf.Abs(actualColor.b - inactiveColor.b) > 0.01f)
+            if (Mathf.Abs(actualColor.b - inactiveColor.b) > 0.05f)
                 return true;
         }
 
@@ -272,7 +315,7 @@ public class SetColorMaterial : MonoBehaviour
 
     bool DistantFromTargetCloak()
     {
-        if (goActive)
+        if (GoActive)
         {
             if (Mathf.Abs(targetCloak) > 0.01f)
                 return true;
@@ -298,8 +341,8 @@ public class SetColorMaterial : MonoBehaviour
                 colorsInRange = mat.GetColor("_EmissionColor");
                 break;
         }
-        colorsInRange.r = LFunctions.MapRange(colorsInRange.r, 0f, 1f, inactiveColor.r, activeColor.r);
-        colorsInRange.g = LFunctions.MapRange(colorsInRange.g, 0f, 1f, inactiveColor.g, activeColor.g);
-        colorsInRange.b = LFunctions.MapRange(colorsInRange.b, 0f, 1f, inactiveColor.b, activeColor.b);
+        colorsInRange.r = Functions.MapRange(colorsInRange.r, 0f, 1f, inactiveColor.r, activeColor.r);
+        colorsInRange.g = Functions.MapRange(colorsInRange.g, 0f, 1f, inactiveColor.g, activeColor.g);
+        colorsInRange.b = Functions.MapRange(colorsInRange.b, 0f, 1f, inactiveColor.b, activeColor.b);
     }
 }

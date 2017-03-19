@@ -26,9 +26,9 @@ public class SetEmissiveColorMaterial : MonoBehaviour
         goActive = false;
         colorsInRange = mat.color;
         actualColor = mat.color;
-        colorsInRange.r = LFunctions.MapRange(colorsInRange.r, 0f, 1f, inactiveColor.r, activeColor.r);
-        colorsInRange.g = LFunctions.MapRange(colorsInRange.g, 0f, 1f, inactiveColor.g, activeColor.g);
-        colorsInRange.b = LFunctions.MapRange(colorsInRange.b, 0f, 1f, inactiveColor.b, activeColor.b);
+        colorsInRange.r = Functions.MapRange(colorsInRange.r, 0f, 1f, inactiveColor.r, activeColor.r);
+        colorsInRange.g = Functions.MapRange(colorsInRange.g, 0f, 1f, inactiveColor.g, activeColor.g);
+        colorsInRange.b = Functions.MapRange(colorsInRange.b, 0f, 1f, inactiveColor.b, activeColor.b);
 
     }
 
@@ -110,9 +110,9 @@ public class SetEmissiveColorMaterial : MonoBehaviour
 
     void SetFinalColor()
     {
-        actualColor.r = LFunctions.MapRange(colorsInRange.r, inactiveColor.r, activeColor.r, 0f, 1f);
-        actualColor.g = LFunctions.MapRange(colorsInRange.g, inactiveColor.g, activeColor.g, 0f, 1f);
-        actualColor.b = LFunctions.MapRange(colorsInRange.b, inactiveColor.b, activeColor.b, 0f, 1f);
+        actualColor.r = Functions.MapRange(colorsInRange.r, inactiveColor.r, activeColor.r, 0f, 1f);
+        actualColor.g = Functions.MapRange(colorsInRange.g, inactiveColor.g, activeColor.g, 0f, 1f);
+        actualColor.b = Functions.MapRange(colorsInRange.b, inactiveColor.b, activeColor.b, 0f, 1f);
         mat.SetColor("_EmissionColor", actualColor);
     }
 
