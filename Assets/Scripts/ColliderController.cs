@@ -11,20 +11,10 @@ public class ColliderController : MonoBehaviour {
     }
 
     public WorldAppartenance gameObjectWorld;
-    public Collider col; 
 
-    public void DoSomething()
+    public void SetCollider(bool inThisWorld)
     {
-        gameObject.GetComponent<Collider>().enabled = !gameObject.GetComponent<Collider>().enabled;
-    }
-
-    //CurrentWorld = true : World 1
-    //CurrentWorld = false : World 2
-    void OnChangeWorld(WorldAppartenance w)
-    {
-        if (w == WorldAppartenance.world1 && gameObjectWorld == WorldAppartenance.world1)
-        {
-            //gameObject.GetComponent<Collider>().
-        }
+        gameObject.GetComponent<Collider>().enabled = inThisWorld;
+        //gameObject.GetComponent<MeshRenderer>().enabled = inThisWorld;
     }
 }
