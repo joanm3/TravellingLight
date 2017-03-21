@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: InverseMask
-  m_Shader: {fileID: 4800000, guid: 32e2e8f30f75bce45a457279174fb18b, type: 3}
+  m_Shader: {fileID: 4800000, guid: c0b6a36c2dcfba44c959785b389207aa, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -120,10 +120,10 @@ Material:
       second: 0
     - first:
         name: _Length
-      second: 10
+      second: 3
     - first:
         name: _LineWidth
-      second: 1
+      second: 0.2
     - first:
         name: _Metallic
       second: 0

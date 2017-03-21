@@ -6,9 +6,9 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: planteFlorale
+  m_Name: Ground
   m_Shader: {fileID: 4800000, guid: 6e67ffcd3649144418fcb164d3dd79f0, type: 3}
-  m_ShaderKeywords: _EMISSION _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+  m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -48,8 +48,8 @@ Material:
     - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 2800000, guid: d7dbfc57b475d5d4888fea448623a836, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 3aeb97c0f2e5f1546b1674aa03f75547, type: 3}
+        m_Scale: {x: 10, y: 10}
         m_Offset: {x: 0, y: 0}
     - first:
         name: _MainTex2
@@ -114,10 +114,10 @@ Material:
       second: 0.5
     - first:
         name: _GlossMapScale
-      second: 0.133
+      second: 1
     - first:
         name: _Glossiness
-      second: 0.14
+      second: 0
     - first:
         name: _Glossiness2
       second: 0.5
@@ -129,10 +129,10 @@ Material:
       second: 0
     - first:
         name: _Length
-      second: 3
+      second: 1
     - first:
         name: _LineWidth
-      second: 0.112
+      second: 0.25
     - first:
         name: _Metallic
       second: 0
@@ -150,10 +150,10 @@ Material:
       second: 0.02
     - first:
         name: _Radius
-      second: 2.02
+      second: 2
     - first:
         name: _SmoothnessTextureChannel
-      second: 1
+      second: 0
     - first:
         name: _SpecularHighlights
       second: 1
@@ -175,22 +175,22 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _LineColor
-      second: {r: 1, g: 1, b: 1, a: 0.359}
+      second: {r: 1, g: 1, b: 1, a: 0.309}
     - first:
         name: _NoiseSettings
       second: {r: 1, g: 1, b: 0, a: 0}
     - first:
         name: _NoiseSettings2
-      second: {r: 1.2, g: 1.45, b: 0.06, a: 0}
+      second: {r: 1.2, g: 1.33, b: 0.06, a: 0}
     - first:
         name: _TargetPos2
-      second: {r: 9.56, g: 5, b: 0, a: 0}
+      second: {r: 7.106207, g: 28.61, b: 6.8680744, a: 0}
     - first:
         name: _TargetPos3
-      second: {r: 0, g: 5, b: -9.86, a: 0}
+      second: {r: 7.106207, g: 28.61, b: 6.8680744, a: 0}
     - first:
         name: _TargetPos4
-      second: {r: 0, g: 5, b: 15.28, a: 0}
+      second: {r: 7.106207, g: 28.61, b: 6.8680744, a: 0}
     - first:
         name: _TargetPosition
-      second: {r: -8.2300005, g: 5, b: 0, a: 0}
+      second: {r: 7.106207, g: 28.61, b: 6.8680744, a: 0}

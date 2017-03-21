@@ -81,7 +81,7 @@ Material:
       second: 1
     - first:
         name: _ChangePoint
-      second: 10
+      second: 10.39
     - first:
         name: _CircleForce
       second: 0.5
@@ -108,13 +108,13 @@ Material:
       second: 1
     - first:
         name: _Invert
-      second: 0
+      second: 1
     - first:
         name: _Length
-      second: 10
+      second: 3
     - first:
         name: _LineWidth
-      second: 0.025
+      second: 0.112
     - first:
         name: _Metallic
       second: 0
@@ -163,7 +163,11 @@ Material:
       second: {r: 1, g: 1, b: 0, a: 0}
     - first:
         name: _NoiseSettings2
+<<<<<<< HEAD
       second: {r: 1.2, g: 1.35, b: 0.06, a: 0}
+=======
+      second: {r: 1.2, g: 1.45, b: 0.06, a: 0}
+>>>>>>> 71fc3e5d47bb337caf2e7c049b5c7531fd5352ab
     - first:
         name: _OutlineColor
       second: {r: 0, g: 0, b: 0, a: 1}

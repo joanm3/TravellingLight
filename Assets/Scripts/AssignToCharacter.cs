@@ -101,12 +101,12 @@ public class AssignToCharacter : MonoBehaviour
         if (following)
         {
             lightIntegrator.LightFollowers.Add(this);
-            colorMat.GoActive = false;
+            colorMat.IsActive = false;
             isInSphere = false;
         }
         else
         {
-            colorMat.GoActive = true;
+            colorMat.IsActive = true;
             lightIntegrator.LightFollowers.Remove(this);
             isInSphere = true;
         }

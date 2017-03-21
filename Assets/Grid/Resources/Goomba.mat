@@ -132,7 +132,7 @@ Material:
       second: 4
     - first:
         name: _LineWidth
-      second: 0.186
+      second: 0.2
     - first:
         name: _Metallic
       second: 0
