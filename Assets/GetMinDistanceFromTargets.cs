@@ -5,6 +5,7 @@ using UnityEngine;
 public class GetMinDistanceFromTargets : MonoBehaviour
 {
 
+    public bool changeWorldAccordingToDistance = false;
     public float minDistance;
 
     // Use this for initialization
@@ -20,6 +21,10 @@ public class GetMinDistanceFromTargets : MonoBehaviour
     void Update()
     {
         minDistance = GetNearestDistance();
+        if (changeWorldAccordingToDistance)
+        {
+            ColliderManager.Instance.SetWorldAndColliders(minDistance < WorldMaskManager.Instance.worldMaskGlobalVariables.GlobalChangeDistance);
+        }
     }
 
 

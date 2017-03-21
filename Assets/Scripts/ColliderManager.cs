@@ -54,7 +54,7 @@ public class ColliderManager : Singleton<ColliderManager>
         {
             if (currentWorld == WorldAppartenance.world1 && colliderControllers[i].gameObjectWorld == ColliderController.WorldAppartenance.world1)
             {
-                colliderControllers[i].SetCollider(true);              
+                colliderControllers[i].SetCollider(true);
             }
             if (currentWorld == WorldAppartenance.world1 && colliderControllers[i].gameObjectWorld == ColliderController.WorldAppartenance.world2)
             {
@@ -70,5 +70,42 @@ public class ColliderManager : Singleton<ColliderManager>
             }
         }
     }
-	
+
+    public void SetWorldAndColliders(bool isInsideZone)
+    {
+        if (isInsideZone)
+        {
+            currentWorld = WorldAppartenance.world1;
+            for (int i = 0; i < colliderControllers.Count; i++)
+            {
+                if (colliderControllers[i].gameObjectWorld == ColliderController.WorldAppartenance.world1)
+                {
+                    colliderControllers[i].SetCollider(true);
+                }
+                else
+                {
+                    colliderControllers[i].SetCollider(false);
+                }
+            }
+        }
+        else
+        {
+            currentWorld = WorldAppartenance.world2;
+            for (int i = 0; i < colliderControllers.Count; i++)
+            {
+                if (colliderControllers[i].gameObjectWorld == ColliderController.WorldAppartenance.world1)
+                {
+                    colliderControllers[i].SetCollider(false);
+                }
+                else
+                {
+                    colliderControllers[i].SetCollider(true);
+                }
+            }
+        }
+
+
+
+    }
+
 }

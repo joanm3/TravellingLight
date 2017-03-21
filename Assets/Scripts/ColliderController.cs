@@ -15,6 +15,6 @@ public class ColliderController : MonoBehaviour {
     public void SetCollider(bool inThisWorld)
     {
         gameObject.GetComponent<Collider>().enabled = inThisWorld;
-        gameObject.GetComponent<MeshRenderer>().enabled = inThisWorld;
+        //gameObject.GetComponent<MeshRenderer>().enabled = inThisWorld;
     }
 }
