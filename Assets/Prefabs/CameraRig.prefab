@@ -132,34 +132,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f6d6f4c5bcb33c43be96426053199ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraMode: 0
+  cameraMode: 2
   character: {fileID: 0}
   characterMotion: {fileID: 0}
   secondPersonCameraPosition: {fileID: 0}
   parentRig: {fileID: 4929063131095926}
-  distanceAwayDefault: 8.87
-  distanceUpDefault: 3.6
-  distanceAwayMinMax: {x: 3, y: 15}
-  distanceUpMinMax: {x: 0.5, y: 5}
+  inverseCameraX: 0
+  inverseCameraY: 0
+  mouseSensibility: 0.428
+  distanceAwayDefault: 2.5
+  distanceUpDefault: 0.3
+  distanceAwayMinMax: {x: 2.5, y: 10}
+  distanceUpMinMax: {x: 0.3, y: 5}
   distanceUpCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
     - serializedVersion: 2
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  camSmoothDampTime: 0.2
+  camSmoothDampTime: 0.1
   firstPersonCameraPosition: {fileID: 0}
   firstPersonThreshold: 0.3
   fpLookSpeed: 1
@@ -168,9 +171,9 @@ MonoBehaviour:
   lookDirDampTime: 0.2
   lookDirFactorRotation: 1
   lookAtSmoothFactor: 5
-  distanceSensibility: 0.04
+  distanceSensibility: 0.119
   freeThreshold: 0.1
-  camMinDistFromChar: {x: 1, y: -0.5}
+  camMinDistFromChar: {x: 1.45, y: -0.13}
   rightStickThreshold: 0.1
   angleTest: 10
 --- !u!124 &124639092957540388

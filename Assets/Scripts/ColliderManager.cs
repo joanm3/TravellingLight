@@ -5,7 +5,6 @@ using UnityEngine;
 public class ColliderManager : Singleton<ColliderManager>
 {
 
-
     public List<ColliderController> colliderControllers;
 
     public enum WorldAppartenance
@@ -32,7 +31,7 @@ public class ColliderManager : Singleton<ColliderManager>
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             ChangeColliders();
         }

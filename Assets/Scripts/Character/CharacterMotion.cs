@@ -165,6 +165,7 @@ public class CharacterMotion : MonoBehaviour
 
     private void Start()
     {
+        m_surfaceHitCharacterPosition = transform.position;
         m_controller = GetComponent<CharacterController>();
         m_lastSurfaceNormal = m_surfaceNormal;
         m_surfaceAngle = 0f;
@@ -353,6 +354,10 @@ public class CharacterMotion : MonoBehaviour
                 {
                     SetAnimation_Idle();
                     OnGroundUpdate();
+                    if (Input.GetKeyUp(KeyCode.Space))
+                    {
+                        Jump(m_surfaceNormal);
+                    }
                     break;
                 }
             case CharacterState.Walking:
@@ -365,6 +370,10 @@ public class CharacterMotion : MonoBehaviour
                 {
                     SetAnimation_Run();
                     OnGroundUpdate();
+                    if (Input.GetKeyUp(KeyCode.Space))
+                    {
+                        Jump(m_surfaceNormal);
+                    }
                     break;
                 }
             case CharacterState.Falling:
@@ -813,3 +822,50 @@ public class CharacterMotion : MonoBehaviour
     }
     #endregion
 }
+
+
+//USE THIS FOR SNAPPING TO MOVING GROUND. MAKE A NEW SCRIPT BETTER. 
+/*
+        if (IsGrounded)
+        {
+            Vector3 _currentFrameSnap = m_surfacePoint;
+            if (m_lastFrameSnapInitialized)
+            {
+
+                //if (!m_lastSurfaceTransform.position.Equals(m_surfaceTransform.position))
+                //{
+                //    Debug.Log("Diff pos:" + (m_surfaceTransform.position- m_lastSurfaceTransform.position));
+                //}
+
+                Vector3 lastPos = m_lastSurfaceTransform.TransformPoint(m_lastFrameSnap);
+                Vector3 newPos = m_surfaceTransform.TransformPoint(m_lastFrameSnap);
+
+                Vector3 _posCorrection = newPos - lastPos;
+
+
+                m_controller.Move(_posCorrection);
+            }
+            m_lastFrameSnap = m_surfaceTransform.InverseTransformPoint(_currentFrameSnap);
+            if (!m_surfaceTransform.TransformPoint(m_lastFrameSnap).Equals(_currentFrameSnap))
+            {
+                Vector3 diff = m_surfaceTransform.TransformPoint(m_lastFrameSnap) - _currentFrameSnap;
+                //Debug.Log("Problem here: " + diff);
+
+            }
+            m_lastFrameSnapInitialized = true;
+        }
+
+        if (m_surfaceTransform != null)
+        {
+
+            m_lastSurfaceTransform.position = m_surfaceTransform.position;
+            m_lastSurfaceTransform.rotation = m_surfaceTransform.rotation;
+            m_lastSurfaceTransform.localScale = m_surfaceTransform.localScale;
+        }
+        else
+        {
+            m_lastFrameSnapInitialized = false;
+        }
+
+
+    */

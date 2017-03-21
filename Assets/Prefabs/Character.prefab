@@ -84,6 +84,7 @@ GameObject:
   - component: {fileID: 143741196125698316}
   - component: {fileID: 114792210110971422}
   - component: {fileID: 114722032729395720}
+  - component: {fileID: 114334302234279956}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -4910,6 +4911,19 @@ MonoBehaviour:
   lightStart: 50
   speedLightEnd: 1
   playerLight: {fileID: 0}
+--- !u!114 &114334302234279956
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1041642679849176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 927bb353db1045e489ada1c84669dce3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  changeWorldAccordingToDistance: 1
+  minDistance: 0
 --- !u!114 &114445990283694308
 MonoBehaviour:
   m_ObjectHideFlags: 1
