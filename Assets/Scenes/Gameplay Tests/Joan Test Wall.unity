@@ -439,6 +439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 927bb353db1045e489ada1c84669dce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  changeWorldAccordingToDistance: 1
   minDistance: 0
 --- !u!1 &766749309
 GameObject:
@@ -623,7 +624,8 @@ Prefab:
       propertyPath: m_RootOrder
       value: 12
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114293707849897760, guid: 1acf3c7368379df4c8f27ae0bb621be1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 1acf3c7368379df4c8f27ae0bb621be1, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &918556809
@@ -751,6 +753,23 @@ Transform:
   m_PrefabParentObject: {fileID: 4556275807984914, guid: 74a3c9174a90d4f4fa2655a948d0ee93,
     type: 2}
   m_PrefabInternal: {fileID: 1134120144}
+--- !u!1 &1098301059 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1021517557939520, guid: 1acf3c7368379df4c8f27ae0bb621be1,
+    type: 2}
+  m_PrefabInternal: {fileID: 876719039}
+--- !u!114 &1098301060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1098301059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 737f3ee40fd27194b9604cbb10b13285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectWorld: 0
 --- !u!1001 &1133091764
 Prefab:
   m_ObjectHideFlags: 0
@@ -1096,6 +1115,10 @@ Prefab:
         type: 2}
       propertyPath: forestTargetPositions.Array.data[0].z
       value: 5.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654048433457090, guid: ef63458b9dab5f640acde87405d0b762, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ef63458b9dab5f640acde87405d0b762, type: 2}
