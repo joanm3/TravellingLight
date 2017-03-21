@@ -25,11 +25,11 @@ public class SetColorMaterial : MonoBehaviour
     [SerializeField]
     private Color inactiveColor = Color.black;
 
-    public bool GoActive { get { return goActive; } set { goActive = value; } }
+    public bool IsActive { get { return isActive; } set { isActive = value; } }
     public bool IsLightEnabled { get { return isLightEnabled; } set { isLightEnabled = value; } }
 
     bool isLightEnabled = true;
-    bool goActive = false;
+    bool isActive = false;
     Renderer rend;
     Material mat;
     GameObject luzInstance = null;
@@ -47,13 +47,13 @@ public class SetColorMaterial : MonoBehaviour
 
     void ChangeGoActive()
     {
-        GoActive = !GoActive;
+        IsActive = !IsActive;
     }
 
     void Start()
     {
-        goActive = false;
-        manualActivation = goActive;
+        isActive = false;
+        manualActivation = isActive;
         oldManualActivation = manualActivation;
         worldType = GetComponent<WorldType>();
         targetCloak = 1f;
@@ -99,12 +99,12 @@ public class SetColorMaterial : MonoBehaviour
         }
         else
         {
-            actualColor = GoActive ? activeColor : inactiveColor;
+            actualColor = IsActive ? activeColor : inactiveColor;
         }
 
         if (DistantFromTargetCloak())
         {
-            UpdateTargetCloaks(GoActive);
+            UpdateTargetCloaks(IsActive);
         }
         else
         {
@@ -129,7 +129,7 @@ public class SetColorMaterial : MonoBehaviour
                 if (luzLight != null)
                     luzLight.intensity = 0f;
             }
-            GoActive = true;
+            IsActive = true;
             if (sinMovement)
                 sinMovement.move = true;
         }
@@ -143,7 +143,7 @@ public class SetColorMaterial : MonoBehaviour
 
         if (col.gameObject.tag == ("LightSourceCollider"))
         {
-            GoActive = false;
+            IsActive = false;
             if (sinMovement)
                 sinMovement.move = false;
         }
@@ -227,7 +227,7 @@ public class SetColorMaterial : MonoBehaviour
     {
         //change the colors in a range from 0-1 to avoid the colors to sum differently. check also 
         //if the values of the target color is bigger or smaller to sum or substract them. 
-        if (GoActive)
+        if (IsActive)
         {
             colorsInRange.r = (activeColor.r > inactiveColor.r) ?
                 colorsInRange.r + velocity * Time.deltaTime :
@@ -291,7 +291,7 @@ public class SetColorMaterial : MonoBehaviour
 
     bool DistantFromTargetColor()
     {
-        if (GoActive)
+        if (IsActive)
         {
             if (Mathf.Abs(actualColor.r - activeColor.r) > 0.05f)
                 return true;
@@ -315,7 +315,7 @@ public class SetColorMaterial : MonoBehaviour
 
     bool DistantFromTargetCloak()
     {
-        if (GoActive)
+        if (IsActive)
         {
             if (Mathf.Abs(targetCloak) > 0.01f)
                 return true;

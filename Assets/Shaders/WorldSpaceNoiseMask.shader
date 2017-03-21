@@ -43,7 +43,7 @@
 			{
 				"RenderType" = "Opaque"
 			}
-
+			Cull Off
 
 			CGPROGRAM
 			// Physically based Standard lighting model, and enable shadows on all light types
@@ -189,16 +189,27 @@
 				finalValue = sumT;
 
 				float finalInvers = 1 - finalValue;
-				float clipRange = lerp(finalInvers, finalValue, _Invert);
+				//float clipRange = lerp(finalInvers, finalValue, _Invert);
+
 				/*clipRange *= 1 + _LineWidth; */
-				float clipV = lerp(-1, clipRange, _Clip);
-				clip(-clipV + _LineWidth);
+				float clipV = lerp(-1, finalInvers, _Clip);
+				float clipFinal = lerp(-clipV, clipV, _Invert);
+				clip(clipFinal);
+				//clip(-clipV + _LineWidth);
+				//if (_Invert > 0.9)
+				//{
+				//	clip(clipV);
+				//}
+				//else
+				//{
+				//	clip(-clipV);
+				//}
 
 				//*********************TEXTURE****************************//
 				float4 c = tex2D(_MainTex, IN.uv_MainTex);
 
-				float shouldLine1 = step(-_LineWidth, -clipRange);
-				float shouldLine2 = step(0, -clipRange);
+				float shouldLine1 = step(-_LineWidth, -finalInvers);
+				float shouldLine2 = step(0, -finalInvers);
 				float shouldLine = shouldLine1 - shouldLine2;
 				o.Albedo = c.rgb;
 				//o.Albedo.b = shouldLine; 

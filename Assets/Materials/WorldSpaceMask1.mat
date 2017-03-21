@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: WorldSpaceMask1
-  m_Shader: {fileID: 4800000, guid: 6e67ffcd3649144418fcb164d3dd79f0, type: 3}
+  m_Shader: {fileID: 4800000, guid: c0b6a36c2dcfba44c959785b389207aa, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -81,13 +81,13 @@ Material:
       second: 1
     - first:
         name: _ChangePoint
-      second: 10
+      second: 10.39
     - first:
         name: _CircleForce
       second: 0.5
     - first:
         name: _Clip
-      second: 0
+      second: 1
     - first:
         name: _Cloak
       second: 0
@@ -129,10 +129,10 @@ Material:
       second: 0
     - first:
         name: _Length
-      second: 4
+      second: 1
     - first:
         name: _LineWidth
-      second: 0.186
+      second: 0.25
     - first:
         name: _Metallic
       second: 0
@@ -181,7 +181,7 @@ Material:
       second: {r: 1, g: 1, b: 0, a: 0}
     - first:
         name: _NoiseSettings2
-      second: {r: 1.2, g: 1.35, b: 0.06, a: 0}
+      second: {r: 1.2, g: 1.33, b: 0.06, a: 0}
     - first:
         name: _TargetPos2
       second: {r: 9.56, g: 5, b: 0, a: 0}

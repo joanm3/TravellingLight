@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Eggplant_Fruit
+  m_Name: InsideZone
   m_Shader: {fileID: 4800000, guid: c0b6a36c2dcfba44c959785b389207aa, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
@@ -48,7 +48,13 @@ Material:
     - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 2800000, guid: 89277f3b049847d4196a358cd9e09846, type: 3}
+        m_Texture: {fileID: 2800000, guid: f05549371eb437641adf6caba7e1c3a0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MainTex2
+      second:
+        m_Texture: {fileID: 2800000, guid: 55bb554bc7a59254d9e67b8a502f8354, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -69,12 +75,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _Ramp
-      second:
-        m_Texture: {fileID: 2800000, guid: 4a056241e2722dc46a7262a8e7073fd9, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
         name: _BumpScale
@@ -85,6 +85,21 @@ Material:
     - first:
         name: _CircleForce
       second: 0.5
+    - first:
+        name: _Clip
+      second: 1
+    - first:
+        name: _Cloak
+      second: 0
+    - first:
+        name: _Cloak2
+      second: 0
+    - first:
+        name: _Cloak3
+      second: 0
+    - first:
+        name: _Cloak4
+      second: 0
     - first:
         name: _Cutoff
       second: 0.5
@@ -104,19 +119,25 @@ Material:
         name: _Glossiness
       second: 0.5
     - first:
+        name: _Glossiness2
+      second: 0.5
+    - first:
         name: _GlossyReflections
       second: 1
     - first:
         name: _Invert
-      second: 1
+      second: 0
     - first:
         name: _Length
-      second: 3
+      second: 1
     - first:
         name: _LineWidth
-      second: 0.112
+      second: 0.25
     - first:
         name: _Metallic
+      second: 0
+    - first:
+        name: _Metallic2
       second: 0
     - first:
         name: _Mode
@@ -125,14 +146,11 @@ Material:
         name: _OcclusionStrength
       second: 1
     - first:
-        name: _Outline
-      second: 0.002
-    - first:
         name: _Parallax
       second: 0.02
     - first:
         name: _Radius
-      second: 0.75
+      second: 2
     - first:
         name: _SmoothnessTextureChannel
       second: 0
@@ -151,7 +169,7 @@ Material:
     m_Colors:
     - first:
         name: _Color
-      second: {r: 1, g: 1, b: 1, a: 1}
+      second: {r: 0.566066, g: 0.7058823, b: 0.37889272, a: 1}
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
@@ -163,7 +181,16 @@ Material:
       second: {r: 1, g: 1, b: 0, a: 0}
     - first:
         name: _NoiseSettings2
-      second: {r: 1.2, g: 1.45, b: 0.06, a: 0}
+      second: {r: 1.2, g: 1.33, b: 0.06, a: 0}
     - first:
-        name: _OutlineColor
-      second: {r: 0, g: 0, b: 0, a: 1}
+        name: _TargetPos2
+      second: {r: 9.56, g: 5, b: 0, a: 0}
+    - first:
+        name: _TargetPos3
+      second: {r: 0, g: 5, b: -9.86, a: 0}
+    - first:
+        name: _TargetPos4
+      second: {r: 0, g: 5, b: 15.28, a: 0}
+    - first:
+        name: _TargetPosition
+      second: {r: -8.2300005, g: 5, b: 0, a: 0}

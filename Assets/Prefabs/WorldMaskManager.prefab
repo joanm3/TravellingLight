@@ -34,7 +34,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1654048433457090}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.51, y: 0, z: 0}
+  m_LocalPosition: {x: -0.97, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -53,11 +53,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
   worldMaskGlobalVariables:
-    NoiseSettings: {x: 1.2, y: 1.35, z: 0.06}
-    LineColor: {r: 1, g: 1, b: 1, a: 0.359}
-    LineWidth: 0.186
+    NoiseSettings: {x: 1.2, y: 1.33, z: 0.06}
+    LineColor: {r: 1, g: 1, b: 1, a: 0.309}
+    LineWidth: 0.25
     CircleForce: 0.5
     InnerExpand: 0.5
+    GlobalChangeDistance: 10.39
   showHidden: 0
   standardHeight: 5
   forestPrefab: {fileID: 1313352315478006, guid: 11278de6369d11a4d9dc91aff064fcec,
@@ -67,23 +68,12 @@ MonoBehaviour:
     colorSetter: {fileID: 0}
     index: 0
     cloak: 0
-  - target: {fileID: 0}
-    colorSetter: {fileID: 0}
-    index: 1
-    cloak: 0
-  - target: {fileID: 0}
-    colorSetter: {fileID: 0}
-    index: 2
-    cloak: 0
-  - target: {fileID: 0}
-    colorSetter: {fileID: 0}
-    index: 3
-    cloak: 0
   forestMaterials:
+  - {fileID: 2100000, guid: ba302118315d5734b9debe75a8b64b54, type: 2}
   - {fileID: 2100000, guid: 68f1c98870fecbe499a9577a253803b8, type: 2}
-  - {fileID: 2100000, guid: 5d40a2089dd9afe4d835d914af8fce20, type: 2}
+  - {fileID: 2100000, guid: ca8fe1cb4dc0bfd44a5cff76603d2be5, type: 2}
   - {fileID: 2100000, guid: 43b4b81157f6e114e9763a00807065d5, type: 2}
-  - {fileID: 2100000, guid: 25b05982ae2f412458285ebd8d696c3b, type: 2}
+  - {fileID: 2100000, guid: c3035288343ebd344810a2a4726204b3, type: 2}
   cityPrefab: {fileID: 1801652433295718, guid: 5cbf3ac60bc565d47aecc31d7606729f, type: 2}
   cityTargets:
   - target: {fileID: 0}
@@ -94,22 +84,16 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 9a9194b6660e6f84aa63d28b7f561847, type: 2}
   forestCloaks:
   - 0
-  - 0
-  - 0
-  - 0
   cityCloaks:
   - 0
   forestTargetPositions:
-  - {x: 17.59, y: 5, z: 20.68, w: 0}
-  - {x: 34.829998, y: 5, z: 10.26, w: 0}
-  - {x: 13.67, y: 5, z: 3.83, w: 0}
-  - {x: 0, y: 5, z: 0, w: 0}
+  - {x: 8.99, y: 5, z: 10.24, w: 0}
   cityTargetPositions:
-  - {x: 0, y: 5, z: -22.919998, w: 0}
+  - {x: 42.2, y: 5, z: -21.56, w: 0}
   target1: {fileID: 0}
   cloak1: 0
   target2: {fileID: 0}
-  cloak2: 0
+  cloak2: 1
   target3: {fileID: 0}
   cloak3: 0
   target4: {fileID: 0}

@@ -256,6 +256,11 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
     }
 
+    void UpdateDistances()
+    {
+
+    }
+
     void ResetCloaks(bool equalOne)
     {
         float value = (equalOne) ? 1f : 0f;
@@ -318,8 +323,16 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
             matList[i].SetVector("_LineColor", Instance.worldMaskGlobalVariables.LineColor);
             matList[i].SetFloat("_CircleForce", Instance.worldMaskGlobalVariables.CircleForce);
             matList[i].SetFloat("_LineWidth", Instance.worldMaskGlobalVariables.LineWidth);
-
             matList[i].SetFloat("_Expand", Instance.worldMaskGlobalVariables.InnerExpand);
+            //if (worldTargets[i].useGlobalDistance)
+            //{
+            matList[i].SetFloat("_ChangePoint", Instance.worldMaskGlobalVariables.GlobalChangeDistance);
+            //}
+            //else
+            //{
+            //    matList[i].SetFloat("_ChangePoint", worldTargets[i].localChangeDistance);
+            //}
+
             matList[i].SetFloat("_Length", worldTargets.Count);
             matList[i].SetFloatArray("_Cloaks", cloakValues);
             matList[i].SetVectorArray("_Positions", targetPositions);
@@ -353,6 +366,7 @@ public class WorldMaskVariables
     public float CircleForce;
     [Range(0, 1)]
     public float InnerExpand;
+    public float GlobalChangeDistance = 10f;
 
 }
 
@@ -364,4 +378,6 @@ public class WorldTarget
     public int index = 0;
     [Range(0, 1)]
     public float cloak = 0f;
+    //public bool useGlobalDistance = true;
+    //public float localChangeDistance = 10f;
 }
