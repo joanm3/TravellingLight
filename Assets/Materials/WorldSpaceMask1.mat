@@ -87,7 +87,7 @@ Material:
       second: 0.5
     - first:
         name: _Clip
-      second: 0
+      second: 1
     - first:
         name: _Cloak
       second: 0
@@ -175,7 +175,7 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _LineColor
-      second: {r: 1, g: 1, b: 1, a: 0.309}
+      second: {r: 1, g: 1, b: 1, a: 0.359}
     - first:
         name: _NoiseSettings
       second: {r: 1, g: 1, b: 0, a: 0}
