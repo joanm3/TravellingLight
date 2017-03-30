@@ -20,6 +20,8 @@ public class GetMinDistanceFromTargets : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (ColliderManager.Instance == null)
+            return;
         minDistance = GetNearestDistance();
         if (changeWorldAccordingToDistance)
         {

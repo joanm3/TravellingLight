@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2300000}
   - component: {fileID: 65591840530103350}
   - component: {fileID: 114296986829476442}
+  - component: {fileID: 114408505130630130}
   m_Layer: 12
   m_Name: Stone rock_b
   m_TagString: Untagged
@@ -105,3 +106,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldType: 0
+--- !u!114 &114408505130630130
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 737f3ee40fd27194b9604cbb10b13285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectWorld: 0

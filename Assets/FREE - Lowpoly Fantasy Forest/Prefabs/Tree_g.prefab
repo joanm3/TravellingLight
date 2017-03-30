@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2300000}
   - component: {fileID: 65436818812171692}
   - component: {fileID: 114436100372088132}
+  - component: {fileID: 114922048173922710}
   m_Layer: 12
   m_Name: Tree_g
   m_TagString: Untagged
@@ -25,8 +26,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 22.36, y: 0.013609582, z: 33.96}
+  m_LocalRotation: {x: 0.00000001573026, y: -0.69425124, z: -0.00000001517334, w: 0.7197328}
+  m_LocalPosition: {x: 12.4, y: 0, z: 2.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -105,3 +106,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldType: 0
+--- !u!114 &114922048173922710
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 737f3ee40fd27194b9604cbb10b13285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectWorld: 0

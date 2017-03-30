@@ -140,10 +140,10 @@ MonoBehaviour:
   inverseCameraX: 0
   inverseCameraY: 0
   mouseSensibility: 0.428
-  distanceAwayDefault: 2.5
-  distanceUpDefault: 0.3
-  distanceAwayMinMax: {x: 2.5, y: 10}
-  distanceUpMinMax: {x: 0.3, y: 5}
+  distanceAwayDefault: 8
+  distanceUpDefault: 3
+  distanceAwayMinMax: {x: 8, y: 8.1}
+  distanceUpMinMax: {x: 3, y: 3.1}
   distanceUpCurve:
     serializedVersion: 2
     m_Curve:

@@ -129,10 +129,10 @@ Material:
       second: 0
     - first:
         name: _Length
-      second: 1
+      second: 3
     - first:
         name: _LineWidth
-      second: 0.25
+      second: 0.112
     - first:
         name: _Metallic
       second: 0
@@ -175,7 +175,7 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _LineColor
-      second: {r: 1, g: 1, b: 1, a: 0.359}
+      second: {r: 1, g: 1, b: 1, a: 0.309}
     - first:
         name: _NoiseSettings
       second: {r: 1, g: 1, b: 0, a: 0}
