@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 032832a3b9043d342a0787712ef9733e
+timeCreated: 1460171292
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - heartGUI: {fileID: 13162060, guid: 8de43d0871c820c41bb9bca83b974389, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

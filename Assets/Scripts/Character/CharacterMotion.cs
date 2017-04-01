@@ -166,6 +166,8 @@ public class CharacterMotion : MonoBehaviour
     private void Start()
     {
         m_surfaceHitCharacterPosition = transform.position;
+
+
         m_controller = GetComponent<CharacterController>();
         m_lastSurfaceNormal = m_surfaceNormal;
         m_surfaceAngle = 0f;

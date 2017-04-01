@@ -1,0 +1,161 @@
+fileFormatVersion: 2
+guid: 70d6e7385d3d283449f3f71a13a66cfb
+timeCreated: 1475178772
+licenseType: Store
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Arms
+    100002: //RootNode
+    100004: HeadN
+    100006: HipN
+    100008: L1stNa
+    100010: L1stNb
+    100012: L2ndNa
+    100014: L2ndNb
+    100016: L3rdNa
+    100018: L3rdNb
+    100020: L4thNa
+    100022: L4thNb
+    100024: LArmJ
+    100026: LFootJ
+    100028: LHandN
+    100030: LKneeJ
+    100032: LLegJ
+    100034: LShoulderJ
+    100036: LThumbNa
+    100038: LThumbNb
+    100040: LToeN
+    100042: R1stNa
+    100044: R1stNb
+    100046: R2ndNa
+    100048: R2ndNb
+    100050: R3rdNa
+    100052: R3rdNb
+    100054: R4thNa
+    100056: R4thNb
+    100058: RArmJ
+    100060: RFootJ
+    100062: RHandN
+    100064: RKneeJ
+    100066: RLegJ
+    100068: RShoulderJ
+    100070: RThumbNa
+    100072: RThumbNb
+    100074: RToeN
+    100076: TopN
+    100078: WaistN
+    100080: Body
+    100082: Head
+    100084: Hood
+    400000: Arms
+    400002: //RootNode
+    400004: HeadN
+    400006: HipN
+    400008: L1stNa
+    400010: L1stNb
+    400012: L2ndNa
+    400014: L2ndNb
+    400016: L3rdNa
+    400018: L3rdNb
+    400020: L4thNa
+    400022: L4thNb
+    400024: LArmJ
+    400026: LFootJ
+    400028: LHandN
+    400030: LKneeJ
+    400032: LLegJ
+    400034: LShoulderJ
+    400036: LThumbNa
+    400038: LThumbNb
+    400040: LToeN
+    400042: R1stNa
+    400044: R1stNb
+    400046: R2ndNa
+    400048: R2ndNb
+    400050: R3rdNa
+    400052: R3rdNb
+    400054: R4thNa
+    400056: R4thNb
+    400058: RArmJ
+    400060: RFootJ
+    400062: RHandN
+    400064: RKneeJ
+    400066: RLegJ
+    400068: RShoulderJ
+    400070: RThumbNa
+    400072: RThumbNb
+    400074: RToeN
+    400076: TopN
+    400078: WaistN
+    400080: Body
+    400082: Head
+    400084: Hood
+    4300000: Arms
+    4300002: Head
+    4300004: Hood
+    4300006: Body
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Arms
+    13700002: Body
+    13700004: Head
+    13700006: Hood
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 10
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
