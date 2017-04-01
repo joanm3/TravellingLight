@@ -11,12 +11,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
-  EditorBanks: []
+  EditorBanks:
+  - {fileID: 114035705389642960}
+  - {fileID: 114875597899321002}
   EditorEvents: []
-  MasterBankRef: {fileID: 0}
-  StringsBankRef: {fileID: 0}
-  stringsBankWriteTime: 0
+  MasterBankRef: {fileID: 114875597899321002}
+  StringsBankRef: {fileID: 114035705389642960}
+  stringsBankWriteTime: 636265534115090002
   cacheVersion: 2
+--- !u!114 &114035705389642960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: FMODTravellingLight\Build\Desktop\Master Bank.strings.bank
+  lastModified: 636265534115090002
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 638
+  Exists: 1
 --- !u!114 &114811907379453946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31,6 +51,24 @@ MonoBehaviour:
   Path: E:\Unity Projects\TravellingLight\FMODProject\SoundTravellingLight\Build\Desktop\Master
     Bank.bank
   lastModified: 636265056763352043
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 12192
+  Exists: 1
+--- !u!114 &114875597899321002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: D:\TravellingLight\FMODTravellingLight\Build\Desktop\Master Bank.bank
+  lastModified: 636265534115090002
   LoadResult: 0
   FileSizes:
   - Name: Desktop

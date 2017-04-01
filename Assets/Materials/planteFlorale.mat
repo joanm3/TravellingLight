@@ -129,10 +129,10 @@ Material:
       second: 0
     - first:
         name: _Length
-      second: 3
+      second: 1
     - first:
         name: _LineWidth
-      second: 0.112
+      second: 0.25
     - first:
         name: _Metallic
       second: 0
