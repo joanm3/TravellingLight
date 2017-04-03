@@ -1,4 +1,6 @@
-﻿
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+
 #ifdef WIRE_FRAME
 #define CORNER_COUNT 5
 #else
@@ -73,7 +75,7 @@ void GetVertexData(uint2 vertexPosI, float2 ooWidthHeight, float3 scale, out flo
     const float4 vertexYAndNormal = GetYAndNormal(inUVIn01, ooWidthHeight, scale);
     const float3 vertexPos = lerp(_BBoxMin.xyz, _BBoxMax.xyz, float3(inUVIn01.x, vertexYAndNormal.x, inUVIn01.y));
     
-    vertex = mul(UNITY_MATRIX_MVP, float4(vertexPos, 1));
+    vertex = UnityObjectToClipPos(float4(vertexPos, 1));
     normal = vertexYAndNormal.yzw;
     uv = inUVIn01;
 }

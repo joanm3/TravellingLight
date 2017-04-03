@@ -65,8 +65,8 @@ public class WorldMaskController : MonoBehaviour
         }
 
         UpdateGlobalVariables();
-        UpdateCloaks();
-        UpdateTargetsDone();
+        //UpdateCloaks();
+        //UpdateTargetsDone();
         UpdateTargetUniforms();
 
     }
@@ -88,8 +88,8 @@ public class WorldMaskController : MonoBehaviour
             }
         }
 
-        UpdateCloaks();
-        UpdateTargetsDone();
+        //UpdateCloaks();
+        //UpdateTargetsDone();
         UpdateTargetUniforms();
 
 
@@ -102,13 +102,13 @@ public class WorldMaskController : MonoBehaviour
             timeLeft -= Time.deltaTime;
             if (timeLeft < 0)
             {
-                UpdateTargetsDone();
+                //UpdateTargetsDone();
                 timeLeft = Mathf.Abs(timeToCheck);
             }
         }
         else
         {
-            UpdateTargetsDone();
+            //UpdateTargetsDone();
         }
     }
 
@@ -142,65 +142,65 @@ public class WorldMaskController : MonoBehaviour
         maskMaterial.SetFloat("_Expand", WorldMaskManager.Instance.worldMaskGlobalVariables.InnerExpand);
     }
 
-    void UpdateCloaks()
-    {
-        if (WorldMaskManager.Instance == null)
-            return;
+    //void UpdateCloaks()
+    //{
+    //    if (WorldMaskManager.Instance == null)
+    //        return;
 
-        switch (worldType)
-        {
-            case WorldType.Forest:
-                cloak1 = WorldMaskManager.Instance.cloak1;
-                cloak2 = WorldMaskManager.Instance.cloak2;
-                cloak3 = WorldMaskManager.Instance.cloak3;
-                cloak4 = WorldMaskManager.Instance.cloak4;
-                cloak5 = WorldMaskManager.Instance.cloak5;
-                cloak6 = WorldMaskManager.Instance.cloak6;
-                break;
-            case WorldType.City:
-                cloak1 = WorldMaskManager.Instance.cloakA;
-                cloak2 = WorldMaskManager.Instance.cloakB;
-                cloak3 = WorldMaskManager.Instance.cloakC;
-                cloak4 = WorldMaskManager.Instance.cloakD;
-                cloak3 = WorldMaskManager.Instance.cloakE;
-                cloak4 = WorldMaskManager.Instance.cloakF;
-                break;
-        }
+    //    switch (worldType)
+    //    {
+    //        case WorldType.Forest:
+    //            cloak1 = WorldMaskManager.Instance.cloak1;
+    //            cloak2 = WorldMaskManager.Instance.cloak2;
+    //            cloak3 = WorldMaskManager.Instance.cloak3;
+    //            cloak4 = WorldMaskManager.Instance.cloak4;
+    //            cloak5 = WorldMaskManager.Instance.cloak5;
+    //            cloak6 = WorldMaskManager.Instance.cloak6;
+    //            break;
+    //        case WorldType.City:
+    //            cloak1 = WorldMaskManager.Instance.cloakA;
+    //            cloak2 = WorldMaskManager.Instance.cloakB;
+    //            cloak3 = WorldMaskManager.Instance.cloakC;
+    //            cloak4 = WorldMaskManager.Instance.cloakD;
+    //            cloak3 = WorldMaskManager.Instance.cloakE;
+    //            cloak4 = WorldMaskManager.Instance.cloakF;
+    //            break;
+    //    }
 
-        if (maskMaterial == null)
-            return;
+    //    if (maskMaterial == null)
+    //        return;
 
-        maskMaterial.SetFloat("_Cloak", cloak1);
-        maskMaterial.SetFloat("_Cloak2", cloak2);
-        maskMaterial.SetFloat("_Cloak3", cloak3);
-        maskMaterial.SetFloat("_Cloak4", cloak4);
-    }
+    //    maskMaterial.SetFloat("_Cloak", cloak1);
+    //    maskMaterial.SetFloat("_Cloak2", cloak2);
+    //    maskMaterial.SetFloat("_Cloak3", cloak3);
+    //    maskMaterial.SetFloat("_Cloak4", cloak4);
+    //}
 
-    void UpdateTargetsDone()
-    {
-        if (WorldMaskManager.Instance == null)
-            return;
+    //void UpdateTargetsDone()
+    //{
+    //    if (WorldMaskManager.Instance == null)
+    //        return;
 
-        switch (worldType)
-        {
-            case WorldType.Forest:
-                target = WorldMaskManager.Instance.target1;
-                target2 = WorldMaskManager.Instance.target2;
-                target3 = WorldMaskManager.Instance.target3;
-                target4 = WorldMaskManager.Instance.target4;
-                target5 = WorldMaskManager.Instance.target5;
-                target6 = WorldMaskManager.Instance.target6;
-                break;
-            case WorldType.City:
-                target = WorldMaskManager.Instance.targetA;
-                target2 = WorldMaskManager.Instance.targetB;
-                target3 = WorldMaskManager.Instance.targetC;
-                target4 = WorldMaskManager.Instance.targetD;
-                target5 = WorldMaskManager.Instance.targetE;
-                target6 = WorldMaskManager.Instance.targetF;
-                break;
-        }
+    //    switch (worldType)
+    //    {
+    //        case WorldType.Forest:
+    //            target = WorldMaskManager.Instance.target1;
+    //            target2 = WorldMaskManager.Instance.target2;
+    //            target3 = WorldMaskManager.Instance.target3;
+    //            target4 = WorldMaskManager.Instance.target4;
+    //            target5 = WorldMaskManager.Instance.target5;
+    //            target6 = WorldMaskManager.Instance.target6;
+    //            break;
+    //        case WorldType.City:
+    //            target = WorldMaskManager.Instance.targetA;
+    //            target2 = WorldMaskManager.Instance.targetB;
+    //            target3 = WorldMaskManager.Instance.targetC;
+    //            target4 = WorldMaskManager.Instance.targetD;
+    //            target5 = WorldMaskManager.Instance.targetE;
+    //            target6 = WorldMaskManager.Instance.targetF;
+    //            break;
+    //    }
 
-    }
+    //}
 
 }

@@ -9,9 +9,9 @@ public class ColliderManager : Singleton<ColliderManager>
 
     public enum WorldAppartenance
     {
-        world1, world2
+        worldInSphere, worldOutSphere
     }
-    public WorldAppartenance currentWorld = WorldAppartenance.world1;
+    public WorldAppartenance currentWorld = WorldAppartenance.worldInSphere;
 
 
     void Start()
@@ -39,31 +39,31 @@ public class ColliderManager : Singleton<ColliderManager>
 
     public void ChangeColliders()
     {
-        if (currentWorld == WorldAppartenance.world1)
+        if (currentWorld == WorldAppartenance.worldInSphere)
         {
-            currentWorld = WorldAppartenance.world2;
+            currentWorld = WorldAppartenance.worldOutSphere;
         }
 
-        else if (currentWorld == WorldAppartenance.world2)
+        else if (currentWorld == WorldAppartenance.worldOutSphere)
         {
-            currentWorld = WorldAppartenance.world1;
+            currentWorld = WorldAppartenance.worldInSphere;
         }
 
         for (int i = 0; i < colliderControllers.Count; i++)
         {
-            if (currentWorld == WorldAppartenance.world1 && colliderControllers[i].gameObjectWorld == ColliderController.WorldAppartenance.world1)
+            if (currentWorld == WorldAppartenance.worldInSphere && colliderControllers[i].gameObjectWorld == ColliderController.WorldAppartenance.worldInSphere)
             {
                 colliderControllers[i].SetCollider(true);
             }
-            if (currentWorld == WorldAppartenance.world1 && colliderControllers[i].gameObjectWorld == ColliderController.WorldAppartenance.world2)
+            if (currentWorld == WorldAppartenance.worldInSphere && colliderControllers[i].gameObjectWorld == ColliderController.WorldAppartenance.worldOutSphere)
             {
                 colliderControllers[i].SetCollider(false);
             }
-            if (currentWorld == WorldAppartenance.world2 && colliderControllers[i].gameObjectWorld == ColliderController.WorldAppartenance.world1)
+            if (currentWorld == WorldAppartenance.worldOutSphere && colliderControllers[i].gameObjectWorld == ColliderController.WorldAppartenance.worldInSphere)
             {
                 colliderControllers[i].SetCollider(false);
             }
-            if (currentWorld == WorldAppartenance.world2 && colliderControllers[i].gameObjectWorld == ColliderController.WorldAppartenance.world2)
+            if (currentWorld == WorldAppartenance.worldOutSphere && colliderControllers[i].gameObjectWorld == ColliderController.WorldAppartenance.worldOutSphere)
             {
                 colliderControllers[i].SetCollider(true);
             }
@@ -74,10 +74,10 @@ public class ColliderManager : Singleton<ColliderManager>
     {
         if (isInsideZone)
         {
-            currentWorld = WorldAppartenance.world1;
+            currentWorld = WorldAppartenance.worldInSphere;
             for (int i = 0; i < colliderControllers.Count; i++)
             {
-                if (colliderControllers[i].gameObjectWorld == ColliderController.WorldAppartenance.world1)
+                if (colliderControllers[i].gameObjectWorld == ColliderController.WorldAppartenance.worldInSphere)
                 {
                     colliderControllers[i].SetCollider(true);
                 }
@@ -89,10 +89,10 @@ public class ColliderManager : Singleton<ColliderManager>
         }
         else
         {
-            currentWorld = WorldAppartenance.world2;
+            currentWorld = WorldAppartenance.worldOutSphere;
             for (int i = 0; i < colliderControllers.Count; i++)
             {
-                if (colliderControllers[i].gameObjectWorld == ColliderController.WorldAppartenance.world1)
+                if (colliderControllers[i].gameObjectWorld == ColliderController.WorldAppartenance.worldInSphere)
                 {
                     colliderControllers[i].SetCollider(false);
                 }

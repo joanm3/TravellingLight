@@ -57,7 +57,7 @@ public class SetColorMaterial : MonoBehaviour
         oldManualActivation = manualActivation;
         worldType = GetComponent<WorldType>();
         targetCloak = 1f;
-        SetTargetCloak();
+        //SetTargetCloak();
 
         rend = GetComponent<Renderer>();
         mat = rend.material;
@@ -105,10 +105,6 @@ public class SetColorMaterial : MonoBehaviour
         if (DistantFromTargetCloak())
         {
             UpdateTargetCloaks(IsActive);
-        }
-        else
-        {
-
         }
     }
 
@@ -164,64 +160,64 @@ public class SetColorMaterial : MonoBehaviour
                 break;
 
             case WorldType.InWorld.City:
-                for (int i = 0; i < WorldMaskManager.Instance.cityCloaks.Length; i++)
-                {
-                    if (index == i)
-                    {
-                        WorldMaskManager.Instance.cityTargets[i].cloak = targetCloak;
-                    }
-                }
+                //for (int i = 0; i < WorldMaskManager.Instance.cityCloaks.Length; i++)
+                //{
+                //    if (index == i)
+                //    {
+                //        WorldMaskManager.Instance.cityTargets[i].cloak = targetCloak;
+                //    }
+                //}
                 break;
         }
     }
 
-    void SetTargetCloak()
-    {
-        switch (worldType.worldType)
-        {
-            case WorldType.InWorld.Forest:
-                switch (targetIndex)
-                {
-                    case TargetIndex.one:
-                        WorldMaskManager.Instance.cloak1 = targetCloak;
-                        break;
+    //void SetTargetCloak()
+    //{
+    //    switch (worldType.worldType)
+    //    {
+    //        case WorldType.InWorld.Forest:
+    //            switch (targetIndex)
+    //            {
+    //                case TargetIndex.one:
+    //                    WorldMaskManager.Instance.cloak1 = targetCloak;
+    //                    break;
 
-                    case TargetIndex.two:
-                        WorldMaskManager.Instance.cloak2 = targetCloak;
-                        break;
+    //                case TargetIndex.two:
+    //                    WorldMaskManager.Instance.cloak2 = targetCloak;
+    //                    break;
 
-                    case TargetIndex.three:
-                        WorldMaskManager.Instance.cloak3 = targetCloak;
-                        break;
+    //                case TargetIndex.three:
+    //                    WorldMaskManager.Instance.cloak3 = targetCloak;
+    //                    break;
 
-                    case TargetIndex.four:
-                        WorldMaskManager.Instance.cloak4 = targetCloak;
-                        break;
-                }
-                break;
+    //                case TargetIndex.four:
+    //                    WorldMaskManager.Instance.cloak4 = targetCloak;
+    //                    break;
+    //            }
+    //            break;
 
-            case WorldType.InWorld.City:
-                switch (targetIndex)
-                {
-                    case TargetIndex.one:
-                        WorldMaskManager.Instance.cloakA = targetCloak;
-                        break;
+    //        case WorldType.InWorld.City:
+    //            switch (targetIndex)
+    //            {
+    //                case TargetIndex.one:
+    //                    WorldMaskManager.Instance.cloakA = targetCloak;
+    //                    break;
 
-                    case TargetIndex.two:
-                        WorldMaskManager.Instance.cloakB = targetCloak;
-                        break;
+    //                case TargetIndex.two:
+    //                    WorldMaskManager.Instance.cloakB = targetCloak;
+    //                    break;
 
-                    case TargetIndex.three:
-                        WorldMaskManager.Instance.cloakC = targetCloak;
-                        break;
+    //                case TargetIndex.three:
+    //                    WorldMaskManager.Instance.cloakC = targetCloak;
+    //                    break;
 
-                    case TargetIndex.four:
-                        WorldMaskManager.Instance.cloakD = targetCloak;
-                        break;
-                }
-                break;
-        }
-    }
+    //                case TargetIndex.four:
+    //                    WorldMaskManager.Instance.cloakD = targetCloak;
+    //                    break;
+    //            }
+    //            break;
+    //    }
+    //}
 
     void SetColorInRange()
     {
@@ -294,7 +290,7 @@ public class SetColorMaterial : MonoBehaviour
             targetCloak = 1f;
         }
 
-        SetTargetCloak();
+        //SetTargetCloak();
         SetTargetCloaks();
     }
 
