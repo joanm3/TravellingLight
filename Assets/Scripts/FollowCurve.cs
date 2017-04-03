@@ -40,8 +40,8 @@ public class FollowCurve : MonoBehaviour {
 
     void Update()
     {
-        if (speed < 0) speed = 0;
-        if (speed > startSpeed) speed = startSpeed;
+        //if (speed < 0) speed = 0;
+        //if (speed > startSpeed) speed = startSpeed;
 
         if (curve == null)
         {
@@ -61,8 +61,8 @@ public class FollowCurve : MonoBehaviour {
         {
             //LINEAIRE
             case MoveType.lineaire:
-                if (speed < startSpeed) speed += Time.deltaTime;
-                if (pos >= 0.8f && speed > 0) speed -= Time.deltaTime;
+                //if (speed < startSpeed) speed += Time.deltaTime;
+                //if (pos >= 0.8f && speed > 0) speed -= Time.deltaTime;
 
                 if (pos < 1) pos += Time.deltaTime * speed;
                 //STOP MOVE
@@ -124,7 +124,7 @@ public class FollowCurve : MonoBehaviour {
                 }
 
                 //STOP MOVE
-                if (stopMove && speed > 0)
+                /*if (stopMove && speed > 0)
                 {
                     speed -= Time.deltaTime;
                     if (speed < 0) speed = 0;
@@ -133,7 +133,7 @@ public class FollowCurve : MonoBehaviour {
                 else if (!stopMove && speed < startSpeed)
                 {
                     speed += Time.deltaTime;
-                }
+                }*/
                 //END STOP MOVE
                 break;
             default:
