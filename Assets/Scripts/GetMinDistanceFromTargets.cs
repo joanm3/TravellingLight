@@ -6,16 +6,16 @@ public class GetMinDistanceFromTargets : MonoBehaviour
 {
 
     public bool changeWorldAccordingToDistance = false;
+    //this should change if distances are according to different types
+    //for the moment all distances are the same so we leave it like that. to see in the future
     public float minDistance;
+    public bool IsInsideSpheres { get { return minDistance < WorldMaskManager.Instance.worldMaskGlobalVariables.GlobalChangeDistance; } }
 
     // Use this for initialization
     void Start()
     {
         minDistance = 100f;
     }
-
-
-
 
     // Update is called once per frame
     void Update()

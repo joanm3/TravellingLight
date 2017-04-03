@@ -38,54 +38,9 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
     int oldCityCount;
     Shader maskShader;
 
-
-    //[Header("Forest")]
-    //public Transform target1;
-    //[Range(0, 1)]
-    //public float cloak1;
-    //public Transform target2;
-    //[Range(0, 1)]
-    //public float cloak2;
-    //public Transform target3;
-    //[Range(0, 1)]
-    //public float cloak3;
-    //public Transform target4;
-    //[Range(0, 1)]
-    //public float cloak4;
-    //public Transform target5;
-    //[Range(0, 1)]
-    //public float cloak5;
-    //public Transform target6;
-    //[Range(0, 1)]
-    //public float cloak6;
-
-    //[Header("City")]
-    //public Transform targetA;
-    //[Range(0, 1)]
-    //public float cloakA;
-    //public Transform targetB;
-    //[Range(0, 1)]
-    //public float cloakB;
-    //public Transform targetC;
-    //[Range(0, 1)]
-    //public float cloakC;
-    //public Transform targetD;
-    //[Range(0, 1)]
-    //public float cloakD;
-    //public Transform targetE;
-    //[Range(0, 1)]
-    //public float cloakE;
-    //public Transform targetF;
-    //[Range(0, 1)]
-    //public float cloakF;
-
-
     void OnEnable()
     {
-        //if (!Application.isPlaying)
-        //{
         Init();
-        //}
 
         oldForestCount = forestTargets.Count;
         maskShader = Shader.Find("Custom/WorldSpaceNoiseMask");
@@ -102,6 +57,11 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
                 forestMaterials[i].SetFloat("_Clip", 1f);
             }
             ResetCloaks(true);
+            for (int i = 0; i < forestTargets.Count; i++)
+            {
+                forestTargets[i].startPosition =
+                    new Vector3(forestTargets[i].target.transform.position.x, forestTargets[i].target.transform.position.y, forestTargets[i].target.transform.position.z);
+            }
         }
     }
 
@@ -364,6 +324,7 @@ public class WorldTarget
     public int index = 0;
     [Range(0, 1)]
     public float cloak = 0f;
+    public Vector3 startPosition;
     //public bool useGlobalDistance = true;
     //public float localChangeDistance = 10f;
 }
