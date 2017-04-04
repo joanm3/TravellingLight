@@ -168,7 +168,6 @@ public class ThirdPersonCamera : MonoBehaviour
     void LateUpdate()
     {
 
-        float leftArrowY = Input.GetAxis("FirstPerson");
         float rightX = (!inverseCameraX) ? -Input.GetAxis("Mouse X") * mouseSensibility : Input.GetAxis("Mouse X") * mouseSensibility;
         float rightY = (!inverseCameraY) ? Input.GetAxis("Mouse Y") * mouseSensibility : -Input.GetAxis("Mouse Y") * mouseSensibility;
 
@@ -187,53 +186,48 @@ public class ThirdPersonCamera : MonoBehaviour
         if (!test)
         {
             #region Assign Camera
-            if (Input.GetAxis("Target") > TARGETING_THRESHOLD && cameraMode != CamMode.FirstPerson)
+
+            if (cameraMode == CamMode.ThirdPersonTarget)
+                cameraMode = CamMode.ThirdPersonOrbit;
+
+            //first person case
+            //if (Input.GetButtonDown("FirstPerson")) //&& cameraMode != CamMode.ThirdPersonFree)// && characterMotion.Speed < 0.2f)
+            //{
+            //    if (cameraMode != CamMode.FirstPerson)
+            //    {
+            //        fpStartingXRot = UpdateAngleInDeg(firstPersonCameraPosition.forward, Vector3.forward);
+            //        //fpXRot = fpStartingXRot;
+            //        fpXRot = 0f;
+            //        distanceStartWhenGoingToFPS = Vector3.Distance(this.transform.position, firstPersonCamPos.XForm.position);
+            //        fpYRot = 0f;
+            //        cameraMode = CamMode.FirstPerson;
+            //    }
+            //    else
+            //    {
+            //        cameraMode = CamMode.ThirdPersonOrbit;
+            //    }
+            //}
+
+            //if (Input.GetButtonDown("SecondPerson") && cameraMode != CamMode.FirstPerson) //&& cameraMode != CamMode.ThirdPersonFree)// && characterMotion.Speed < 0.2f)
+            //{
+            //    if (cameraMode != CamMode.SecondPerson)
+            //    {
+            //        cameraMode = CamMode.SecondPerson;
+            //    }
+            //    else
+            //    {
+            //        cameraMode = CamMode.ThirdPersonOrbit;
+            //    }
+            //}
+
+            //free camera case
+            if ((Mathf.Abs(rightY) > freeThreshold || Mathf.Abs(rightX) > freeThreshold) && cameraMode == CamMode.ThirdPersonOrbit) // && System.Math.Round(characterMotion.Speed, 2) == 0)
             {
-                cameraMode = CamMode.ThirdPersonTarget;
+                cameraMode = CamMode.ThirdPersonFree;
+                savedRigToGoal = Vector3.zero;
             }
-            else
-            {
-                if (cameraMode == CamMode.ThirdPersonTarget)
-                    cameraMode = CamMode.ThirdPersonOrbit;
 
-                //first person case
-                if (Input.GetButtonDown("FirstPerson")) //&& cameraMode != CamMode.ThirdPersonFree)// && characterMotion.Speed < 0.2f)
-                {
-                    if (cameraMode != CamMode.FirstPerson)
-                    {
-                        fpStartingXRot = UpdateAngleInDeg(firstPersonCameraPosition.forward, Vector3.forward);
-                        //fpXRot = fpStartingXRot;
-                        fpXRot = 0f;
-                        distanceStartWhenGoingToFPS = Vector3.Distance(this.transform.position, firstPersonCamPos.XForm.position);
-                        fpYRot = 0f;
-                        cameraMode = CamMode.FirstPerson;
-                    }
-                    else
-                    {
-                        cameraMode = CamMode.ThirdPersonOrbit;
-                    }
-                }
 
-                if (Input.GetButtonDown("SecondPerson") && cameraMode != CamMode.FirstPerson) //&& cameraMode != CamMode.ThirdPersonFree)// && characterMotion.Speed < 0.2f)
-                {
-                    if (cameraMode != CamMode.SecondPerson)
-                    {
-                        cameraMode = CamMode.SecondPerson;
-                    }
-                    else
-                    {
-                        cameraMode = CamMode.ThirdPersonOrbit;
-                    }
-                }
-
-                //free camera case
-                if ((Mathf.Abs(rightY) > freeThreshold || Mathf.Abs(rightX) > freeThreshold) && cameraMode == CamMode.ThirdPersonOrbit) // && System.Math.Round(characterMotion.Speed, 2) == 0)
-                {
-                    cameraMode = CamMode.ThirdPersonFree;
-                    savedRigToGoal = Vector3.zero;
-                }
-
-            }
             #endregion
         }
 

@@ -19,10 +19,10 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
     public List<WorldTarget> forestTargets = new List<WorldTarget>();
     public List<Material> forestMaterials = new List<Material>();
 
-    [Header("City")]
-    public GameObject cityPrefab;
-    public List<WorldTarget> cityTargets = new List<WorldTarget>();
-    public List<Material> cityMaterials = new List<Material>();
+    //[Header("City")]
+    //public GameObject cityPrefab;
+    //public List<WorldTarget> cityTargets = new List<WorldTarget>();
+    //public List<Material> cityMaterials = new List<Material>();
 
 
 
@@ -38,102 +38,48 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
     int oldCityCount;
     Shader maskShader;
 
-
-    [Header("Forest")]
-    public Transform target1;
-    [Range(0, 1)]
-    public float cloak1;
-    public Transform target2;
-    [Range(0, 1)]
-    public float cloak2;
-    public Transform target3;
-    [Range(0, 1)]
-    public float cloak3;
-    public Transform target4;
-    [Range(0, 1)]
-    public float cloak4;
-    public Transform target5;
-    [Range(0, 1)]
-    public float cloak5;
-    public Transform target6;
-    [Range(0, 1)]
-    public float cloak6;
-
-    [Header("City")]
-    public Transform targetA;
-    [Range(0, 1)]
-    public float cloakA;
-    public Transform targetB;
-    [Range(0, 1)]
-    public float cloakB;
-    public Transform targetC;
-    [Range(0, 1)]
-    public float cloakC;
-    public Transform targetD;
-    [Range(0, 1)]
-    public float cloakD;
-    public Transform targetE;
-    [Range(0, 1)]
-    public float cloakE;
-    public Transform targetF;
-    [Range(0, 1)]
-    public float cloakF;
-
-
     void OnEnable()
     {
-        if (!Application.isPlaying)
-        {
-            Init();
-        }
+        Init();
 
         oldForestCount = forestTargets.Count;
-        oldCityCount = cityTargets.Count;
         maskShader = Shader.Find("Custom/WorldSpaceNoiseMask");
 
         LoadMaterials();
         UpdateLengths();
         UpdateCloaks();
-        //if (forestTargets != null && forestTargets.Count > 0)
-        //{
         UpdateTargetPositions(forestTargets, ref forestTargetPositions);
-        //}
-        //if (forestTargets != null && forestTargets.Count > 0)
-        //{
-        UpdateTargetPositions(cityTargets, ref cityTargetPositions);
-        //}
 
         if (Application.isPlaying)
         {
-            //if (forestMaterials != null && forestMaterials.Count < 0)
-            //{
             for (int i = 0; i < forestMaterials.Count; i++)
             {
                 forestMaterials[i].SetFloat("_Clip", 1f);
             }
-            //}
-            //if (cityMaterials != null && forestMaterials.Count < 0)
-            //{
-            for (int i = 0; i < cityMaterials.Count; i++)
-            {
-                cityMaterials[i].SetFloat("_Clip", 1f);
-            }
-            //}
             ResetCloaks(true);
+            for (int i = 0; i < forestTargets.Count; i++)
+            {
+                forestTargets[i].startPosition =
+                    new Vector3(forestTargets[i].target.transform.position.x, forestTargets[i].target.transform.position.y, forestTargets[i].target.transform.position.z);
+            }
         }
-
     }
 
     void Update()
     {
-        UpdateLengths();
-        UpdateList(ref forestTargets, ref oldForestCount, forestPrefab);
-        UpdateList(ref cityTargets, ref oldCityCount, cityPrefab);
+        if (!Application.isPlaying)
+        {
+            UpdateLengths();
+            UpdateList(ref forestTargets, ref oldForestCount, forestPrefab);
+        }
+        if (forestMaterials.Count <= 0 || forestTargets.Count <= 0 || forestPrefab == null)
+            return;
+        //UpdateList(ref cityTargets, ref oldCityCount, cityPrefab);
         UpdateTargetPositions(forestTargets, ref forestTargetPositions);
-        UpdateTargetPositions(cityTargets, ref cityTargetPositions);
+        //UpdateTargetPositions(cityTargets, ref cityTargetPositions);
         UpdateCloaks();
         UpdateShaderVariables(forestMaterials, forestTargets, forestCloaks, forestTargetPositions);
-        UpdateShaderVariables(cityMaterials, cityTargets, cityCloaks, cityTargetPositions);
+        //UpdateShaderVariables(cityMaterials, cityTargets, cityCloaks, cityTargetPositions);
 
         if (!Application.isPlaying)
         {
@@ -144,10 +90,10 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
                     forestMaterials[i].SetFloat("_Clip", 0f);
                 }
 
-                for (int i = 0; i < cityMaterials.Count; i++)
-                {
-                    cityMaterials[i].SetFloat("_Clip", 0f);
-                }
+                //for (int i = 0; i < cityMaterials.Count; i++)
+                //{
+                //    cityMaterials[i].SetFloat("_Clip", 0f);
+                //}
             }
             else
             {
@@ -156,10 +102,10 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
                     forestMaterials[i].SetFloat("_Clip", 1f);
                 }
 
-                for (int i = 0; i < cityMaterials.Count; i++)
-                {
-                    cityMaterials[i].SetFloat("_Clip", 1f);
-                }
+                //for (int i = 0; i < cityMaterials.Count; i++)
+                //{
+                //    cityMaterials[i].SetFloat("_Clip", 1f);
+                //}
             }
         }
     }
@@ -169,7 +115,7 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
     {
 
         forestMaterials.Clear();
-        cityMaterials.Clear();
+        //cityMaterials.Clear();
 
         WorldType[] wt = GameObject.FindObjectsOfType<WorldType>();
 
@@ -182,8 +128,8 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
                         forestMaterials.Add(wt[i].GetComponent<MeshRenderer>().sharedMaterial);
                     break;
                 case WorldType.InWorld.City:
-                    if (!cityMaterials.Contains(wt[i].GetComponent<MeshRenderer>().sharedMaterial))
-                        cityMaterials.Add(wt[i].GetComponent<MeshRenderer>().sharedMaterial);
+                    //if (!cityMaterials.Contains(wt[i].GetComponent<MeshRenderer>().sharedMaterial))
+                    //    cityMaterials.Add(wt[i].GetComponent<MeshRenderer>().sharedMaterial);
                     break;
             }
         }
@@ -244,14 +190,14 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
         //if (cityTargets.Count < 0)
         //{
-        if (cityCloaks.Length != cityTargets.Count)
-        {
-            cityCloaks = new float[cityTargets.Count];
-        }
-        for (int i = 0; i < cityTargets.Count; i++)
-        {
-            cityCloaks[i] = cityTargets[i].cloak;
-        }
+        //if (cityCloaks.Length != cityTargets.Count)
+        //{
+        //    cityCloaks = new float[cityTargets.Count];
+        //}
+        //for (int i = 0; i < cityTargets.Count; i++)
+        //{
+        //    cityCloaks[i] = cityTargets[i].cloak;
+        //}
         //}
 
     }
@@ -274,10 +220,10 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
         //}
         //if (cityTargets != null)
         //{
-        for (int i = 0; i < cityTargets.Count; i++)
-        {
-            cityTargets[i].cloak = value;
-        }
+        //for (int i = 0; i < cityTargets.Count; i++)
+        //{
+        //    cityTargets[i].cloak = value;
+        //}
         //}
     }
 
@@ -287,10 +233,10 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
         {
             forestMaterials[i].SetFloat("_Length", forestTargets.Count);
         }
-        for (int i = 0; i < cityMaterials.Count; i++)
-        {
-            cityMaterials[i].SetFloat("_Length", cityTargets.Count);
-        }
+        //for (int i = 0; i < cityMaterials.Count; i++)
+        //{
+        //    cityMaterials[i].SetFloat("_Length", cityTargets.Count);
+        //}
     }
 
 
@@ -378,6 +324,7 @@ public class WorldTarget
     public int index = 0;
     [Range(0, 1)]
     public float cloak = 0f;
+    public Vector3 startPosition;
     //public bool useGlobalDistance = true;
     //public float localChangeDistance = 10f;
 }

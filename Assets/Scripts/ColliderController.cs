@@ -7,7 +7,7 @@ public class ColliderController : MonoBehaviour {
 
     public enum WorldAppartenance
     {
-        world1,world2
+        worldInSphere,worldOutSphere
     }
 
     public WorldAppartenance gameObjectWorld;
