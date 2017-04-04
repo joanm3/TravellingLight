@@ -117,6 +117,7 @@ public class FollowCurve : MonoBehaviour {
                 break;
             //LOOP
             case MoveType.loop:
+                speed = 0.1f;
                 pos += Time.deltaTime * speed;
                 if (pos >= 1 && loop)
                 {
