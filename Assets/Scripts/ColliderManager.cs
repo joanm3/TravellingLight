@@ -29,13 +29,6 @@ public class ColliderManager : Singleton<ColliderManager>
         ChangeColliders();
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            ChangeColliders();
-        }
-    }
 
     public void ChangeColliders()
     {

@@ -4,29 +4,33 @@ using UnityEngine;
 
 public class GetMinDistanceFromTargets : MonoBehaviour
 {
-
-    public bool changeWorldAccordingToDistance = false;
     //this should change if distances are according to different types
     //for the moment all distances are the same so we leave it like that. to see in the future
-    public float minDistance;
-    public bool IsInsideSpheres { get { return minDistance < WorldMaskManager.Instance.worldMaskGlobalVariables.GlobalChangeDistance; } }
+    public bool IsInsideSphere { get { return isInsideSphere; } }
+    internal bool isInsideSphere;
+    internal bool lastInsideSphere;
+
+    internal float minDistance;
 
     // Use this for initialization
-    void Start()
+    internal virtual void Start()
     {
+        isInsideSphere = minDistance < WorldMaskManager.Instance.worldMaskGlobalVariables.GlobalChangeDistance;
+        lastInsideSphere = isInsideSphere;
         minDistance = 100f;
     }
 
     // Update is called once per frame
-    void Update()
+    internal virtual void Update()
     {
         if (ColliderManager.Instance == null)
-            return;
-        minDistance = GetNearestDistance();
-        if (changeWorldAccordingToDistance)
         {
-            ColliderManager.Instance.SetWorldAndColliders(minDistance < WorldMaskManager.Instance.worldMaskGlobalVariables.GlobalChangeDistance);
+            Debug.LogError("ColliderManager.Instance not found.");
+            return;
         }
+        minDistance = GetNearestDistance();
+        isInsideSphere = minDistance < WorldMaskManager.Instance.worldMaskGlobalVariables.GlobalChangeDistance;
+
     }
 
 

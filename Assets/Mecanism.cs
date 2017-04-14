@@ -38,10 +38,10 @@ public class Mecanism : MonoBehaviour
         switch (activationType)
         {
             case ActivationType.WorldInSphere:
-                isActive = (distanceFromTargets.IsInsideSpheres) ? playerInTrigger : false;
+                isActive = (distanceFromTargets.IsInsideSphere) ? playerInTrigger : false;
                 break;
             case ActivationType.WorldOutsideSphere:
-                isActive = (!distanceFromTargets.IsInsideSpheres) ? playerInTrigger : false;
+                isActive = (!distanceFromTargets.IsInsideSphere) ? playerInTrigger : false;
                 break;
             case ActivationType.TwoWorlds:
                 isActive = playerInTrigger;
