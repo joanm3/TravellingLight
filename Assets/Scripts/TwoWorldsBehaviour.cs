@@ -6,8 +6,9 @@ public class TwoWorldsBehaviour : GetMinDistanceFromTargets
 {
 
     public Collider inSphereCollider;
+    //public Mesh inSphereOnlyMesh;
     public Collider outsideSphereCollider;
-
+    //public Mesh outsideSphereOnlyMesh;
 
 
     sealed override internal void Start()

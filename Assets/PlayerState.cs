@@ -19,6 +19,7 @@ public class PlayerState : Singleton<PlayerState>
         minDistance = 100f;
         lastIsInsideSphere = isInsideSphere;
         ReloadTwoWorldsObjectsList();
+        SetWorldColliders();
     }
 
     // Update is called once per frame
