@@ -9,6 +9,7 @@ public class PlayerState : Singleton<PlayerState>
 
     public float minDistance;
 
+    [SerializeField]
     private bool isInsideSphere;
     private bool lastIsInsideSphere;
     private List<TwoWorldsBehaviour> twoWorldsObjects = new List<TwoWorldsBehaviour>();
