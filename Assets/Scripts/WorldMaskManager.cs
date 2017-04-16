@@ -36,14 +36,14 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
     int oldForestCount;
     int oldCityCount;
-    Shader maskShader;
+    //Shader maskShader;
 
     void OnEnable()
     {
         Init();
 
         oldForestCount = forestTargets.Count;
-        maskShader = Shader.Find("Custom/WorldSpaceNoiseMask");
+        //maskShader = Shader.Find("Custom/WorldSpaceNoiseMask");
 
         LoadMaterials();
         UpdateLengths();
@@ -141,6 +141,7 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
         //if (targets.Count == 0)
         //    return;
 
+        //this should only be possible in edit mode, change later. 
         if (oldCount < targets.Count)
         {
             for (int i = oldCount; i < targets.Count; i++)
@@ -149,7 +150,6 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
                 targets[i].target = (!Application.isPlaying) ? (GameObject)PrefabUtility.InstantiatePrefab(prefab) : Instantiate(prefab);
 #else
                 targets[i].target = Instantiate(prefab);
-
 #endif
                 targets[i].target.transform.parent = (parent) ? parent.transform : null;
                 targets[i].target.transform.position = new Vector3(0f, standardHeight, 0f);
@@ -199,11 +199,6 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
         //    cityCloaks[i] = cityTargets[i].cloak;
         //}
         //}
-
-    }
-
-    void UpdateDistances()
-    {
 
     }
 
