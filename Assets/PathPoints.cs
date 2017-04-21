@@ -10,7 +10,7 @@ public class PathPoints : MonoBehaviour
     public GameObject pathPointPrefab;
     public bool loop = false;
     public Color gizmosColor = Color.red;
-    public List<GameObject> pathPoints;
+    public List<GameObject> Points;
 
     public int pointsLastLength;
 
@@ -19,28 +19,35 @@ public class PathPoints : MonoBehaviour
 
     void OnEnable()
     {
-        pointsLastLength = pathPoints.Count;
+        pointsLastLength = Points.Count;
     }
 
     void Update()
     {
-        if (pointsLastLength != pathPoints.Count)
+
+#if UNITY_EDITOR
+        if (Application.isPlaying)
+            return;
+#else
+        return;
+#endif
+        if (pointsLastLength != Points.Count)
         {
 
-            if (pointsLastLength < pathPoints.Count)
+            if (pointsLastLength < Points.Count)
             {
-                for (int i = pointsLastLength; i < pathPoints.Count; i++)
+                for (int i = pointsLastLength; i < Points.Count; i++)
                 {
 
 #if UNITY_EDITOR
-                    pathPoints[i] = (!Application.isPlaying) ? (GameObject)PrefabUtility.InstantiatePrefab(pathPointPrefab) : Instantiate(pathPointPrefab);
-                    pathPoints[i].transform.parent = this.transform;
+                    Points[i] = (!Application.isPlaying) ? (GameObject)PrefabUtility.InstantiatePrefab(pathPointPrefab) : Instantiate(pathPointPrefab);
+                    Points[i].transform.parent = this.transform;
 #else
                     pathPoints[i] = Instantiate(pathPointPrefab, this.transform);
 #endif
                 }
             }
-            else if (pointsLastLength > pathPoints.Count)
+            else if (pointsLastLength > Points.Count)
             {
 
                 //foreach (Transform child in transform)
@@ -54,32 +61,48 @@ public class PathPoints : MonoBehaviour
                 PathPoint[] points = GameObject.FindObjectsOfType<PathPoint>();
                 for (int i = 0; i < points.Length; i++)
                 {
-                    if (!pathPoints.Contains(points[i].gameObject))
+                    if (!Points.Contains(points[i].gameObject))
                     {
                         DestroyImmediate(points[i].gameObject);
                     }
                 }
             }
-            pointsLastLength = pathPoints.Count;
+            pointsLastLength = Points.Count;
         }
     }
 
+
+    public int GetNextIndex(int currIndex)
+    {
+        if (currIndex == Points.Count - 1)
+            return 0;
+        else
+            return currIndex + 1;
+    }
+
+    public int GetPreviousIndex(int currIndex)
+    {
+        if (currIndex == 0)
+            return Points.Count - 1;
+        else
+            return currIndex - 1;
+    }
 
     void OnDrawGizmos()
     {
-        if (pathPoints == null || pathPoints.Count <= 0)
+        if (Points == null || Points.Count <= 0)
             return;
 
         Gizmos.color = gizmosColor;
-        for (int i = 0; i < pathPoints.Count - 1; i++)
+        for (int i = 0; i < Points.Count - 1; i++)
         {
-            Gizmos.DrawLine(pathPoints[i].transform.position, pathPoints[i + 1].transform.position);
+            Gizmos.DrawLine(Points[i].transform.position, Points[i + 1].transform.position);
         }
         if (loop)
         {
-            Gizmos.DrawLine(pathPoints[0].transform.position, pathPoints[pathPoints.Count - 1].transform.position);
+            Gizmos.DrawLine(Points[0].transform.position, Points[Points.Count - 1].transform.position);
         }
     }
 
-    
+
 }

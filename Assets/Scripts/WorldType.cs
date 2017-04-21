@@ -6,6 +6,5 @@ using UnityEngine;
 public class WorldType : MonoBehaviour
 {
 
-    public enum InWorld { Forest, City };
-    public InWorld worldType = InWorld.Forest;
+
 }
