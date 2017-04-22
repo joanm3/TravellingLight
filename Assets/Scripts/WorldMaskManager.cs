@@ -121,17 +121,8 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
         for (int i = 0; i < wt.Length; i++)
         {
-            switch (wt[i].worldType)
-            {
-                case WorldType.InWorld.Forest:
-                    if (!forestMaterials.Contains(wt[i].GetComponent<MeshRenderer>().sharedMaterial))
-                        forestMaterials.Add(wt[i].GetComponent<MeshRenderer>().sharedMaterial);
-                    break;
-                case WorldType.InWorld.City:
-                    //if (!cityMaterials.Contains(wt[i].GetComponent<MeshRenderer>().sharedMaterial))
-                    //    cityMaterials.Add(wt[i].GetComponent<MeshRenderer>().sharedMaterial);
-                    break;
-            }
+            if (!forestMaterials.Contains(wt[i].GetComponent<Renderer>().sharedMaterial))
+                forestMaterials.Add(wt[i].GetComponent<Renderer>().sharedMaterial);
         }
     }
 

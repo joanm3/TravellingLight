@@ -147,27 +147,12 @@ public class SetColorMaterial : MonoBehaviour
 
     void SetTargetCloaks()
     {
-        switch (worldType.worldType)
+        for (int i = 0; i < WorldMaskManager.Instance.forestCloaks.Length; i++)
         {
-            case WorldType.InWorld.Forest:
-                for (int i = 0; i < WorldMaskManager.Instance.forestCloaks.Length; i++)
-                {
-                    if (index == i)
-                    {
-                        WorldMaskManager.Instance.forestTargets[i].cloak = targetCloak;
-                    }
-                }
-                break;
-
-            case WorldType.InWorld.City:
-                //for (int i = 0; i < WorldMaskManager.Instance.cityCloaks.Length; i++)
-                //{
-                //    if (index == i)
-                //    {
-                //        WorldMaskManager.Instance.cityTargets[i].cloak = targetCloak;
-                //    }
-                //}
-                break;
+            if (index == i)
+            {
+                WorldMaskManager.Instance.forestTargets[i].cloak = targetCloak;
+            }
         }
     }
 
