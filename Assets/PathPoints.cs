@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -60,6 +61,10 @@ public class PathPoints : MonoBehaviour
         }
     }
 
+    internal int GetNextIndex(int destIndex)
+    {
+        throw new NotImplementedException();
+    }
 
     void OnDrawGizmos()
     {
