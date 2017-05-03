@@ -29,7 +29,7 @@ public class EnemyType01 : TwoWorldsBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         fov = GetComponent<FieldOfView>();
-        destination = Path.Points[destIndex].transform.position;
+        destination = Path.points[destIndex].transform.position;
         currSpeed = walkingSpeed;
         agent.SetDestination(destination);
     }
@@ -42,7 +42,7 @@ public class EnemyType01 : TwoWorldsBehaviour
         if (Vector3.Distance(destination, transform.position) < checkDistanceToDest)
         {
             timer = 0f;
-            destination = Path.Points[Path.GetNextIndex(destIndex)].transform.position;
+            destination = Path.points[Path.GetNextIndex(destIndex)].transform.position;
             StartCoroutine(WaitAndGoToNextPoint());
         }
     }
@@ -83,7 +83,7 @@ public class EnemyType01 : TwoWorldsBehaviour
 
     IEnumerator WaitAndGoToNextPoint()
     {
-        PathPoint pp = Path.Points[destIndex].GetComponent<PathPoint>();
+        PathPoint pp = Path.points[destIndex].GetComponent<PathPoint>();
         Debug.Log(pp.name);
         if (pp != null)
         {
