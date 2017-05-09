@@ -23,7 +23,10 @@ public class InputManager : PlayerPrefsManager<InputManager>
     public KeyEvent select = new KeyEvent();
 
     [SerializeField]
-    public KeyEvent placeLight = new KeyEvent();
+    public KeyEvent placeFirefly = new KeyEvent();
+
+    [SerializeField]
+    public KeyEvent takeFirefly = new KeyEvent();
 
     [SerializeField]
     public KeyEvent showMenu = new KeyEvent();

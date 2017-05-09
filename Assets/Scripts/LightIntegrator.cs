@@ -4,43 +4,158 @@ using UnityEngine;
 
 public class LightIntegrator : MonoBehaviour
 {
-
-    public AssignToCharacter assignToCharacter;
-    public List<AssignToCharacter> LightFollowers = new List<AssignToCharacter>();
+    public Transform equippedFirefliesTransform;
+    public List<AssignToCharacter> AssignedFireflies = new List<AssignToCharacter>();
     public float minDistanceFromCharacter = 5f;
     public float distanceMultiplier = 2f;
     public float positioningSpeed = 5f;
     public float positioningYHeight = 4f;
+    public float scalingVelocity = 0.5f;
 
-    private AssignToCharacter placingObject;
+    private AssignToCharacter assigningFirefly;
+    private AssignToCharacter placingFirefly;
     private Vector3 playerPlacePosition;
+    private bool currentlyAssigning = false;
+
+    private bool isInAssignedPosition = false;
+    private bool isInAssignedScale = false;
+
+    private bool isInPlacedPosition = false;
+    private bool isInPlacedScale = false;
+    private bool isAssigningFirefly = false;
+    private bool isPlacingFirefly = false;
+
+    private List<AssignToCharacter> inZoneFireflies = new List<AssignToCharacter>();
+
+
+    void Start()
+    {
+        if (equippedFirefliesTransform == null)
+        {
+            Debug.LogError("Please assign the " + equippedFirefliesTransform.ToString());
+        }
+    }
+
 
     void Update()
     {
-        if (LightFollowers.Count > 0)
+
+        #region TAKE FIREFLY
+
+        if (InputManager.Instance.takeFirefly.IsCurrentEvent() && inZoneFireflies.Count > 0 && !isAssigningFirefly && !isPlacingFirefly)
         {
-            if (InputManager.Instance.placeLight.IsCurrentEvent() && placingObject == null)
-            {
-                placingObject = LightFollowers[0];
-                placingObject.IsFollowingCharacter = false;
-                playerPlacePosition = transform.position;
-                playerPlacePosition.y = transform.position.y + positioningYHeight;
-            }
+            isAssigningFirefly = true;
+            //you could look the closest one
+            //HERE HERE HERE RECUPERATE ACCORDING TO ANGLE
+            assigningFirefly = inZoneFireflies[0];
+            inZoneFireflies.Remove(inZoneFireflies[0]);
+            assigningFirefly.IsFollowingCharacter = true;
+            //if (!AssignedFireflies.Contains(assigningFirefly)) AssignedFireflies.Add(assigningFirefly);
         }
 
-        if (placingObject)
+        if (isAssigningFirefly && assigningFirefly != null && !isPlacingFirefly)
         {
-            //attention cause you can reposition a object when you should not like this. improve later. 
+            //position
             float step = positioningSpeed * Time.deltaTime;
-            if (Vector3.Distance(placingObject.transform.position, playerPlacePosition) > 0.1f)
+            if (Vector3.Distance(assigningFirefly.transform.position, equippedFirefliesTransform.transform.position) > 0.4f)
             {
-                placingObject.transform.position = Vector3.MoveTowards(placingObject.transform.position, playerPlacePosition, step);
+                assigningFirefly.transform.position = Vector3.MoveTowards(assigningFirefly.transform.position, equippedFirefliesTransform.transform.position, step);
             }
             else
             {
-                placingObject = null;
+                isInAssignedPosition = true;
+            }
+
+            //scale
+            if (assigningFirefly.transform.localScale.x > 0f)
+            {
+                assigningFirefly.transform.localScale = new Vector3(
+                    assigningFirefly.transform.localScale.x - (scalingVelocity * Time.deltaTime),
+                    assigningFirefly.transform.localScale.y - (scalingVelocity * Time.deltaTime),
+                    assigningFirefly.transform.localScale.z - (scalingVelocity * Time.deltaTime));
+            }
+            else if (!isInAssignedScale)
+            {
+                assigningFirefly.transform.localScale = Vector3.zero;
+                assigningFirefly.transform.parent = this.transform;
+                assigningFirefly.transform.position = this.transform.position;
+                isInAssignedScale = true;
+            }
+
+
+            if (isInAssignedScale && isInAssignedPosition)
+            {
+
+                assigningFirefly.transform.localScale = Vector3.zero;
+                assigningFirefly.transform.position = equippedFirefliesTransform.transform.position;
+                assigningFirefly = null;
+                isInAssignedScale = false;
+                isInAssignedPosition = false;
+                isAssigningFirefly = false;
             }
         }
+
+        #endregion
+
+
+        #region PLACE FIREFLY
+        if (isAssigningFirefly) return;
+
+        if (AssignedFireflies.Count > 0)
+        {
+            if (InputManager.Instance.placeFirefly.IsCurrentEvent() && placingFirefly == null)
+            {
+                isPlacingFirefly = true;
+                placingFirefly = AssignedFireflies[0];
+                placingFirefly.transform.parent = null;
+                playerPlacePosition = transform.position;
+                playerPlacePosition.y = transform.position.y + positioningYHeight;
+                placingFirefly.IsFollowingCharacter = false;
+                if (!inZoneFireflies.Contains(placingFirefly)) inZoneFireflies.Add(placingFirefly);
+            }
+        }
+
+        if (placingFirefly != null)
+        {
+            //position 
+            float step = positioningSpeed * Time.deltaTime;
+            if (Vector3.Distance(placingFirefly.transform.position, playerPlacePosition) > 0.1f)
+            {
+                placingFirefly.transform.position = Vector3.MoveTowards(placingFirefly.transform.position, playerPlacePosition, step);
+            }
+            else
+            {
+                //placingFirefly.IsFollowingCharacter = false;
+                isInPlacedPosition = true;
+            }
+
+            //scale
+            if (placingFirefly.transform.localScale.x < placingFirefly.startingScale)
+            {
+                placingFirefly.transform.localScale = new Vector3(
+                    placingFirefly.transform.localScale.x + (scalingVelocity * Time.deltaTime),
+                    placingFirefly.transform.localScale.y + (scalingVelocity * Time.deltaTime),
+                    placingFirefly.transform.localScale.z + (scalingVelocity * Time.deltaTime));
+            }
+            else if (!isInAssignedScale)
+            {
+                placingFirefly.transform.localScale = new Vector3(placingFirefly.startingScale, placingFirefly.startingScale, placingFirefly.startingScale);
+                isInPlacedScale = true;
+            }
+
+
+            if (isInPlacedPosition && isInPlacedScale)
+            {
+                placingFirefly = null;
+                isInPlacedPosition = false;
+                isInPlacedScale = false;
+                isPlacingFirefly = false;
+            }
+
+        }
+        #endregion
+
+
 
     }
 
@@ -51,14 +166,11 @@ public class LightIntegrator : MonoBehaviour
         if (atc == null)
             atc = other.gameObject.GetComponentInParent<AssignToCharacter>();
 
-        if (atc != null)
+        if (atc != null && !atc.IsFollowingCharacter)
         {
-            if (!atc.IsFollowingCharacter)
-            {
-                assignToCharacter = atc;
-                atc.isInSphere = true;
-                atc.distanceFromTarget = minDistanceFromCharacter + ((LightFollowers.Count - 1f) * distanceMultiplier);
-            }
+            if (!inZoneFireflies.Contains(atc)) inZoneFireflies.Add(atc);
+            //assigningFirefly = atc;
+            atc.isInSphere = true;
         }
     }
 
@@ -68,9 +180,12 @@ public class LightIntegrator : MonoBehaviour
         if (atc == null)
             atc = other.gameObject.GetComponentInParent<AssignToCharacter>();
 
-        if (atc != null)
-        {
-            atc.isInSphere = false;
-        }
+        //if (assigningFirefly != null && atc != null && assigningFirefly.Equals(atc))
+        //{
+        //    //assigningFirefly = null;
+        //}
+
+        if (inZoneFireflies.Contains(atc)) inZoneFireflies.Remove(atc);
+
     }
 }
