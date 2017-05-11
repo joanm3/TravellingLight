@@ -24,6 +24,8 @@ public class SetColorMaterial : MonoBehaviour
     private Color activeColor = Color.white;
     [SerializeField]
     private Color inactiveColor = Color.black;
+    [SerializeField]
+    private bool instantiateObject = false;
 
     public bool IsActive { get { return isActive; } set { isActive = value; } }
     public bool IsLightEnabled { get { return isLightEnabled; } set { isLightEnabled = value; } }
@@ -75,8 +77,8 @@ public class SetColorMaterial : MonoBehaviour
         OnColorsChanged();
 
         sinMovement = GetComponent<SinusMovement>();
-        if (sinMovement)
-            sinMovement.move = false;
+        //if (sinMovement)
+        //    sinMovement.move = false;
 
     }
 
@@ -117,7 +119,7 @@ public class SetColorMaterial : MonoBehaviour
 
         if (col.gameObject.tag == ("LightSourceCollider"))
         {
-            if (luz != null && luzInstance == null)
+            if (luz != null && luzInstance == null && instantiateObject)
             {
                 luzInstance = Instantiate(luz, gameObject.transform.position, Quaternion.identity);
                 if (makeLuzChild) luzInstance.transform.parent = this.transform;

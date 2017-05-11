@@ -65,6 +65,7 @@
 
 			uniform float _ChangeFactors[count];
 			uniform float _CurDistances[count];
+			uniform float _ChangePoints[count];
 
 			uniform sampler2D _MainTex;
 			uniform float _Glossiness;
@@ -181,7 +182,7 @@
 				//maskClip *= 0.5; 
 				float inLine = 1;
 				_CurDistances[0] = distance(_Positions[0].xyz, IN.worldPos);
-				_ChangeFactors[0] = maskClip + ((_Cloaks[0] * _ChangePoint) * inLine) - (1 - (_CurDistances[0] - _ChangePoint));
+				_ChangeFactors[0] = maskClip + ((_Cloaks[0] * _ChangePoints[0]) * inLine) - (1 - (_CurDistances[0] - _ChangePoints[0]));
 				_ChangeFactors[0] = clamp(_ChangeFactors[0], -1, 1);
 
 				float sumT = 1 - _ChangeFactors[0];
@@ -190,7 +191,7 @@
 				for (uint i = 1; i < _Length; ++i)
 				{
 					_CurDistances[i] = distance(_Positions[i].xyz, IN.worldPos);
-					_ChangeFactors[i] = maskClip + ((_Cloaks[i] * _ChangePoint) * inLine) - (1 - (_CurDistances[i] - _ChangePoint));
+					_ChangeFactors[i] = maskClip + ((_Cloaks[i] * _ChangePoints[i]) * inLine) - (1 - (_CurDistances[i] - _ChangePoints[i]));
 					_ChangeFactors[i] = clamp(_ChangeFactors[i], -1, 1);
 					sumT += 1 - _ChangeFactors[i];
 					multT *= 1 - _ChangeFactors[i];

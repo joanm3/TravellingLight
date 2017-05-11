@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -19,14 +18,6 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
     public List<WorldTarget> forestTargets = new List<WorldTarget>();
     public List<Material> forestMaterials = new List<Material>();
 
-    //[Header("City")]
-    //public GameObject cityPrefab;
-    //public List<WorldTarget> cityTargets = new List<WorldTarget>();
-    //public List<Material> cityMaterials = new List<Material>();
-
-
-
-
     [Header("Read Only")]
     public float[] forestCloaks;
     public float[] cityCloaks;
@@ -36,14 +27,13 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
     int oldForestCount;
     int oldCityCount;
-    //Shader maskShader;
+
 
     void OnEnable()
     {
         Init();
 
         oldForestCount = forestTargets.Count;
-        //maskShader = Shader.Find("Custom/WorldSpaceNoiseMask");
 
         LoadMaterials();
         UpdateLengths();
@@ -74,12 +64,10 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
         }
         if (forestMaterials.Count <= 0 || forestTargets.Count <= 0 || forestPrefab == null)
             return;
-        //UpdateList(ref cityTargets, ref oldCityCount, cityPrefab);
+
         UpdateTargetPositions(forestTargets, ref forestTargetPositions);
-        //UpdateTargetPositions(cityTargets, ref cityTargetPositions);
         UpdateCloaks();
         UpdateShaderVariables(forestMaterials, forestTargets, forestCloaks, forestTargetPositions);
-        //UpdateShaderVariables(cityMaterials, cityTargets, cityCloaks, cityTargetPositions);
 
         if (!Application.isPlaying)
         {
@@ -89,11 +77,6 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
                 {
                     forestMaterials[i].SetFloat("_Clip", 0f);
                 }
-
-                //for (int i = 0; i < cityMaterials.Count; i++)
-                //{
-                //    cityMaterials[i].SetFloat("_Clip", 0f);
-                //}
             }
             else
             {
@@ -101,11 +84,6 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
                 {
                     forestMaterials[i].SetFloat("_Clip", 1f);
                 }
-
-                //for (int i = 0; i < cityMaterials.Count; i++)
-                //{
-                //    cityMaterials[i].SetFloat("_Clip", 1f);
-                //}
             }
         }
     }
@@ -129,9 +107,6 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
     void UpdateList(ref List<WorldTarget> targets, ref int oldCount, GameObject prefab)
     {
-        //if (targets.Count == 0)
-        //    return;
-
         //this should only be possible in edit mode, change later. 
         if (oldCount < targets.Count)
         {
@@ -146,10 +121,17 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
                 targets[i].target.transform.position = new Vector3(0f, standardHeight, 0f);
                 targets[i].target.transform.rotation = Quaternion.identity;
                 targets[i].target.name = prefab.name + "_" + (i + 1).ToString();
+
+                targets[i].firefly = targets[i].target.GetComponent<Firefly>();
+                if (targets[i].firefly == null) Debug.LogError("no firefly component to the instantiated prefab");
+                targets[i].targetChildTransform = targets[i].firefly.targetTransform;
+                Debug.Log(targets[i].targetChildTransform);
                 targets[i].cloak = 0f;
                 targets[i].index = i;
-                targets[i].colorSetter = targets[i].target.transform.GetComponentInAll<SetColorMaterial>();
+                targets[i].firefly.index = i;
+                targets[i].colorSetter = targets[i].firefly.colorSetter;
                 targets[i].colorSetter.index = targets[i].index;
+                targets[i].particles = targets[i].firefly.particles;
             }
         }
         else if (oldForestCount > targets.Count)
@@ -167,8 +149,7 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
     void UpdateCloaks()
     {
-        //if (forestTargets.Count < 0)
-        //{
+
         if (forestCloaks.Length != forestTargets.Count)
         {
             forestCloaks = new float[forestTargets.Count];
@@ -176,41 +157,19 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
         for (int i = 0; i < forestTargets.Count; i++)
         {
             forestCloaks[i] = forestTargets[i].cloak;
+            forestTargets[i].firefly.cloak = forestTargets[i].cloak;
         }
-        //}
-
-        //if (cityTargets.Count < 0)
-        //{
-        //if (cityCloaks.Length != cityTargets.Count)
-        //{
-        //    cityCloaks = new float[cityTargets.Count];
-        //}
-        //for (int i = 0; i < cityTargets.Count; i++)
-        //{
-        //    cityCloaks[i] = cityTargets[i].cloak;
-        //}
-        //}
-
     }
 
     void ResetCloaks(bool equalOne)
     {
         float value = (equalOne) ? 1f : 0f;
 
-        //if (forestTargets != null)
-        //{
         for (int i = 0; i < forestTargets.Count; i++)
         {
             forestTargets[i].cloak = value;
         }
-        //}
-        //if (cityTargets != null)
-        //{
-        //for (int i = 0; i < cityTargets.Count; i++)
-        //{
-        //    cityTargets[i].cloak = value;
-        //}
-        //}
+
     }
 
     void UpdateLengths()
@@ -219,20 +178,12 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
         {
             forestMaterials[i].SetFloat("_Length", forestTargets.Count);
         }
-        //for (int i = 0; i < cityMaterials.Count; i++)
-        //{
-        //    cityMaterials[i].SetFloat("_Length", cityTargets.Count);
-        //}
+
     }
 
 
     void UpdateTargetPositions(List<WorldTarget> targets, ref Vector4[] targetPositions)
     {
-        //if (targets == null)
-        //    return;
-        //if (targets.Count <= 0)
-        //    return;
-
         if (targetPositions.Length != targets.Count)
         {
             targetPositions = new Vector4[targets.Count];
@@ -242,7 +193,6 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
             targetPositions[i] = targets[i].target.GetComponentInAll<SinusMovement>().transform.position;
             if (targetPositions[i] == null)
                 targetPositions[i] = targets[i].target.transform.position;
-            //targetPositions[i].w = 0f;
         }
     }
 
@@ -256,14 +206,20 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
             matList[i].SetFloat("_CircleForce", Instance.worldMaskGlobalVariables.CircleForce);
             matList[i].SetFloat("_LineWidth", Instance.worldMaskGlobalVariables.LineWidth);
             matList[i].SetFloat("_Expand", Instance.worldMaskGlobalVariables.InnerExpand);
-            //if (worldTargets[i].useGlobalDistance)
-            //{
-            matList[i].SetFloat("_ChangePoint", Instance.worldMaskGlobalVariables.GlobalChangeDistance);
-            //}
-            //else
-            //{
-            //    matList[i].SetFloat("_ChangePoint", worldTargets[i].localChangeDistance);
-            //}
+
+            if (worldTargets[i].firefly.useGlobalDistance)
+            {
+                matList[i].SetFloat("_ChangePoint", Instance.worldMaskGlobalVariables.GlobalChangeDistance);
+                //IMPORTANT
+                //TODO TODO TODO TODO TODO 
+                //matList[i].SetFloatArray("_ChangePoints",)
+                //Debug.Log("is there");
+            }
+            else
+            {
+                Debug.Log("is here");
+                matList[i].SetFloat("_ChangePoint", worldTargets[i].firefly.changeDistance);
+            }
 
             matList[i].SetFloat("_Length", worldTargets.Count);
             matList[i].SetFloatArray("_Cloaks", cloakValues);
@@ -305,12 +261,18 @@ public class WorldMaskVariables
 [System.Serializable]
 public class WorldTarget
 {
+    public Firefly firefly;
     public GameObject target;
+    public bool isEquipped = false;
     public SetColorMaterial colorSetter;
     public int index = 0;
     [Range(0, 1)]
     public float cloak = 0f;
     public Vector3 startPosition;
+    public Transform targetChildTransform;
+    public ParticleSystem particles;
+    public bool useGlobalDistance = true;
+    public float changeDistance = 10f;
     //public bool useGlobalDistance = true;
     //public float localChangeDistance = 10f;
 }

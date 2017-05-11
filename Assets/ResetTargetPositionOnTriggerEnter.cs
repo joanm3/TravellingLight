@@ -15,7 +15,7 @@ public class ResetTargetPositionOnTriggerEnter : MonoBehaviour
         SetColorMaterial scm = other.transform.GetComponent<SetColorMaterial>();
         if (scm != null)
         {
-            AssignToCharacter atc = other.transform.GetComponentInParent<AssignToCharacter>();
+            Firefly atc = other.transform.GetComponentInParent<Firefly>();
             atc.transform.position = WorldMaskManager.Instance.forestTargets[scm.index].startPosition;
             atc.IsFollowingCharacter = false;
             scm.IsActive = false;

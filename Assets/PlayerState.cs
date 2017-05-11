@@ -30,8 +30,11 @@ public class PlayerState : Singleton<PlayerState>
         if (ColliderManager.Instance == null)
             return;
         minDistance = GetNearestDistance();
+
         //for the moment the distance of the spheres is global. this should change case we have different distances. 
         isInsideSphere = minDistance < WorldMaskManager.Instance.worldMaskGlobalVariables.GlobalChangeDistance;
+
+
         if (isInsideSphere != lastIsInsideSphere)
         {
             //old method. 
@@ -101,6 +104,28 @@ public class PlayerState : Singleton<PlayerState>
             }
         }
         return nearestIndex == -1 ? 1000 : minDist;
+    }
+
+    private bool InsideSphere()
+    {
+        if (WorldMaskManager.Instance == null)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < WorldMaskManager.Instance.forestTargets.Count; i++)
+        {
+            if (WorldMaskManager.Instance.forestTargets[i].colorSetter.IsActive)
+            {
+                var dist = Vector3.Distance(transform.position, WorldMaskManager.Instance.forestTargets[i].target.transform.position);
+                if (dist < WorldMaskManager.Instance.forestTargets[i].firefly.changeDistance)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private void ReloadTwoWorldsObjectsList()

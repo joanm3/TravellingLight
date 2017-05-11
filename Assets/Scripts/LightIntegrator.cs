@@ -5,15 +5,15 @@ using UnityEngine;
 public class LightIntegrator : MonoBehaviour
 {
     public Transform equippedFirefliesTransform;
-    public List<AssignToCharacter> AssignedFireflies = new List<AssignToCharacter>();
+    public List<Firefly> AssignedFireflies = new List<Firefly>();
     public float minDistanceFromCharacter = 5f;
     public float distanceMultiplier = 2f;
     public float positioningSpeed = 5f;
     public float positioningYHeight = 4f;
     public float scalingVelocity = 0.5f;
 
-    private AssignToCharacter assigningFirefly;
-    private AssignToCharacter placingFirefly;
+    private Firefly assigningFirefly;
+    private Firefly placingFirefly;
     private Vector3 playerPlacePosition;
     private bool currentlyAssigning = false;
 
@@ -25,7 +25,7 @@ public class LightIntegrator : MonoBehaviour
     private bool isAssigningFirefly = false;
     private bool isPlacingFirefly = false;
 
-    private List<AssignToCharacter> inZoneFireflies = new List<AssignToCharacter>();
+    private List<Firefly> inZoneFireflies = new List<Firefly>();
 
 
     void Start()
@@ -162,9 +162,9 @@ public class LightIntegrator : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        AssignToCharacter atc = other.gameObject.GetComponent<AssignToCharacter>();
+        Firefly atc = other.gameObject.GetComponent<Firefly>();
         if (atc == null)
-            atc = other.gameObject.GetComponentInParent<AssignToCharacter>();
+            atc = other.gameObject.GetComponentInParent<Firefly>();
 
         if (atc != null && !atc.IsFollowingCharacter)
         {
@@ -176,9 +176,9 @@ public class LightIntegrator : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        AssignToCharacter atc = other.gameObject.GetComponent<AssignToCharacter>();
+        Firefly atc = other.gameObject.GetComponent<Firefly>();
         if (atc == null)
-            atc = other.gameObject.GetComponentInParent<AssignToCharacter>();
+            atc = other.gameObject.GetComponentInParent<Firefly>();
 
         //if (assigningFirefly != null && atc != null && assigningFirefly.Equals(atc))
         //{

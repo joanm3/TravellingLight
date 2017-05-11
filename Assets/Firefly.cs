@@ -2,9 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class AssignToCharacter : MonoBehaviour
+public class Firefly : MonoBehaviour
 {
+
+    [SerializeField]
+    private bool isEquipped = false;
+    public int index = 0;
+    [Range(0, 1)]
+    public float cloak = 0f;
+    public bool useGlobalDistance = true;
+    public float changeDistance = 10f;
+    public SetColorMaterial colorSetter;
+    public Vector3 startPosition;
+    public Transform targetTransform;
+    public ParticleSystem particles;
 
     public bool isInSphere = false;
 
@@ -12,6 +23,8 @@ public class AssignToCharacter : MonoBehaviour
     //private float selectedScale = 0.25f;
     //[SerializeField]
     //private float velocityToChange = 1f;
+    public float startingScale;
+
     [SerializeField]
     private float followSpeed = 1f;
     public float distanceFromTarget = 2f;
@@ -21,19 +34,6 @@ public class AssignToCharacter : MonoBehaviour
     private float rotationAngleForce = 5f;
     [SerializeField]
     private bool desactivateWhenFollowing = true;
-
-    public float startingScale;
-
-    public bool IsFollowingCharacter
-    {
-        get { return isFollowingCharacter; }
-        set
-        {
-            isFollowingCharacter = value;
-            OnIsFollowingCharacterChanged(isFollowingCharacter);
-        }
-    }
-
     private SetColorMaterial colorMat;
     private GameObject player;
     private LightIntegrator lightIntegrator;
@@ -51,12 +51,26 @@ public class AssignToCharacter : MonoBehaviour
         lightIntegrator = player.GetComponentInChildren<LightIntegrator>();
     }
 
+    void Update()
+    {
+        if (useGlobalDistance) changeDistance = WorldMaskManager.Instance.worldMaskGlobalVariables.GlobalChangeDistance;
+    }
 
-    void OnIsFollowingCharacterChanged(bool following)
+    public bool IsFollowingCharacter
+    {
+        get { return isEquipped; }
+        set
+        {
+            isEquipped = value;
+            OnIsEquippedChanged(isEquipped);
+        }
+    }
+
+    void OnIsEquippedChanged(bool following)
     {
         if (following)
         {
-            // lightIntegrator.AssignedFireflies.Add(this);
+            lightIntegrator.AssignedFireflies.Add(this);
             //SinusMovement[] sinMoves = GetComponentsInChildren<SinusMovement>(); 
             //if(sinMoves.Length > 0)
             //{
@@ -78,12 +92,11 @@ public class AssignToCharacter : MonoBehaviour
             //        item.move = false;
             //    }
             //}
-            // lightIntegrator.AssignedFireflies.Remove(this);
+            lightIntegrator.AssignedFireflies.Remove(this);
             colorMat.IsActive = true;
             isInSphere = true;
         }
         colorMat.IsLightEnabled = !following;
     }
-
 
 }
