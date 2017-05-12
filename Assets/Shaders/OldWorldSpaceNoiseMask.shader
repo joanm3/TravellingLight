@@ -75,7 +75,8 @@
 	uniform float _WindowHeight;
 
 	//outline
-	uniform float _ChangePoint;
+	uniform float
+		;
 	uniform float4 _LineColor;
 	uniform float _LineWidth;
 	uniform float4 _Color;

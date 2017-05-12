@@ -28,6 +28,8 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
     int oldForestCount;
     int oldCityCount;
 
+    public float[] changePoints;
+
 
     void OnEnable()
     {
@@ -199,6 +201,13 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
     void UpdateShaderVariables(List<Material> matList, List<WorldTarget> worldTargets, float[] cloakValues, Vector4[] targetPositions)
     {
+        changePoints = new float[forestTargets.Count];
+        for (int i = 0; i < changePoints.Length; i++)
+        {
+            changePoints[i] = forestTargets[i].changeDistance;
+        }
+
+
         for (int i = 0; i < matList.Count; i++)
         {
             matList[i].SetVector("_NoiseSettings2", Instance.worldMaskGlobalVariables.NoiseSettings);
@@ -206,22 +215,10 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
             matList[i].SetFloat("_CircleForce", Instance.worldMaskGlobalVariables.CircleForce);
             matList[i].SetFloat("_LineWidth", Instance.worldMaskGlobalVariables.LineWidth);
             matList[i].SetFloat("_Expand", Instance.worldMaskGlobalVariables.InnerExpand);
-
-            if (worldTargets[i].firefly.useGlobalDistance)
-            {
-                matList[i].SetFloat("_ChangePoint", Instance.worldMaskGlobalVariables.GlobalChangeDistance);
-                //IMPORTANT
-                //TODO TODO TODO TODO TODO 
-                //matList[i].SetFloatArray("_ChangePoints",)
-                //Debug.Log("is there");
-            }
-            else
-            {
-                Debug.Log("is here");
-                matList[i].SetFloat("_ChangePoint", worldTargets[i].firefly.changeDistance);
-            }
-
             matList[i].SetFloat("_Length", worldTargets.Count);
+
+
+            matList[i].SetFloatArray("_ChangePoints", changePoints);
             matList[i].SetFloatArray("_Cloaks", cloakValues);
             matList[i].SetVectorArray("_Positions", targetPositions);
         }
