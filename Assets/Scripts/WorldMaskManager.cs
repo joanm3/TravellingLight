@@ -134,6 +134,7 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
                 targets[i].colorSetter = targets[i].firefly.colorSetter;
                 targets[i].colorSetter.index = targets[i].index;
                 targets[i].particles = targets[i].firefly.particles;
+                targets[i].changeDistance = targets[i].firefly.changeDistance;
             }
         }
         else if (oldForestCount > targets.Count)
