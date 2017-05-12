@@ -17,7 +17,7 @@ public class ResetTargetPositionOnTriggerEnter : MonoBehaviour
         {
             Firefly atc = other.transform.GetComponentInParent<Firefly>();
             atc.transform.position = WorldMaskManager.Instance.forestTargets[scm.index].startPosition;
-            atc.IsFollowingCharacter = false;
+            atc.IsEquipped = false;
             scm.IsActive = false;
             //WorldMaskManager.Instance.forestTargets[scm.index].cloak = 1f;
         }

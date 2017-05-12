@@ -16,32 +16,38 @@ public class Firefly : MonoBehaviour
     public Vector3 startPosition;
     public Transform targetTransform;
     public ParticleSystem particles;
+    public float goToBottleSpeed = 2f;
 
-    public bool isInSphere = false;
+    //[Header("Big Firefly")]
+    //public bool isBigFirefly = true;
+    //public int numberOfFirefliesNeeded = 3;
+    //public GameObject[] objectsToShowWhenWithEachFirefly;
 
-    //[SerializeField]
-    //private float selectedScale = 0.25f;
-    //[SerializeField]
-    //private float velocityToChange = 1f;
+    [Header("Read values")]
+    public bool isInLightIntegratorZone = false;
+    public bool integrateToBottle = false;
+    public BottleSphere currentBottleSphere;
+    public bool consumedByBottleSphere = false;
     public float startingScale;
+    public bool canActivate = true;
 
-    [SerializeField]
-    private float followSpeed = 1f;
-    public float distanceFromTarget = 2f;
-    [SerializeField]
-    private bool isFollowingCharacter = false;
-    [SerializeField]
-    private float rotationAngleForce = 5f;
-    [SerializeField]
-    private bool desactivateWhenFollowing = true;
     private SetColorMaterial colorMat;
     private GameObject player;
     private LightIntegrator lightIntegrator;
+
+    public Renderer waterRenderer;
+    public Material waterMaterial;
+    public float startingTransparency;
+    public float currentTransparency;
 
     void Start()
     {
         startingScale = transform.localScale.x;
         colorMat = GetComponentInChildren<SetColorMaterial>();
+        if (!waterRenderer) waterRenderer = colorMat.GetComponentInChildren<SkinnedMeshRenderer>();
+        waterMaterial = waterRenderer.material;
+        startingTransparency = waterMaterial.GetFloat("_Transparency");
+        currentTransparency = startingTransparency;
         if (colorMat == null)
         {
             Debug.LogError("color material null for " + this.name);
@@ -54,9 +60,34 @@ public class Firefly : MonoBehaviour
     void Update()
     {
         if (useGlobalDistance) changeDistance = WorldMaskManager.Instance.worldMaskGlobalVariables.GlobalChangeDistance;
+
+
+        #region ASSIGN TO BIG SPHERE
+        if (!isEquipped && integrateToBottle)
+        {
+            float step = goToBottleSpeed * Time.deltaTime;
+            if (currentBottleSphere != null) transform.position = Vector3.MoveTowards(transform.position, currentBottleSphere.transform.position, step);
+            float transparencyStep = Time.deltaTime * 0.2f;
+            currentTransparency -= Mathf.Max(0f, transparencyStep);
+            var emission = particles.emission;
+            emission.enabled = false;
+            waterMaterial.SetFloat("_Transparency", currentTransparency);
+
+            colorMat.IsActive = false;
+            canActivate = false;
+            if (Vector3.Distance(transform.position, currentBottleSphere.transform.position) < 0.1f)
+            {
+                transform.position = currentBottleSphere.transform.position;
+                integrateToBottle = false;
+                consumedByBottleSphere = true;
+                //IsEquipped = false;
+            }
+        }
+        #endregion
+
     }
 
-    public bool IsFollowingCharacter
+    public bool IsEquipped
     {
         get { return isEquipped; }
         set
@@ -66,37 +97,37 @@ public class Firefly : MonoBehaviour
         }
     }
 
-    void OnIsEquippedChanged(bool following)
+    void OnIsEquippedChanged(bool equiped)
     {
-        if (following)
+        if (equiped)
         {
             lightIntegrator.AssignedFireflies.Add(this);
-            //SinusMovement[] sinMoves = GetComponentsInChildren<SinusMovement>(); 
-            //if(sinMoves.Length > 0)
-            //{
-            //    foreach (SinusMovement item in sinMoves)
-            //    {
-            //        item.move = false; 
-            //    }
-            //}
+            if (particles != null)
+            {
+                var emission = particles.emission;
+                emission.enabled = false;
+                particles.gameObject.SetActive(false);
+            }
             colorMat.IsActive = false;
-            isInSphere = false;
+            isInLightIntegratorZone = false;
         }
         else
         {
-            //SinusMovement[] sinMoves = GetComponentsInChildren<SinusMovement>();
-            //if (sinMoves.Length > 0)
-            //{
-            //    foreach (SinusMovement item in sinMoves)
-            //    {
-            //        item.move = false;
-            //    }
-            //}
             lightIntegrator.AssignedFireflies.Remove(this);
+            if (particles != null)
+            {
+                particles.gameObject.SetActive(true);
+                var emission = particles.emission;
+                emission.enabled = true;
+            }
             colorMat.IsActive = true;
-            isInSphere = true;
+            isInLightIntegratorZone = true;
         }
-        colorMat.IsLightEnabled = !following;
+        colorMat.IsLightEnabled = !equiped;
     }
+
+
+
+
 
 }

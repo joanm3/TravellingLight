@@ -21,9 +21,6 @@
 			_Expand("Inner Expand", Range(0,1)) = 0.5
 			_Radius("Radius", FLOAT) = 0.75
 
-			_ChangePoint("Change at this distance", Float) = 5
-
-
 			//outline properties
 			_LineWidth("Line Width", Range(0,1)) = 0.5
 			_LineColor("Line Color (alpha = emission)", Color) = (1,1,1,0)
@@ -50,13 +47,14 @@
 			#include "Assets/Shaders/Include/snoise.cginc"
 
 			//TABLE!
-			#define count 100
+			#define count 50
 			uniform int _Length;
 			uniform float3 _Positions[count];
 			uniform float _Cloaks[count];
 
 			uniform float _ChangeFactors[count];
 			uniform float _CurDistances[count];
+			uniform float _ChangePoints[count];
 
 			uniform sampler2D _MainTex;
 			uniform sampler2D _Normal;
@@ -164,7 +162,7 @@
 				//maskClip *= 0.5; 
 				float inLine = 1;
 				_CurDistances[0] = distance(_Positions[0].xyz, IN.worldPos);
-				_ChangeFactors[0] = maskClip + ((_Cloaks[0] * _ChangePoint) * inLine) - (1 - (_CurDistances[0] - _ChangePoint));
+				_ChangeFactors[0] = maskClip + ((_Cloaks[0] * _ChangePoints[0]) * inLine) - (1 - (_CurDistances[0] - _ChangePoints[0]));
 				_ChangeFactors[0] = clamp(_ChangeFactors[0], -1, 1);
 
 				float sumT = 1 - _ChangeFactors[0];
@@ -173,7 +171,7 @@
 				for (uint i = 1; i < _Length; ++i)
 				{
 					_CurDistances[i] = distance(_Positions[i].xyz, IN.worldPos);
-					_ChangeFactors[i] = maskClip + ((_Cloaks[i] * _ChangePoint) * inLine) - (1 - (_CurDistances[i] - _ChangePoint));
+					_ChangeFactors[i] = maskClip + ((_Cloaks[i] * _ChangePoints[i]) * inLine) - (1 - (_CurDistances[i] - _ChangePoints[i]));
 					_ChangeFactors[i] = clamp(_ChangeFactors[i], -1, 1);
 					sumT += 1 - _ChangeFactors[i];
 					multT *= 1 - _ChangeFactors[i];
@@ -211,5 +209,5 @@
 			ENDCG
 		}
 
-			FallBack Off
+			FallBack "Diffuse"
 }

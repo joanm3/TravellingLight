@@ -6,11 +6,10 @@ public class LightIntegrator : MonoBehaviour
 {
     public Transform equippedFirefliesTransform;
     public List<Firefly> AssignedFireflies = new List<Firefly>();
-    public float minDistanceFromCharacter = 5f;
-    public float distanceMultiplier = 2f;
     public float positioningSpeed = 5f;
     public float positioningYHeight = 4f;
     public float scalingVelocity = 0.5f;
+    public float transparencySpeed = 0.3f;
 
     private Firefly assigningFirefly;
     private Firefly placingFirefly;
@@ -24,7 +23,7 @@ public class LightIntegrator : MonoBehaviour
     private bool isInPlacedScale = false;
     private bool isAssigningFirefly = false;
     private bool isPlacingFirefly = false;
-
+    private bool isInGoodTransparency = false;
     private List<Firefly> inZoneFireflies = new List<Firefly>();
 
 
@@ -44,13 +43,33 @@ public class LightIntegrator : MonoBehaviour
 
         if (InputManager.Instance.takeFirefly.IsCurrentEvent() && inZoneFireflies.Count > 0 && !isAssigningFirefly && !isPlacingFirefly)
         {
-            isAssigningFirefly = true;
             //you could look the closest one
-            //HERE HERE HERE RECUPERATE ACCORDING TO ANGLE
-            assigningFirefly = inZoneFireflies[0];
-            inZoneFireflies.Remove(inZoneFireflies[0]);
-            assigningFirefly.IsFollowingCharacter = true;
-            //if (!AssignedFireflies.Contains(assigningFirefly)) AssignedFireflies.Add(assigningFirefly);
+            //HERE HERE HERE RECUPERATE ACCORDING TO ANGLE TO PLAYER
+
+            for (int i = 0; i < inZoneFireflies.Count; i++)
+            {
+                if (inZoneFireflies[i].canActivate)
+                {
+                    assigningFirefly = inZoneFireflies[i];
+                    inZoneFireflies.Remove(inZoneFireflies[i]);
+                    isAssigningFirefly = true;
+                    break;
+                }
+            }
+            if (isAssigningFirefly)
+            {
+                assigningFirefly.IsEquipped = true;
+                //check if it is in a bottle but can be used and take it out of the box. 
+                if (assigningFirefly.consumedByBottleSphere && assigningFirefly.currentBottleSphere != null)
+                {
+                    if (assigningFirefly.currentBottleSphere.assignedFireflies.Contains(assigningFirefly))
+                    {
+                        assigningFirefly.currentBottleSphere.assignedFireflies.Remove(assigningFirefly);
+                        assigningFirefly.currentBottleSphere.firefliesInZone.Add(assigningFirefly);
+                    }
+                    assigningFirefly.currentBottleSphere = null;
+                }
+            }
         }
 
         if (isAssigningFirefly && assigningFirefly != null && !isPlacingFirefly)
@@ -73,6 +92,9 @@ public class LightIntegrator : MonoBehaviour
                     assigningFirefly.transform.localScale.x - (scalingVelocity * Time.deltaTime),
                     assigningFirefly.transform.localScale.y - (scalingVelocity * Time.deltaTime),
                     assigningFirefly.transform.localScale.z - (scalingVelocity * Time.deltaTime));
+
+
+
             }
             else if (!isInAssignedScale)
             {
@@ -80,18 +102,35 @@ public class LightIntegrator : MonoBehaviour
                 assigningFirefly.transform.parent = this.transform;
                 assigningFirefly.transform.position = this.transform.position;
                 isInAssignedScale = true;
+
+            }
+
+            if (assigningFirefly.currentTransparency < assigningFirefly.startingTransparency)
+            {
+                float transparencyStep = Time.deltaTime * transparencySpeed;
+                assigningFirefly.currentTransparency += Mathf.Min(assigningFirefly.startingTransparency, transparencyStep);
+                var emission = assigningFirefly.particles.emission;
+                emission.enabled = true;
+                assigningFirefly.waterMaterial.SetFloat("_Transparency", assigningFirefly.currentTransparency);
+            }
+            else if (!isInGoodTransparency)
+            {
+                assigningFirefly.waterMaterial.SetFloat("_Transparency", assigningFirefly.startingTransparency);
+                isInGoodTransparency = true;
             }
 
 
-            if (isInAssignedScale && isInAssignedPosition)
-            {
 
+
+            if (isInAssignedScale && isInAssignedPosition && isInGoodTransparency)
+            {
                 assigningFirefly.transform.localScale = Vector3.zero;
                 assigningFirefly.transform.position = equippedFirefliesTransform.transform.position;
                 assigningFirefly = null;
                 isInAssignedScale = false;
                 isInAssignedPosition = false;
                 isAssigningFirefly = false;
+                isInGoodTransparency = true;
             }
         }
 
@@ -108,10 +147,11 @@ public class LightIntegrator : MonoBehaviour
                 isPlacingFirefly = true;
                 placingFirefly = AssignedFireflies[0];
                 placingFirefly.transform.parent = null;
-                playerPlacePosition = transform.position;
-                playerPlacePosition.y = transform.position.y + positioningYHeight;
-                placingFirefly.IsFollowingCharacter = false;
+                playerPlacePosition = equippedFirefliesTransform.position;
+                playerPlacePosition.y = playerPlacePosition.y + positioningYHeight;
+                placingFirefly.IsEquipped = false;
                 if (!inZoneFireflies.Contains(placingFirefly)) inZoneFireflies.Add(placingFirefly);
+                placingFirefly.canActivate = true;
             }
         }
 
@@ -157,6 +197,9 @@ public class LightIntegrator : MonoBehaviour
 
 
 
+
+
+
     }
 
 
@@ -166,11 +209,11 @@ public class LightIntegrator : MonoBehaviour
         if (atc == null)
             atc = other.gameObject.GetComponentInParent<Firefly>();
 
-        if (atc != null && !atc.IsFollowingCharacter)
+        if (atc != null && !atc.IsEquipped)
         {
             if (!inZoneFireflies.Contains(atc)) inZoneFireflies.Add(atc);
             //assigningFirefly = atc;
-            atc.isInSphere = true;
+            atc.isInLightIntegratorZone = true;
         }
     }
 

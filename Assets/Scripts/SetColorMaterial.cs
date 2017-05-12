@@ -32,18 +32,18 @@ public class SetColorMaterial : MonoBehaviour
 
     bool isLightEnabled = true;
     bool isActive = false;
+    public bool manualActivation = false;
+
+    Firefly firefly;
     Renderer rend;
     Material mat;
     GameObject luzInstance = null;
     public Light luzLight = null;
     Color colorsInRange;
     Color actualColor;
-
     SinusMovement sinMovement;
-
     private float targetCloak = 0f;
 
-    public bool manualActivation = false;
 
     private bool oldManualActivation = false;
 
@@ -61,6 +61,8 @@ public class SetColorMaterial : MonoBehaviour
         targetCloak = 1f;
         //SetTargetCloak();
 
+        firefly = GetComponentInParent<Firefly>();
+        if (firefly == null) Debug.LogError("firefly not found, please assign one");
         rend = GetComponent<Renderer>();
         mat = rend.material;
         switch (colorType)
@@ -117,7 +119,7 @@ public class SetColorMaterial : MonoBehaviour
         if (!IsLightEnabled)
             return;
 
-        if (col.gameObject.tag == ("LightSourceCollider"))
+        if (col.gameObject.tag == ("LightSourceCollider") && firefly.canActivate)
         {
             if (luz != null && luzInstance == null && instantiateObject)
             {
@@ -262,6 +264,8 @@ public class SetColorMaterial : MonoBehaviour
         }
     }
 
+
+    //this should be in firefly code not here... lol
     void UpdateTargetCloaks(bool goActive)
     {
         if (WorldMaskManager.Instance == null)
