@@ -48,7 +48,7 @@ public class LightIntegrator : MonoBehaviour
 
             for (int i = 0; i < inZoneFireflies.Count; i++)
             {
-                if (inZoneFireflies[i].canActivate)
+                if (inZoneFireflies[i].canActivate && !inZoneFireflies[i].integrateToBottle)
                 {
                     assigningFirefly = inZoneFireflies[i];
                     inZoneFireflies.Remove(inZoneFireflies[i]);

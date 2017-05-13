@@ -6,12 +6,12 @@ public class BottleSphere : MonoBehaviour
 {
     public int numberRequired = 3;
     public float activatedChangeDistance = 30f;
+    public float transparencyChangeSpeed = 1f;
     public float TickUpdateForFireflies = 0.2f;
+
 
     public GameObject[] objectsThatAppearWithEachFirefly = new GameObject[3];
 
-    public Color whiteColor = Color.white;
-    public Color blueColor = Color.cyan;
 
     public bool isFull = false;
 
@@ -19,33 +19,92 @@ public class BottleSphere : MonoBehaviour
     public List<Firefly> firefliesInZone = new List<Firefly>();
 
     private float timer = 0f;
-    private Material mat;
-
     private int lastIndex;
+    private MeshRenderer[][] renderers;
+    private float[][] startingTransparencies;
+    private float[][] currentTransparencies;
+    private bool transparencyChangedDone = false;
 
     void Start()
     {
-        mat = GetComponent<Renderer>().material;
+
+        // get the renderers of each object that appears. 
+        renderers = new MeshRenderer[objectsThatAppearWithEachFirefly.Length][];
+        startingTransparencies = new float[objectsThatAppearWithEachFirefly.Length][];
+        currentTransparencies = new float[objectsThatAppearWithEachFirefly.Length][];
+
         lastIndex = assignedFireflies.Count;
         for (int i = 0; i < objectsThatAppearWithEachFirefly.Length; i++)
         {
+            renderers[i] = objectsThatAppearWithEachFirefly[i].GetComponentsInChildren<MeshRenderer>(true);
+            startingTransparencies[i] = new float[renderers[i].Length];
+            currentTransparencies[i] = new float[renderers[i].Length];
+
+            for (int j = 0; j < renderers[i].Length; j++)
+            {
+                startingTransparencies[i][j] = renderers[i][j].material.GetFloat("_Transparency");
+                currentTransparencies[i][j] = startingTransparencies[i][j];
+                Debug.Log(startingTransparencies[i][j]);
+            }
+            if (i == 0) { objectsThatAppearWithEachFirefly[i].SetActive(true); continue; }
             objectsThatAppearWithEachFirefly[i].SetActive(false);
         }
+
     }
 
     void Update()
     {
+
+
+
+
+
+
+
+
         if (lastIndex != assignedFireflies.Count)
         {
             //improve later
-            for (int i = 0; i < objectsThatAppearWithEachFirefly.Length; i++)
+            for (int i = 0; i < renderers.Length; i++)
             {
-                if (objectsThatAppearWithEachFirefly[i] != null)
+                for (int j = 0; j < renderers[i].Length; j++)
                 {
-                    if (i < assignedFireflies.Count) objectsThatAppearWithEachFirefly[i].SetActive(true);
-                    else objectsThatAppearWithEachFirefly[i].SetActive(false);
+                    if (!transparencyChangedDone)
+                    {
+                        if (i == assignedFireflies.Count)
+                        {
+                            objectsThatAppearWithEachFirefly[i].SetActive(true);
+                            float transparencyStep = Time.deltaTime * transparencyChangeSpeed;
+                            currentTransparencies[i][j] += Mathf.Max(0f, transparencyStep);
+                            renderers[i][j].material.SetFloat("_Transparency", currentTransparencies[i][j]);
+                        }
+                        else
+                        {
+
+                            float transparencyStep = Time.deltaTime * transparencyChangeSpeed;
+                            currentTransparencies[i][j] -= Mathf.Max(0f, transparencyStep);
+                            renderers[i][j].material.SetFloat("_Transparency", currentTransparencies[i][j]);
+                            if (currentTransparencies[i][j] < 0f) transparencyChangedDone = true;
+                        }
+                    }
+                    else
+                    {
+                        if (i == assignedFireflies.Count)
+                        {
+                            renderers[i][j].material.SetFloat("_Transparency", startingTransparencies[i][j]);
+                        }
+                        else
+                        {
+                            renderers[i][j].material.SetFloat("_Transparency", 0f);
+                            objectsThatAppearWithEachFirefly[i].SetActive(true);
+                        }
+                    }
+
                 }
             }
+
+
+
             if (assignedFireflies.Count >= numberRequired)
             {
                 for (int i = 0; i < assignedFireflies.Count; i++)
@@ -62,14 +121,30 @@ public class BottleSphere : MonoBehaviour
                 }
                 isFull = true;
             }
-            lastIndex = assignedFireflies.Count;
+
+            if (transparencyChangedDone)
+            {
+                lastIndex = assignedFireflies.Count;
+                transparencyChangedDone = false;
+            }
         }
 
 
-        if (isFull) return;
+
+        //ifFullBehaviour
+        if (isFull)
+        {
+
+            return;
+        }
+
+
+
 
         timer += Time.deltaTime;
         if (timer < TickUpdateForFireflies) return;
+
+
 
         for (int i = 0; i < firefliesInZone.Count; i++)
         {

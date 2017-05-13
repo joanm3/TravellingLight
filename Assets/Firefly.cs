@@ -74,8 +74,7 @@ public class Firefly : MonoBehaviour
             waterMaterial.SetFloat("_Transparency", currentTransparency);
 
             colorMat.IsActive = false;
-            canActivate = false;
-            if (Vector3.Distance(transform.position, currentBottleSphere.transform.position) < 0.1f)
+            if (currentBottleSphere != null && Vector3.Distance(transform.position, currentBottleSphere.transform.position) < 0.1f)
             {
                 transform.position = currentBottleSphere.transform.position;
                 integrateToBottle = false;
