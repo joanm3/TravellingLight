@@ -51,6 +51,7 @@ public class LightIntegrator : MonoBehaviour
                 if (inZoneFireflies[i].canActivate && !inZoneFireflies[i].integrateToBottle)
                 {
                     assigningFirefly = inZoneFireflies[i];
+                    assigningFirefly.cloak = 1f;
                     inZoneFireflies.Remove(inZoneFireflies[i]);
                     isAssigningFirefly = true;
                     break;
@@ -68,6 +69,7 @@ public class LightIntegrator : MonoBehaviour
                         assigningFirefly.currentBottleSphere.assignedFireflies.Remove(assigningFirefly);
                         assigningFirefly.currentBottleSphere.firefliesInZone.Add(assigningFirefly);
                     }
+                    assigningFirefly.consumedByBottleSphere = false; 
                     assigningFirefly.currentBottleSphere = null;
                 }
             }
@@ -113,10 +115,14 @@ public class LightIntegrator : MonoBehaviour
                 var emission = assigningFirefly.particles.emission;
                 emission.enabled = true;
                 assigningFirefly.waterMaterial.SetFloat("_Transparency", assigningFirefly.currentTransparency);
+                assigningFirefly.waterMaterial.SetFloat("_RefractionAmount", assigningFirefly.currentTransparency);
+
             }
             else if (!isInGoodTransparency)
             {
                 assigningFirefly.waterMaterial.SetFloat("_Transparency", assigningFirefly.startingTransparency);
+                assigningFirefly.waterMaterial.SetFloat("_RefractionAmount", assigningFirefly.startingTransparency);
+
                 isInGoodTransparency = true;
             }
 

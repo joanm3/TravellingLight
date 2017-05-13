@@ -68,15 +68,18 @@ public class Firefly : MonoBehaviour
             float step = goToBottleSpeed * Time.deltaTime;
             if (currentBottleSphere != null) transform.position = Vector3.MoveTowards(transform.position, currentBottleSphere.transform.position, step);
             float transparencyStep = Time.deltaTime * 0.2f;
-            currentTransparency -= Mathf.Max(0f, transparencyStep);
+            currentTransparency = Mathf.Max(0f, currentTransparency - transparencyStep);
             var emission = particles.emission;
             emission.enabled = false;
             waterMaterial.SetFloat("_Transparency", currentTransparency);
+            waterMaterial.SetFloat("_RefractionAmount", currentTransparency);
 
             colorMat.IsActive = false;
             if (currentBottleSphere != null && Vector3.Distance(transform.position, currentBottleSphere.transform.position) < 0.1f)
             {
                 transform.position = currentBottleSphere.transform.position;
+                waterMaterial.SetFloat("_Transparency", 0f);
+                waterMaterial.SetFloat("_RefractionAmount", 0f);
                 integrateToBottle = false;
                 consumedByBottleSphere = true;
                 //IsEquipped = false;
