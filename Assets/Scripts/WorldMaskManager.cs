@@ -159,6 +159,7 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
         }
         for (int i = 0; i < forestTargets.Count; i++)
         {
+            if (forestTargets[i].firefly.consumedByBottleSphere || forestTargets[i].firefly.integrateToBottle || !forestTargets[i].firefly.canActivate) continue;
             forestCloaks[i] = forestTargets[i].cloak;
             forestTargets[i].firefly.cloak = forestTargets[i].cloak;
         }

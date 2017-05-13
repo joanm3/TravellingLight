@@ -64,6 +64,7 @@ public class LightIntegrator : MonoBehaviour
                 {
                     if (assigningFirefly.currentBottleSphere.assignedFireflies.Contains(assigningFirefly))
                     {
+                        //assigningFirefly.cloak = 0f;
                         assigningFirefly.currentBottleSphere.assignedFireflies.Remove(assigningFirefly);
                         assigningFirefly.currentBottleSphere.firefliesInZone.Add(assigningFirefly);
                     }

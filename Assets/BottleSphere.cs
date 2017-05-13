@@ -11,7 +11,7 @@ public class BottleSphere : MonoBehaviour
 
 
     public GameObject[] objectsThatAppearWithEachFirefly = new GameObject[3];
-
+    private FadeWhenEnabling[] faders;
 
     public bool isFull = false;
 
@@ -20,33 +20,21 @@ public class BottleSphere : MonoBehaviour
 
     private float timer = 0f;
     private int lastIndex;
-    private MeshRenderer[][] renderers;
-    private float[][] startingTransparencies;
-    private float[][] currentTransparencies;
-    private bool transparencyChangedDone = false;
+
 
     void Start()
     {
-
-        // get the renderers of each object that appears. 
-        renderers = new MeshRenderer[objectsThatAppearWithEachFirefly.Length][];
-        startingTransparencies = new float[objectsThatAppearWithEachFirefly.Length][];
-        currentTransparencies = new float[objectsThatAppearWithEachFirefly.Length][];
-
         lastIndex = assignedFireflies.Count;
+        faders = new FadeWhenEnabling[objectsThatAppearWithEachFirefly.Length];
         for (int i = 0; i < objectsThatAppearWithEachFirefly.Length; i++)
         {
-            renderers[i] = objectsThatAppearWithEachFirefly[i].GetComponentsInChildren<MeshRenderer>(true);
-            startingTransparencies[i] = new float[renderers[i].Length];
-            currentTransparencies[i] = new float[renderers[i].Length];
-
-            for (int j = 0; j < renderers[i].Length; j++)
-            {
-                startingTransparencies[i][j] = renderers[i][j].material.GetFloat("_Transparency");
-                currentTransparencies[i][j] = startingTransparencies[i][j];
-                Debug.Log(startingTransparencies[i][j]);
-            }
+            faders[i] = objectsThatAppearWithEachFirefly[i].GetComponent<FadeWhenEnabling>();
             if (i == 0) { objectsThatAppearWithEachFirefly[i].SetActive(true); continue; }
+
+            for (int j = 0; j < faders[i].currentTransparencies.Length; j++)
+            {
+                faders[i].currentTransparencies[j] = 0f;
+            }
             objectsThatAppearWithEachFirefly[i].SetActive(false);
         }
 
@@ -56,54 +44,29 @@ public class BottleSphere : MonoBehaviour
     {
 
 
-
-
-
-
-
-
         if (lastIndex != assignedFireflies.Count)
         {
-            //improve later
-            for (int i = 0; i < renderers.Length; i++)
+            //fade In/out the child objects
+            for (int i = 0; i < faders.Length; i++)
             {
-                for (int j = 0; j < renderers[i].Length; j++)
+
+                if (i == assignedFireflies.Count)
                 {
-                    if (!transparencyChangedDone)
-                    {
-                        if (i == assignedFireflies.Count)
-                        {
-                            objectsThatAppearWithEachFirefly[i].SetActive(true);
-                            float transparencyStep = Time.deltaTime * transparencyChangeSpeed;
-                            currentTransparencies[i][j] += Mathf.Max(0f, transparencyStep);
-                            renderers[i][j].material.SetFloat("_Transparency", currentTransparencies[i][j]);
-                        }
-                        else
-                        {
-
-                            float transparencyStep = Time.deltaTime * transparencyChangeSpeed;
-                            currentTransparencies[i][j] -= Mathf.Max(0f, transparencyStep);
-                            renderers[i][j].material.SetFloat("_Transparency", currentTransparencies[i][j]);
-                            if (currentTransparencies[i][j] < 0f) transparencyChangedDone = true;
-                        }
-                    }
-                    else
-                    {
-                        if (i == assignedFireflies.Count)
-                        {
-                            renderers[i][j].material.SetFloat("_Transparency", startingTransparencies[i][j]);
-                        }
-                        else
-                        {
-                            renderers[i][j].material.SetFloat("_Transparency", 0f);
-                            objectsThatAppearWithEachFirefly[i].SetActive(true);
-                        }
-                    }
-
+                    faders[i].gameObject.SetActive(true);
+                    faders[i].finishedFading = false;
+                    StartCoroutine(faders[i].FadeIn(transparencyChangeSpeed));
+                }
+                else
+                {
+                    faders[i].finishedFading = false;
+                    StartCoroutine(faders[i].FadeOut(transparencyChangeSpeed));
                 }
             }
 
-
+            for (int i = 0; i < assignedFireflies.Count; i++)
+            {
+                assignedFireflies[i].cloak = 1f; 
+            }
 
             if (assignedFireflies.Count >= numberRequired)
             {
@@ -122,11 +85,7 @@ public class BottleSphere : MonoBehaviour
                 isFull = true;
             }
 
-            if (transparencyChangedDone)
-            {
-                lastIndex = assignedFireflies.Count;
-                transparencyChangedDone = false;
-            }
+            lastIndex = assignedFireflies.Count;
         }
 
 

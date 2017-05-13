@@ -17,6 +17,7 @@ public class Firefly : MonoBehaviour
     public Transform targetTransform;
     public ParticleSystem particles;
     public float goToBottleSpeed = 2f;
+    public bool canActivate = true;
 
     //[Header("Big Firefly")]
     //public bool isBigFirefly = true;
@@ -29,7 +30,6 @@ public class Firefly : MonoBehaviour
     public BottleSphere currentBottleSphere;
     public bool consumedByBottleSphere = false;
     public float startingScale;
-    public bool canActivate = true;
 
     private SetColorMaterial colorMat;
     private GameObject player;
