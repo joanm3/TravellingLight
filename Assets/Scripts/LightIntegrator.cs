@@ -51,7 +51,7 @@ public class LightIntegrator : MonoBehaviour
                 if (inZoneFireflies[i].canActivate && !inZoneFireflies[i].integrateToBottle)
                 {
                     assigningFirefly = inZoneFireflies[i];
-                    assigningFirefly.cloak = 1f;
+                    WorldMaskManager.Instance.forestTargets[assigningFirefly.index].cloak = 1f;
                     inZoneFireflies.Remove(inZoneFireflies[i]);
                     isAssigningFirefly = true;
                     break;

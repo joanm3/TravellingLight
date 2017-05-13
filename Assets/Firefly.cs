@@ -8,8 +8,8 @@ public class Firefly : MonoBehaviour
     [SerializeField]
     private bool isEquipped = false;
     public int index = 0;
-    [Range(0, 1)]
-    public float cloak = 0f;
+    //[Range(0, 1)]
+    //public float cloak = 0f;
     public bool useGlobalDistance = true;
     public float changeDistance = 10f;
     public SetColorMaterial colorSetter;

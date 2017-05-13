@@ -20,20 +20,22 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
     [Header("Read Only")]
     public float[] forestCloaks;
-    public float[] cityCloaks;
-
     public Vector4[] forestTargetPositions;
-    public Vector4[] cityTargetPositions;
+    public float[] changePoints;
 
     int oldForestCount;
     int oldCityCount;
 
-    public float[] changePoints;
 
 
     void OnEnable()
     {
         Init();
+
+#if !UNITY_EDITOR
+          Cursor.visible = false;
+#endif
+
 
         oldForestCount = forestTargets.Count;
 
@@ -152,16 +154,15 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
     void UpdateCloaks()
     {
-
         if (forestCloaks.Length != forestTargets.Count)
         {
             forestCloaks = new float[forestTargets.Count];
         }
         for (int i = 0; i < forestTargets.Count; i++)
         {
-            if (forestTargets[i].firefly.consumedByBottleSphere || forestTargets[i].firefly.integrateToBottle || !forestTargets[i].firefly.canActivate) continue;
+            //forestTargets[i].changeDistance = forestTargets[i].firefly.changeDistance;
+            //if (forestTargets[i].firefly.consumedByBottleSphere || forestTargets[i].firefly.integrateToBottle || !forestTargets[i].firefly.canActivate) continue;
             forestCloaks[i] = forestTargets[i].cloak;
-            forestTargets[i].firefly.cloak = forestTargets[i].cloak;
         }
     }
 

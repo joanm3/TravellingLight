@@ -155,7 +155,8 @@ public class SetColorMaterial : MonoBehaviour
         {
             if (index == i)
             {
-                WorldMaskManager.Instance.forestTargets[i].cloak = targetCloak;
+                if (firefly.canActivate && !firefly.consumedByBottleSphere && !firefly.integrateToBottle) WorldMaskManager.Instance.forestTargets[firefly.index].cloak = targetCloak;
+                //WorldMaskManager.Instance.forestTargets[i].firefly.cloak = targetCloak;
             }
         }
     }

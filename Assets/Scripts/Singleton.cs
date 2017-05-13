@@ -19,7 +19,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
             if (parent != null)
                 Instance.gameObject.transform.SetParent(parent, false);
             Instance.gameObject.name = typeof(T).Name;
-            Debug.Log(Instance.gameObject.name + " initialised", Instance.gameObject);
+            //Debug.Log(Instance.gameObject.name + " initialised", Instance.gameObject);
         }
     }
 

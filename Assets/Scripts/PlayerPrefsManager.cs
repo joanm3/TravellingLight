@@ -50,7 +50,7 @@ public abstract class PlayerPrefsManager<T> : Singleton<T> where T : PlayerPrefs
             saveLoadEnabled = false;
             OnLoad();
             saveLoadEnabled = true;
-            Debug.Log("Loaded " + key, this);
+            //Debug.Log("Loaded " + key, this);
         }
     }
 
@@ -83,7 +83,7 @@ public abstract class PlayerPrefsManager<T> : Singleton<T> where T : PlayerPrefs
             saveLoadEnabled = false;
             OnSave();
             SaveValues();
-            Debug.Log("Saved " + key, this);
+            //Debug.Log("Saved " + key, this);
             saveLoadEnabled = true;
         }
     }

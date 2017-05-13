@@ -215,7 +215,11 @@
 				float shouldLine = shouldLine1 - shouldLine2;
 				o.Albedo = c.rgb;
 				o.Albedo = lerp(c2.rgb, c.rgb, shouldLine1);
-				o.Albedo = lerp(o.Albedo, c.rgb * _LineColor.rgb, shouldLine);
+				//o.Albedo = lerp(o.Albedo, c.rgb * _LineColor.rgb, shouldLine);
+				//o.Albedo = lerp(o.Albedo, _LineColor.rgb, shouldLine);
+				//o.Albedo = lerp(o.Albedo, c.rgb * _LineColor.rgb * _LineColor.rgb, shouldLine);
+				o.Albedo = lerp(o.Albedo, c.rgb + _LineColor.rgb, shouldLine);
+
 				o.Emission = lerp(o.Emission, _LineColor.a, shouldLine);
 				o.Metallic = _Metallic;
 				o.Smoothness = _Glossiness;

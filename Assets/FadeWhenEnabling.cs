@@ -5,15 +5,15 @@ using UnityEngine;
 public class FadeWhenEnabling : MonoBehaviour
 {
 
-    Renderer[] renderers;
+    public Renderer[] renderers;
     public float[] startingTranparencies;
     public float[] currentTransparencies;
 
     public bool finishedFading = false;
 
-    void Start()
+    void Awake()
     {
-        renderers = GetComponentsInChildren<Renderer>(true);
+        if (renderers.Length <= 0) renderers = GetComponentsInChildren<Renderer>(true);
         startingTranparencies = new float[renderers.Length];
         currentTransparencies = new float[renderers.Length];
 
@@ -35,7 +35,6 @@ public class FadeWhenEnabling : MonoBehaviour
                 currentTransparencies[i] += Time.deltaTime * speed;
                 renderers[i].material.SetFloat("_Transparency", currentTransparencies[i]);
                 renderers[i].material.SetFloat("_RefractionAmount", currentTransparencies[i]);
-
             }
 
             if (renderers[renderers.Length - 1].material.GetFloat("_Transparency") > startingTranparencies[renderers.Length - 1])

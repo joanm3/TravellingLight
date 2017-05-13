@@ -4,11 +4,13 @@ using UnityEngine;
 using BezierCurves;
 
 [ExecuteInEditMode]
-public class FollowCurve : MonoBehaviour {
+public class FollowCurve : MonoBehaviour
+{
 
     public BezierCurve3D curve;
-    [Range(0,1)]
+    [Range(0, 1)]
     public float pos;
+    public bool changeRotation = true;
     public float speed;
     const float speedConst = 3;
     float startSpeed;
@@ -17,7 +19,7 @@ public class FollowCurve : MonoBehaviour {
 
     public enum MoveType
     {
-        lineaire,sinusoidale,loop     
+        lineaire, sinusoidale, loop
     }
     public MoveType movementType;
 
@@ -50,14 +52,15 @@ public class FollowCurve : MonoBehaviour {
         }
 
         transform.position = curve.GetPoint(pos);
-        transform.rotation = curve.GetRotation(pos,Vector3.up);
 
-        if(!Application.isPlaying)
+        if (changeRotation) transform.rotation = curve.GetRotation(pos, Vector3.up);
+
+        if (!Application.isPlaying)
         {
             return;
         }
 
-        switch(movementType)
+        switch (movementType)
         {
             //LINEAIRE
             case MoveType.lineaire:
@@ -112,7 +115,7 @@ public class FollowCurve : MonoBehaviour {
                     {
                         sinusDir = !sinusDir;
                         waitTimeForSinMove = startWaitTimeForSinMove;
-                    }                    
+                    }
                 }
                 break;
             //LOOP
@@ -140,6 +143,6 @@ public class FollowCurve : MonoBehaviour {
             default:
                 Debug.LogError("Asign MoveType to " + gameObject.name);
                 return;
-        }       
+        }
     }
 }
