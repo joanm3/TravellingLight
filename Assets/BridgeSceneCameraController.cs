@@ -15,19 +15,52 @@ public class BridgeSceneCameraController : MonoBehaviour
     public BottleSphere bottleSphere;
     public FollowCurve followCurve;
     public MeshRenderer river;
+    public float riverFadeSpeed = 0.2f;
+    public GameObject[] flocks;
+
 
     public bool firstChangeDone = false;
     public bool secondChangeDone = false;
     public bool comeBacktoPlayerDone = false;
 
+
     private float currentAlpha = 0f;
     private float timer = 0f;
+
+    private Material riverMat;
+    private float riverRimSize = 2f;
+    private float riverTransp = 0.435f;
+    private float riverRefraction = 0.1f;
+    private float riverValue;
+
+    [SerializeField]
+    private float sRiverRimSize = 2f;
+    [SerializeField]
+    private float sRiverTransp = 0.435f;
+    [SerializeField]
+    private float sRiverRefraction = 0.1f;
 
     void Start()
     {
         firstCam.enabled = false;
         secondCam.enabled = false;
         river.gameObject.SetActive(false);
+        riverMat = river.material;
+        sRiverRimSize = riverMat.GetFloat("_RimSize");
+        sRiverTransp = riverMat.GetFloat("_Transparency");
+        sRiverRefraction = riverMat.GetFloat("_RefractionAmount");
+        river.gameObject.GetComponent<BoxCollider>().enabled = false;
+
+        riverMat.SetFloat("_RimSize", 0f);
+        riverMat.SetFloat("_Transparency", 0f);
+        riverMat.SetFloat("_RefractionAmount", 0f);
+
+        //if (flocks.Length < 0) return;
+        //foreach (var flock in flocks)
+        //{
+        //    flock.SetActive(false);
+        //}
+
     }
 
     void Update()
@@ -54,8 +87,43 @@ public class BridgeSceneCameraController : MonoBehaviour
                 StartCoroutine(FadeInOutCameras(secondCam, playerCam));
                 comeBacktoPlayerDone = true;
                 river.gameObject.SetActive(true);
+                river.gameObject.GetComponent<BoxCollider>().enabled = true;
+                StartCoroutine(FadeRiverIn());
+
+                if (flocks.Length < 0) return;
+                foreach (var flock in flocks)
+                {
+                    flock.SetActive(true);
+                }
+                for (int i = 0; i < flocks.Length; i++)
+                {
+                    //foreach (Transform child in flocks[i].transform)
+                    //{
+                    //    FlockChildSound sounds = child.GetComponent<FlockChildSound>();
+                    //    if (sounds) sounds.enabled = true;
+                    //}
+                }
+
+
             }
         }
+    }
+
+    private IEnumerator FadeRiverIn()
+    {
+        while (riverValue < sRiverRimSize)
+        {
+            riverValue += Time.deltaTime * riverFadeSpeed;
+
+            riverMat.SetFloat("_RimSize", Mathf.Min(sRiverRimSize, riverValue));
+            riverMat.SetFloat("_Transparency", Mathf.Min(sRiverTransp, riverValue));
+            riverMat.SetFloat("_RefractionAmount", Mathf.Min(sRiverRefraction, riverValue));
+            yield return new WaitForEndOfFrame();
+        }
+
+        riverMat.SetFloat("_RimSize", sRiverRimSize);
+        riverMat.SetFloat("_Transparency", sRiverTransp);
+        riverMat.SetFloat("_RefractionAmount", sRiverRefraction);
     }
 
 
@@ -66,7 +134,6 @@ public class BridgeSceneCameraController : MonoBehaviour
             canvasGroup.alpha += Time.deltaTime * fadeTime;
             yield return new WaitForEndOfFrame();
         }
-        Debug.Log("arrived here");
         canvasGroup.alpha = 1f;
         secondCamera.enabled = true;
         firstCamera.enabled = false;
