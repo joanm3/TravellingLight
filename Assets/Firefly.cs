@@ -32,7 +32,7 @@ public class Firefly : MonoBehaviour
     public float startingScale;
 
     private SetColorMaterial colorMat;
-    private GameObject player;
+    public GameObject player;
     private LightIntegrator lightIntegrator;
 
     public Renderer waterRenderer;
@@ -53,7 +53,7 @@ public class Firefly : MonoBehaviour
             Debug.LogError("color material null for " + this.name);
             Destroy(this);
         }
-        player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null) player = GameObject.FindGameObjectWithTag("Player");
         lightIntegrator = player.GetComponentInChildren<LightIntegrator>();
     }
 

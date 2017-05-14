@@ -38,6 +38,7 @@ namespace UnityStandardAssets.Cameras
 
         protected override void FollowTarget(float deltaTime)
         {
+
             // we make initial calculations from the original local rotation
             transform.localRotation = m_OriginalRotation;
 
