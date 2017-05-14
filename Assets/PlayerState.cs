@@ -39,7 +39,6 @@ public class PlayerState : Singleton<PlayerState>
 
         //minDistance = GetNearestDistance();
         isInsideSphere = InsideSphere();
-        Debug.Log(InsideSphere());
 
         if (isInsideSphere != lastIsInsideSphere)
         {
