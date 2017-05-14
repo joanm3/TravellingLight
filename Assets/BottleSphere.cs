@@ -140,9 +140,15 @@ public class BottleSphere : MonoBehaviour
             {
                 assignedFireflies[0].useGlobalDistance = false;
                 assignedFireflies[0].changeDistance = activatedChangeDistance;
+
                 WorldMaskManager.Instance.forestTargets[assignedFireflies[0].index].changeDistance = assignedFireflies[0].changeDistance;
                 if (WorldMaskManager.Instance.forestTargets[assignedFireflies[0].index].cloak > 0f)
                 {
+                    //do it only once...
+                    for (int i = 0; i < assignedFireflies.Count; i++)
+                    {
+                        assignedFireflies[i].transform.parent = WorldMaskManager.Instance.targetsParent.transform;
+                    }
                     WorldMaskManager.Instance.forestTargets[assignedFireflies[0].index].cloak -= (activatedCloakSpeed) * Time.deltaTime;
                 }
                 else

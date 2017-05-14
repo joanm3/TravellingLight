@@ -8,7 +8,7 @@ using ProjectLight.Functions;
 [ExecuteInEditMode]
 public class WorldMaskManager : Singleton<WorldMaskManager>
 {
-    public GameObject parent;
+    public GameObject targetsParent;
     public WorldMaskVariables worldMaskGlobalVariables = new WorldMaskVariables();
     public bool showHidden = true;
     public float standardHeight = 5f;
@@ -121,7 +121,7 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 #else
                 targets[i].target = Instantiate(prefab);
 #endif
-                targets[i].target.transform.parent = (parent) ? parent.transform : null;
+                targets[i].target.transform.parent = (targetsParent) ? targetsParent.transform : null;
                 targets[i].target.transform.position = new Vector3(0f, standardHeight, 0f);
                 targets[i].target.transform.rotation = Quaternion.identity;
                 targets[i].target.name = prefab.name + "_" + (i + 1).ToString();
@@ -129,7 +129,6 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
                 targets[i].firefly = targets[i].target.GetComponent<Firefly>();
                 if (targets[i].firefly == null) Debug.LogError("no firefly component to the instantiated prefab");
                 targets[i].targetChildTransform = targets[i].firefly.targetTransform;
-                Debug.Log(targets[i].targetChildTransform);
                 targets[i].cloak = 0f;
                 targets[i].index = i;
                 targets[i].firefly.index = i;
@@ -219,7 +218,6 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
             matList[i].SetFloat("_LineWidth", Instance.worldMaskGlobalVariables.LineWidth);
             matList[i].SetFloat("_Expand", Instance.worldMaskGlobalVariables.InnerExpand);
             matList[i].SetFloat("_Length", worldTargets.Count);
-
 
             matList[i].SetFloatArray("_ChangePoints", changePoints);
             matList[i].SetFloatArray("_Cloaks", cloakValues);

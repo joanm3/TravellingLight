@@ -5,7 +5,7 @@ using UnityEditor;
 #endif
 
 [ExecuteInEditMode]
-[RequireComponent(typeof(BoxCollider))]
+//[RequireComponent(typeof(BoxCollider))]
 public class LevelGrid : MonoBehaviour
 {
     //public GameObject testToGrid; 
@@ -48,7 +48,8 @@ public class LevelGrid : MonoBehaviour
 
     private void Awake()
     {
-#if !UNITY_EDITOR
+#if !UNITY_EDITOR        
+        Destroy(boxCollider);
         Destroy(this); 
 #endif
         if (Ins != null && Ins != this)
@@ -73,6 +74,12 @@ public class LevelGrid : MonoBehaviour
         boxCollider = GetComponent<BoxCollider>();
         boxCollider = UpdateBoxCollider(boxCollider, sizeColums, sizeRows, height);
 
+    }
+
+    void Update()
+    {
+        if (Application.isPlaying)
+            boxCollider.enabled = false;
     }
 
     private void OnDrawGizmos()

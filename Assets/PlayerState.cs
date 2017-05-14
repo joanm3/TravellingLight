@@ -8,11 +8,14 @@ public class PlayerState : Singleton<PlayerState>
     public bool IsInsideSphere { get { return isInsideSphere; } }
 
     public float minDistance;
+    public float updateTick = 0.2f;
 
     [SerializeField]
     private bool isInsideSphere;
     private bool lastIsInsideSphere;
     private List<TwoWorldsBehaviour> twoWorldsObjects = new List<TwoWorldsBehaviour>();
+
+    private float timer;
 
     void Start()
     {
@@ -29,20 +32,24 @@ public class PlayerState : Singleton<PlayerState>
         //get where the player is. 
         if (ColliderManager.Instance == null)
             return;
-        minDistance = GetNearestDistance();
 
-        //for the moment the distance of the spheres is global. this should change case we have different distances. 
-        isInsideSphere = minDistance < WorldMaskManager.Instance.worldMaskGlobalVariables.GlobalChangeDistance;
 
+        timer += Time.deltaTime;
+        if (timer < updateTick) return;
+
+        //minDistance = GetNearestDistance();
+        isInsideSphere = InsideSphere();
+        Debug.Log(InsideSphere());
 
         if (isInsideSphere != lastIsInsideSphere)
         {
-            //old method. 
             ColliderManager.Instance.SetWorldAndColliders(isInsideSphere);
-            //new one
-            SetWorldColliders();
+            //new method not yet integrated. 
+            //SetWorldColliders();
             lastIsInsideSphere = isInsideSphere;
         }
+
+        timer = 0f;
     }
 
     private void SetWorldColliders()
@@ -115,11 +122,14 @@ public class PlayerState : Singleton<PlayerState>
 
         for (int i = 0; i < WorldMaskManager.Instance.forestTargets.Count; i++)
         {
-            if (WorldMaskManager.Instance.forestTargets[i].colorSetter.IsActive)
+            if (WorldMaskManager.Instance.forestTargets[i].colorSetter.IsActive ||
+                (WorldMaskManager.Instance.forestTargets[i].firefly.consumedByBottleSphere && WorldMaskManager.Instance.forestTargets[i].firefly.currentBottleSphere.isFull))
             {
-                var dist = Vector3.Distance(transform.position, WorldMaskManager.Instance.forestTargets[i].target.transform.position);
-                if (dist < WorldMaskManager.Instance.forestTargets[i].firefly.changeDistance)
+                Vector3 posWithCloak = Mathf.Abs(1 - WorldMaskManager.Instance.forestTargets[i].cloak) * WorldMaskManager.Instance.forestTargets[i].target.transform.position;
+                var dist = Vector3.Distance(transform.position, posWithCloak);
+                if (dist < WorldMaskManager.Instance.forestTargets[i].changeDistance)
                 {
+                    //Debug.Log()
                     return true;
                 }
             }

@@ -41,7 +41,7 @@
 			CGPROGRAM
 			// Physically based Standard lighting model, and enable shadows on all light types
 			#pragma vertex vert 
-			#pragma surface surf Standard fullforwardshadows
+			#pragma surface surf Standard off
 
 			#pragma target 4.0
 			#include "Assets/Shaders/Include/snoise.cginc"
@@ -209,5 +209,5 @@
 			ENDCG
 		}
 
-			FallBack "Diffuse"
+			FallBack "Transparent/Cutout/VertexLit"
 }

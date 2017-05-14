@@ -59,8 +59,11 @@ public class Firefly : MonoBehaviour
 
     void Update()
     {
-        if (useGlobalDistance) changeDistance = WorldMaskManager.Instance.worldMaskGlobalVariables.GlobalChangeDistance;
-
+        if (useGlobalDistance)
+        {
+            changeDistance = WorldMaskManager.Instance.worldMaskGlobalVariables.GlobalChangeDistance;
+            //WorldMaskManager.Instance.forestTargets[this.index].changeDistance = changeDistance;
+        }
 
         #region ASSIGN TO BIG SPHERE
         if (!isEquipped && integrateToBottle)
