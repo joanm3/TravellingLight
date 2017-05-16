@@ -9,8 +9,11 @@ public class BridgeSceneCameraController : MonoBehaviour
     public Camera playerCam;
     public Camera firstCam;
     public Camera secondCam;
+    public Camera thirdCam;
     public float changeToSecondCameraAtFollowCurvePos = 0.5f;
-    public float timeToComebackToPlayer = 10f;
+    public float timeToChangeToThirdCam = 10f;
+    public float timeToChangeToPlayer = 10f;
+
     public CanvasGroup canvasGroup;
     public float fadeTime = 1f;
     public BottleSphere bottleSphere;
@@ -22,7 +25,9 @@ public class BridgeSceneCameraController : MonoBehaviour
 
     public bool firstChangeDone = false;
     public bool secondChangeDone = false;
-    public bool comeBacktoPlayerDone = false;
+    public bool thirdChangeDone = false;
+    public bool toPlayerChangeDone = false;
+    public float volumeFadeInSpeed = 1f;
 
 
     private float currentAlpha = 0f;
@@ -40,6 +45,8 @@ public class BridgeSceneCameraController : MonoBehaviour
     private float sRiverTransp = 0.435f;
     [SerializeField]
     private float sRiverRefraction = 0.1f;
+
+    private float currentVolume;
 
     void Start()
     {
@@ -80,39 +87,42 @@ public class BridgeSceneCameraController : MonoBehaviour
             secondChangeDone = true;
         }
 
-        if (secondChangeDone)
+        if (secondChangeDone && followCurve.pos >= 1f && !thirdChangeDone)
         {
-            timer += Time.deltaTime;
+            if (!thirdChangeDone) timer += Time.deltaTime;
 
-            if (timer > timeToComebackToPlayer && !comeBacktoPlayerDone)
+            if (timer > timeToChangeToThirdCam && !thirdChangeDone)
             {
-                StartCoroutine(FadeInOutCameras(secondCam, playerCam));
-                comeBacktoPlayerDone = true;
+                StartCoroutine(FadeInOutCameras(secondCam, thirdCam));
+                thirdChangeDone = true;
                 river.gameObject.SetActive(true);
                 river.gameObject.GetComponent<BoxCollider>().enabled = true;
                 StartCoroutine(FadeRiverIn());
-
-                if (flocks.Length < 0) return;
-                foreach (var flock in flocks)
+                timer = 0f;
+                if (flocks.Length > 0)
                 {
-                    flock.SetActive(true);
+                    foreach (var flock in flocks)
+                    {
+                        flock.SetActive(true);
+                    }
                 }
-                for (int i = 0; i < flocks.Length; i++)
-                {
-                    //foreach (Transform child in flocks[i].transform)
-                    //{
-                    //    FlockChildSound sounds = child.GetComponent<FlockChildSound>();
-                    //    if (sounds) sounds.enabled = true;
-                    //}
-                }
+            }
+        }
 
 
+
+        if (thirdChangeDone)
+        {
+            timer += Time.deltaTime;
+            if (timer > timeToChangeToPlayer && !toPlayerChangeDone)
+            {
+                StartCoroutine(FadeInOutCameras(thirdCam, playerCam));
+                toPlayerChangeDone = true;
             }
         }
     }
 
-    private float currentVolume;
-    public float volumeSpeed = 1f;
+
 
     private IEnumerator ChangeVolume()
     {
@@ -120,7 +130,7 @@ public class BridgeSceneCameraController : MonoBehaviour
 
         while (currentVolume < 1f)
         {
-            currentVolume += Time.deltaTime * volumeSpeed;
+            currentVolume += Time.deltaTime * volumeFadeInSpeed;
             backgroundMusic.SetParameter("LevelEnded", currentVolume);
             yield return new WaitForEndOfFrame();
         }
