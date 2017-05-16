@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.09.00">
+    <object class="AudioFile" id="{6c88c97b-ae07-423b-b5f1-86a130756dde}">
+        <property name="assetPath">
+            <value>02 - Desertic Winds (fond).mp3</value>
+        </property>
+        <property name="isStreaming">
+            <value>true</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>48</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>110.83199999999999</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{fd033b85-ccac-4143-8360-22f82ed0d01c}</destination>
+        </relationship>
+    </object>
+</objects>

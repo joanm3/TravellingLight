@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class PlayerState : Singleton<PlayerState>
 {
@@ -9,6 +10,8 @@ public class PlayerState : Singleton<PlayerState>
 
     public float minDistance;
     public float updateTick = 0.2f;
+    public StudioEventEmitter backgroundMusic;
+    public float volumeSpeed = 1f;
 
     [SerializeField]
     private bool isInsideSphere;
@@ -16,6 +19,8 @@ public class PlayerState : Singleton<PlayerState>
     private List<TwoWorldsBehaviour> twoWorldsObjects = new List<TwoWorldsBehaviour>();
 
     private float timer;
+
+    float currentVolume;
 
     void Start()
     {
@@ -43,12 +48,44 @@ public class PlayerState : Singleton<PlayerState>
         if (isInsideSphere != lastIsInsideSphere)
         {
             ColliderManager.Instance.SetWorldAndColliders(isInsideSphere);
+
+            StopCoroutine(ChangeVolume());
+            StartCoroutine(ChangeVolume());
             //new method not yet integrated. 
             //SetWorldColliders();
             lastIsInsideSphere = isInsideSphere;
         }
 
         timer = 0f;
+    }
+
+
+
+    private IEnumerator ChangeVolume()
+    {
+
+        if (isInsideSphere)
+        {
+            while (currentVolume < 1f)
+            {
+                currentVolume += Time.deltaTime * volumeSpeed;
+                backgroundMusic.SetParameter("Forest", currentVolume);
+                yield return new WaitForEndOfFrame();
+            }
+            currentVolume = 1f;
+        }
+        else
+        {
+            while (currentVolume > 0f)
+            {
+                currentVolume -= Time.deltaTime * volumeSpeed;
+                backgroundMusic.SetParameter("Forest", currentVolume);
+
+                yield return new WaitForEndOfFrame();
+            }
+            currentVolume = 0f;
+        }
+        backgroundMusic.SetParameter("Forest", currentVolume);
     }
 
     private void SetWorldColliders()

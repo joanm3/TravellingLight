@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using FMODUnity;
 
 public class BridgeSceneCameraController : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class BridgeSceneCameraController : MonoBehaviour
     public MeshRenderer river;
     public float riverFadeSpeed = 0.2f;
     public GameObject[] flocks;
-
+    public StudioEventEmitter backgroundMusic;
 
     public bool firstChangeDone = false;
     public bool secondChangeDone = false;
@@ -68,6 +69,7 @@ public class BridgeSceneCameraController : MonoBehaviour
         if (bottleSphere.isFull && !firstChangeDone)
         {
             StartCoroutine(FadeInOutCameras(playerCam, firstCam));
+            StartCoroutine(ChangeVolume());
             firstChangeDone = true;
         }
 
@@ -107,6 +109,24 @@ public class BridgeSceneCameraController : MonoBehaviour
 
             }
         }
+    }
+
+    private float currentVolume;
+    public float volumeSpeed = 1f;
+
+    private IEnumerator ChangeVolume()
+    {
+
+
+        while (currentVolume < 1f)
+        {
+            currentVolume += Time.deltaTime * volumeSpeed;
+            backgroundMusic.SetParameter("LevelEnded", currentVolume);
+            yield return new WaitForEndOfFrame();
+        }
+        currentVolume = 1f;
+        backgroundMusic.SetParameter("LevelEnded", currentVolume);
+
     }
 
     private IEnumerator FadeRiverIn()
