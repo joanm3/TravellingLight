@@ -34,8 +34,8 @@ public class WorldMaskManager : Singleton<WorldMaskManager>
 
 #if !UNITY_EDITOR
           Cursor.visible = false;
+          Cursor.lockState = CursorLockMode.Locked; 
 #endif
-
 
         oldForestCount = forestTargets.Count;
 
